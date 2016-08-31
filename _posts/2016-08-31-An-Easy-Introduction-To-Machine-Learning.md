@@ -66,8 +66,3 @@ This is the key to machine learning or what i like to call it better statistical
 I would like to stop here, you know machine learning can be overwhelming but the main objective of this blog post was to take you to the most basic thing in machine learning but also the most important one.
 
 Please stay tunned for the next series of Machine Learning posts.
-
-
-![_config.yml]({{ site.baseurl }}/images/config.png)
-
-The easiest way to make your first post is to edit this one. Go into /_posts/ and update the Hello World markdown file. For more instructions head over to the [Jekyll Now repository](https://github.com/barryclark/jekyll-now) on GitHub.

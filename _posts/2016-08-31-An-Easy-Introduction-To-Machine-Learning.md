@@ -18,11 +18,12 @@ An easy way to understand machine learning is to think in mathematical functions
 
 Also you have the following data to write your program:
 
-Cpu Speed(Ghz)	Ram (Gb) 	Cache (Mb)	Flops	Reads Per Second	Writes per Second	Computer Price (usd)
-9	10	2	3500	4500	1500	3000
-7	7	1	2500	2500	1500	1500
-6	7	2	1500	4500	1500	2500
-4	2	1	1000	3000	2000	1000
+| Cpu Speed(Ghz)  | Ram (Gb)  | Cache (Mb)  | Flops  |  Reads Per Second |  Writes per Second | Computer Price (usd)  |
+|---|---|---|---|---|---|---|
+| 9  | 10  | 2  | 3500  |  4500 | 1500  |  3000 |
+| 7  |  7| 1  |  2500 |  2500 |  1500 |  1500 |
+| 6 | 7 |  2 |  1500 |  4500 |  1500 |  2500 |
+| 4  | 2  | 1  |  1000 | 3000   | 1500  | 1000   |
 
 Specifically we want to create a function like this
 

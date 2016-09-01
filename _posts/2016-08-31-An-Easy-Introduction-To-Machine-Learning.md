@@ -24,7 +24,7 @@ Also you have the following data to write your program:
 | 7  |  7| 1  |  2500 |  2500 |  1500 |  1500 |
 | 6 | 7 |  2 |  1500 |  4500 |  1500 |  2500 |
 | 4  | 2  | 1  |  1000 | 3000   | 1500  | 1000   |
-
+{:.mbtablestyle}
 Specifically we want to create a function like this
 
 function  int CalculatePrice(int cpuSpeed,int ram,int cache, int flops, int reads, int writes){

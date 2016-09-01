@@ -26,21 +26,21 @@ Also you have the following data to write your program:
 | 4  | 2  | 1  |  1000 | 3000   | 1500  | 1000   |
 
 Specifically we want to create a function like this
-
+```
 function  int CalculatePrice(int cpuSpeed,int ram,int cache, int flops, int reads, int writes){
 	/*implementation*/
 	return price;
 }
-
+```
 Now our goal is to implement this function based on the data wa have, we can have some insights from the data, for example you can se that a high cpu speed appears to elevate the price of the computer also for the memory ram.
 
 So we could write some aproximation based on this insight:
-
+```
 function  int CalculatePrice(int cpuSpeed,int ram,int cache, int flops, int reads, int writes){
 	var price = cpuSpeed*9+ram*9+cache*6+flops*5+reads*4+writes*3;
 	return price;
 }
-
+```
 We assigned some random but higher value for the cpuSpeed variable, this function will give us  an aproximation based on our judgment and on our own insights. The problem with this aproach is that we dont know how to specify the constant values or weights for each variable, yes we know that based on the data we know that cpu speed have a high impact on the computer price, but we dont know if have an impact of a factor o 9 on the total function result. Now we are just taking into account just the cpu speed variable but what if the rest of the variables values have influence in the computer price?. This simply task is getting harder and harder.
 What if we have a new computer with new specs that are not registered on our data-set, what price will our custom function will output?, i will be a precise value?
 As you can see its very difficult to extract logic from data, maybe for this small data set of 4 rows is achievable but what if we have a data set of +100 rows it would be extremelly difficult to think in some function that represents the dataset correctly.

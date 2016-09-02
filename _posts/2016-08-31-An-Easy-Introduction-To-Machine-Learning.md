@@ -62,7 +62,7 @@ Because this is a very small data set we can try with different values and come 
 Lets calculate the total offset of our estimated values vs the values from the data set (real values)
 
 {% raw %}
-  $$(3000-1040)+(2700-800)+(2500-680)+(600-420)=6100$$
+  $$\lvert(3000-1040)\rvert+\lvert(2700-800)\rvert+\lvert(2500-680)\rvert+\lvert(600-420)\rvert=6100$$
 {% endraw %}
 
 Our function predictions have an offset of 6100 usd dollars trying with values from the data set itself.
@@ -72,6 +72,12 @@ Now lets try another value for cpuSpeedFactor for example **cpuSpeedFactor = 600
 {% raw %}
   $$5.2*600=3120 \text{ expected 3000}\\ 4.4*600=2640 \text{ expected 2700}\\ 3.4*600=2040 \text{ expected 2500}\\ 2.1*600=1260 \text{ expected 600}$$
 {% endraw %}
+
+
+{% raw %}
+  $$(3000-1040)+(2700-800)+(2500-680)+(600-420)=6100$$
+{% endraw %}
+
 
  Cpu Speed
 	• Memory Ram

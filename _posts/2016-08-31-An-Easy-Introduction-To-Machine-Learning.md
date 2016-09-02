@@ -49,12 +49,7 @@ function  int CalculatePrice(int cpuSpeed,int ram,int cache, int flops, int read
     var readsFactor = 4;
     var writesFactor = 3;
     
-    var price = cpuSpeed*cpuSpeedFactor+
-    		    ram*ramFactor+
-               cache*cacheFactor+
-                  flops*flopsFactor+
-                  reads*readsFactor+
-                  writes*writesFactor;
+    var price = cpuSpeed*cpuSpeedFactor+ram*ramFactor+cache*cacheFactor+flops*flopsFactor+reads*readsFactor+writes*writesFactor;
 	return price;
 }
 ```

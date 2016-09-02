@@ -6,7 +6,7 @@ published: true
 
 Maybe you have already heard about machine learning and some of the amazing things it can do, in this series of posts im going to explain in a very easy way what Machine Learning is and why it is so important for the future of technology.
 
-Machine learning covers a lot of topics and can have a lot of ramifications, but i like to define it as a set of techniques and specialized algoritms that generate mathematical functions from pure data, the output of these generated functions are of our special interest because they can give us very good estimates about new data based on previous knoweledge, in other words this generated function will try to describe the data no matter how the data is structured.
+Machine learning covers a lot of topics and can have a lot of ramifications, but I like to define it as a set of techniques and specialized algoritms that generate mathematical functions from pure data, the output of these generated functions are of our special interest because they can give us very good estimates about new data based on previous knowledge, in other words this generated function will try to describe the data no matter how the data is structured.
 
 An easy way to understand machine learning is to think in mathematical functions, for example when you write a program using a 3rd generation language like C#, you think in variables, if-then statements, classes, methods, OOP etc. Lets say for example that you want to create a program that outputs the computer **price** in USD dollars depending on the following characteristics:
 
@@ -55,13 +55,13 @@ function int CalculatePrice(int cpuSpeed,int ram,int cache, int flops, int reads
 }
 ```
 I ve created some _factor_ variables that gives each corresponding parameter a _weight_  the bigger the factor the more it influences the total price.
-Also, I ve have assigned a  higher value to the cpuSpeedFactor variable based on my own intuition, this function will give us an aproximation based on my own judgment. The problem with this approach is that we dont know how to specify the constant values or weights for each variable we are just guessing here, yes we know that based on the data we know that CPU speed have a high impact on the computer price, but we dont know if have an impact of a factor o 9 on the total function result. Now we are just taking into account just the cpu speed variable but what if the rest of the variables values have influence in the computer price?. This simply task is getting harder and harder.
-What if we have a new computer with new specs that are not registered on our data-set, what price will our custom function will output?, i will be a precise value?
-As you can see its very difficult to extract logic from data, maybe for this small data set of 4 rows is achievable but what if we have a data set of +100 rows it would be extremelly difficult to think in some function that represents the dataset correctly.
+Also, I ve have assigned a  higher value to the cpuSpeedFactor variable based on my own intuition, this function will give us an aproximation based on my own judgment. The problem with this approach is that we dont know how to specify the constant values or weights for each variable we are just guessing here, yes I know that based on the data we have that CPU speed have a high impact on the computer price, but we dont know if this impact have a value over the total price of a factor of 9. The same applies for the rest of the factor variables, we dont have any real clue how they influence the final computer price.
+
+Maybe we can come up with a conbination of factor variables in such a way that they represent our data exactly. But, ¿what if we have to guess the price of a new computer with new specs that are not registered on our data-set?, ¿what price will our custom function output?, ¿it will be a precise value?, ¿will our ouput have coherence with the dataset?.
+As you can see its very difficult to extract logic from data, maybe for this small data set of 4 rows is achievable, but ¿what if we have a data set of +100 rows? it would be extremelly difficult to think in some function that represents the dataset correctly.
 
 ## Statistics to the rescue 
-It turns out that the field of statistics is the one to extract insights from the data.
-Statistiscs uses the concept of models, models are mathematical methods that can adjust to data to help the statistician to get insights about the data in a easier way. Let me explain you the most basic model (but powerfull) in statistics, the Linear Regression Model.
+It turns out that Statistics can helps us a lot here. Statistiscs uses mathematical methods that can adjust to data to help the statistician to get insights about the data in a easier way. Let me explain you the most basic model (but powerfull) in statistics, the Linear Regression Model.
 
 ## Linear Regression
 This simple but  powerfull model and still used nowdays can model a mathematical formula to estimate values from a set of data.

@@ -1,3 +1,11 @@
+---
+published: false
+---
+---
+layout: post
+title: An easy introduction to Machine Learning
+published: true
+---
 
 Maybe you have already heard about machine learning and some of the amazing things it can do, in this series of posts im going to explain in a very easy way what Machine Learning is and why it is so important for the future of technology.
 

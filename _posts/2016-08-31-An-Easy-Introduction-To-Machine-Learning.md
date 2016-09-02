@@ -41,7 +41,7 @@ So we could write some aproximation based on this insight:
 
 ```
 function  int CalculatePrice(int cpuSpeed,int ram,int cache, int flops, int reads, int writes){
-var cpuSpeedFactor = 9;
+	var cpuSpeedFactor = 9;
     var ramFactor = 8;
     var cacheFactor = 6;
     var flopsFactor = 5;

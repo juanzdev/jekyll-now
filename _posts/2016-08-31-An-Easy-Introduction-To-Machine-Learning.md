@@ -71,7 +71,7 @@ For example lets say you gather some data, let say you ask a group of people the
 In this case you have a bunch of points representing the relationship between age and income, now with statistics and more specifically with a model like linear regression you can model a custom formula for your data that describes best this relationship, in the case of linear regression it will be a straight line, this formula will model a linear relationship that will follow  the form:
 
 {% raw %}
-  $$y = $$b\*$$x+$$C
+  $$y = $$b\*$$x+C
 {% endraw %} 
 
 where C is a constant that allows the straight line to translate vertically, x is the independent variable say the _age_ and y the dependant variable say the _income_, in this case we are assuming that the income in some way is affected by the age of the person.

@@ -1,8 +1,3 @@
----
-layout: post
-title: An easy introduction to Machine Learning
-published: true
----
 
 Maybe you have already heard about machine learning and some of the amazing things it can do, in this series of posts im going to explain in a very easy way what Machine Learning is and why it is so important for the future of technology.
 
@@ -80,7 +75,47 @@ Now lets try another value for cpuSpeedFactor for example **cpuSpeedFactor = 600
 
 Our function predictions have an offset of 1300 usd dollars this time, much better! but is there an optimum value for cpuSpeedFactor that produces the minimum offset?
 
- Cpu Speed
+
+## Statistics to the rescue 
+It turns out that statistics can helps us a lot here. Statistiscs uses mathematical methods that can adjust to data to help gathering adittional insights. Let me explain you the most basic (but powerful) model in statistics, linear regression.
+
+## Linear Regression
+Linear Regression is a mathematical model that tries to fit a mathematical formula of a straight line to a set of  given points of data in a two-dimensional plane.
+
+For example lets draw our given our data set about cpu speed vs computer.
+(diagram)
+
+In this case you have a bunch of points representing the relationship between cpu-speed and price, now with linear regression you can model an ecuation that fits your data using a straight line, this line has the form of an ecuation:
+
+{% raw %}
+  $$y = x*b+c$$
+{% endraw %} 
+
+where C is a constant that allows the straight line to translate vertically, x is the independent variable in this case the _cpu_speed_ and y the dependant variable in this case the _price_.
+
+What linear regresion does is to try to create a linear relationship between our two variables based on all data points that exist on the plane, in this case _cpu_speed_ and _price_, linear regression calculates the minimun distance for each data point to a straight line that covers the entire set of data, for example:
+
+(diagram)
+
+A straight line that try to cover the entire set of data points is really useful because we have an explicit guide that represent our data points and because this line is continuous our function can output not only the values from the data-set but a lot of more values. For example we can know that for cpu-speed of 5.2 Ghz the price is 3000 usd dollars but what about a new computer of speed 5.5 Ghz? if we use our straight line we can get a good estimate, our funtion gives us a new ability to estimate values from our fixed data, in statistics and machine learning this ability is called prediction.
+
+## The prediction/estimation concept
+This same prediction ability gives us the capability to generalize, that is to create a function that represents the entire set of data points and also represent the hidden rules and patterns that our data have implicitly, so that when a new point comes to our function the output will have coherence. A straight line generalizes very well to all kind of data, but that can be bad in some cases because if our data is very complex our function will only be able to represent it with a line giving us wrong predictions. Sometimes the data is very complex and a linear regression is not enought to be able to  predict new values.
+
+For example with our modeled data and our model (rule) fitted to our data we already have an ecuation 
+
+ {% raw %}
+  $$y = 100*x$$ + 76
+ {% endraw %}
+
+fitted to our data, if we want to know the income of a new age value (a value that we never registered in our data points) we can predict it or what i like to call it better "estimate it", this value is using our statistical linear regression model will give us a very good aproximate value.
+I like to think that Linear Regression is the most basic form of Machine Learning, because when you research more on the topic you can somehow see that even the most complex Machine Learning Algorithms at a deep level are trying to  behave the same like Linear Regression, that is, trying to model a mathematical ecuation from data to try to describe in the best way posible the data set.
+
+Of course the value that our model gives us is not exact, it is an aproximate, and in some cases this is very well accepted.
+
+
+
+Cpu Speed
 	• Memory Ram
 	• Cache
 	• Flops
@@ -131,39 +166,3 @@ Also, I ve have assigned a  higher value to the cpuSpeedFactor variable based on
 
 Maybe we can come up with a conbination of factor variables in such a way that they represent our data exactly. But, ¿what if we have to guess the price of a new computer with new specs that are not registered on our data-set?, ¿what price will our custom function output?, ¿it will be a precise value?, ¿will our ouput have coherence with the dataset?.
 As you can see its very difficult to extract logic from data, maybe for this small data set of 4 rows is achievable, but ¿what if we have a data set of +100 rows? it would be extremelly difficult to think in some function that represents the dataset correctly.
-
-## Statistics to the rescue 
-It turns out that statistics can helps us a lot here. Statistiscs uses mathematical methods that can adjust to data to help gathering adittional insights. Let me explain you the most basic (but powerful) model in statistics, linear regression.
-
-## Linear Regression
-Linear Regression is a mathematical model that tries to fit a mathematical formula of a straight line to a set of  given points of data in a two-dimensional plane.
-
-For example lets say you gather some data, let say you ask a group of people their income and their age and you take this data and represent them in a cartesian diagram you will have plot of points in 2 dimensions where you can compare age vs income values.
-
-In this case you have a bunch of points representing the relationship between age and income, now with statistics and more specifically with a model like linear regression you can model a custom formula for your data that describes best this relationship, in the case of linear regression it will be a straight line, this formula will model a linear relationship that will follow  the form:
-
-{% raw %}
-  $$y = $$b*$$x+$$C
-{% endraw %} 
-
-where C is a constant that allows the straight line to translate vertically, x is the independent variable say the _age_ and y the dependant variable say the _income_, in this case we are assuming that the income in some way is affected by the age of the person.
-
-What linear regresion does is to try to create a linear relationship between our two variables based on all data points that exist on the plane, in this case _age_ and _income_, linear regression calculates the minimun distance for each data point to a straight line that covers the entire set of data, for example:
-
-(diagram)
-
-A straight line that try to cover the entire set of data points is useful because we have a formula or a guide to represent data points that were not previusly seen. For example we can know the income of the age 34 and get a fair result, note that the age 34 was never contemplated in our set of data points, this is what is called in statistics and machine learning predict a value.
-
-## The prediction/estimation concept
-This same prediction ability gives us the capability to generalize, that is to create a function that represents the entire set of data points and also represent the hidden rules and patterns that our data have implicitly, so that when a new point comes to our function the output will have coherence. A straight line generalizes very well to all kind of data, but that can be bad in some cases because if our data is very complex our function will only be able to represent it with a line giving us wrong predictions. Sometimes the data is very complex and a linear regression is not enought to be able to  predict new values.
-
-For example with our modeled data and our model (rule) fitted to our data we already have an ecuation 
-
- {% raw %}
-  $$y = 100*x$$ + 76
- {% endraw %}
-
-fitted to our data, if we want to know the income of a new age value (a value that we never registered in our data points) we can predict it or what i like to call it better "estimate it", this value is using our statistical linear regression model will give us a very good aproximate value.
-I like to think that Linear Regression is the most basic form of Machine Learning, because when you research more on the topic you can somehow see that even the most complex Machine Learning Algorithms at a deep level are trying to  behave the same like Linear Regression, that is, trying to model a mathematical ecuation from data to try to describe in the best way posible the data set.
-
-Of course the value that our model gives us is not exact, it is an aproximate, and in some cases this is very well accepted.

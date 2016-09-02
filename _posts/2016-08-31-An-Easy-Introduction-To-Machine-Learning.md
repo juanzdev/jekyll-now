@@ -37,10 +37,10 @@ function  int CalculatePrice(int cpuSpeed, int ram, int cache, int flops, int re
 
 Now our goal is to implement this function, we can have some insights from the data, for example you can see that a high CPU speed appears to increase the total price of the computer, the memory ram also seems to be an important factor for the price.
 
-So we could write some aproximation based on this insight:
+So we could write some code based on this insight:
 
 ```
-function  int CalculatePrice(int cpuSpeed,int ram,int cache, int flops, int reads, int writes){
+function int CalculatePrice(int cpuSpeed,int ram,int cache, int flops, int reads, int writes){
 	
     var cpuSpeedFactor = 9;
     var ramFactor = 8;
@@ -54,8 +54,8 @@ function  int CalculatePrice(int cpuSpeed,int ram,int cache, int flops, int read
     return price;
 }
 ```
-
-We assigned some random but higher value for the cpuSpeed variable, this function will give us  an aproximation based on our judgment and on our own insights. The problem with this aproach is that we dont know how to specify the constant values or weights for each variable, yes we know that based on the data we know that cpu speed have a high impact on the computer price, but we dont know if have an impact of a factor o 9 on the total function result. Now we are just taking into account just the cpu speed variable but what if the rest of the variables values have influence in the computer price?. This simply task is getting harder and harder.
+I ve created some _factor_ variables that gives each corresponding parameter a _weight_  the bigger the factor the more it influences the total price.
+Also, I ve have assigned a  higher value to the cpuSpeedFactor variable based on my own intuition, this function will give us an aproximation based on my own judgment. The problem with this approach is that we dont know how to specify the constant values or weights for each variable we are just guessing here, yes we know that based on the data we know that CPU speed have a high impact on the computer price, but we dont know if have an impact of a factor o 9 on the total function result. Now we are just taking into account just the cpu speed variable but what if the rest of the variables values have influence in the computer price?. This simply task is getting harder and harder.
 What if we have a new computer with new specs that are not registered on our data-set, what price will our custom function will output?, i will be a precise value?
 As you can see its very difficult to extract logic from data, maybe for this small data set of 4 rows is achievable but what if we have a data set of +100 rows it would be extremelly difficult to think in some function that represents the dataset correctly.
 

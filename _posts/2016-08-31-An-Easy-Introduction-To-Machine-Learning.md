@@ -53,7 +53,7 @@ CalculatePrice(3.4); // outputs 2500
 CalculatePrice(2.1); // outputs 600
 
 ```
-Because this is a very small data set we can try with different values and come up with a fair solution, for example lets say that cpuSpeedFactor = 200
+Because this is a very small data set we can try with different values and come up with a fair solution, for example lets say that **cpuSpeedFactor = 200**
 
 {% raw %}
   $$5.2*200=1040 \text{ expected 3000}\\ 4.4*200=800 \text{ expected 2700}\\ 3.4*200=680 \text{ expected 2500}\\ 2.1*200=420 \text{ expected 600}$$
@@ -63,6 +63,14 @@ Lets calculate the total offset of our estimated values vs the values from the d
 
 {% raw %}
   $$(3000-1040)+(2700-800)+(2500-680)+(600-420)=6100$$
+{% endraw %}
+
+Our function predictions have an offset of 6100 usd dollars trying with values from the data set itself.
+
+Now lets try another value for cpuSpeedFactor for example **cpuSpeedFactor = 600**
+
+{% raw %}
+  $$5.2*600=3120 \text{ expected 3000}\\ 4.4*600=2640 \text{ expected 2700}\\ 3.4*600=2040 \text{ expected 2500}\\ 2.1*600=1260 \text{ expected 600}$$
 {% endraw %}
 
  Cpu Speed

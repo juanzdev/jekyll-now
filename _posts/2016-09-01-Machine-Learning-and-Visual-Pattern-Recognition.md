@@ -1,7 +1,10 @@
 ---
 layout: post
 title: Machine Learning and Visual Pattern Recognition
+tagline: Easy websites with GitHub Pages
+description: Minimal tutorial on making a simple website with GitHub Pages
 ---
+
 
 
 ## Natural Pattern Recognition

@@ -56,8 +56,7 @@ CalculatePrice(2.1); // outputs 600
 Because this is a very small data set we can try with different values and come up with a fair solution, for example lets say that cpuSpeedFactor = 200
 
 {% raw %}
-  $$5.2*200=1040 \\
-  4.4*200=800$$
+  $$5.2*200=1040 \\ 4.4*200=800$$
 {% endraw %}
 
  Cpu Speed

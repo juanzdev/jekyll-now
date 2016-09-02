@@ -82,10 +82,10 @@ What linear regresion does is to try to create a linear relationship between our
 
 A straight line that try to cover the entire set of data points is useful because we have a formula or a guide to represent data points that were not previusly seen. For example we can know the income of the age 34 and get a fair result, note that the age 34 was never contemplated in our set of data points, this is what is called in statistics and machine learning predict a value.
 
+## The prediction/estimation concept
 This same prediction ability gives us the capability to generalize, that is to create a function that represents the entire set of data points and also represent the hidden pattern that is happing behind the scenes so that when a new point comes to our function the output will have coherence. A straight line generalizes very well to all kind of data, but that can be bad in some cases because if our data is very complex our function will only be able to represent it with a line giving us wrong predictions. Sometimes the data is very complex and a linear regression is not enought to be able to  predict new values.
 
-## The prediction/estimation concept
-This is kind of a magical word, but when you see it in terms of statistics, for example in the case of linear regression it is actually pretty natural and simple word, for example with our modeled data and our model (rule) fitted to our data we already have an ecuation 
+For example with our modeled data and our model (rule) fitted to our data we already have an ecuation 
 
  {% raw %}
   $$y = 100*x$$ + 76

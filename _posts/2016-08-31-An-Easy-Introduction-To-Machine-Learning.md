@@ -1,6 +1,7 @@
 ---
 layout: post
 title: An easy introduction to Machine Learning
+published: true
 ---
 
 Maybe you have already heard about machine learning and some of the amazing things it can do, in this series of posts im going to explain in a very easy way what Machine Learning is and why it is so important for the future of technology.
@@ -74,7 +75,7 @@ As you can see linear regression gives us a function that represents a straight 
 This is kind of a magical word, but when you see it in terms of statistics, for example in the case of linear regression it is actually pretty natural and simple word, for example with our modeled data and our model (rule) fitted to our data we already have an ecuation 
 
  {% raw %}
-  $$y = 76 + 100*x$$
+  $$y = 100*x$$ + 76
  {% endraw %}
 
 fitted to our data, if we want to know the income of a new age value (a value that we never registered in our data points) we can predict it or what i like to call it better "estimate it", this value is using our statistical linear regression model will give us a very good aproximate value.

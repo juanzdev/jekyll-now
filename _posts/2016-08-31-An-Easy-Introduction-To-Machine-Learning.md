@@ -6,9 +6,9 @@ published: true
 
 Maybe you have already heard about machine learning and some of the amazing things it can do, in this series of posts im going to explain in a very easy way what Machine Learning is and why it is so important for the future of technology.
 
-Machine learning covers a lot of topics and can have a lot of ramifications, but i like to define it as a set of techniques and specialized algoritms that generate mathematical functions from pure data, the output of these generated functions are of our special interest because they can give us very good estimates about new data the algorithm has never seen before based on previous knoweledge.
+Machine learning covers a lot of topics and can have a lot of ramifications, but i like to define it as a set of techniques and specialized algoritms that generate mathematical functions from pure data, the output of these generated functions are of our special interest because they can give us very good estimates about new data based on previous knoweledge, in other words this generated function will try to describe the data no matter how the data is structured.
 
-An easy way to understand machine learning is to think in mathematical functions, for example when you write a program using a 3rd generation language like C#, you think in terms of if-else algorithms or object oriented programing or some fancy tecnique, lets say for example that you   want to create a program that outputs the computer price in USD dollars depending on the following inputs:
+An easy way to understand machine learning is to think in mathematical functions, for example when you write a program using a 3rd generation language like C#, you think in variables, if-then statements, classes, methods, OOP etc. Lets say for example that you want to create a program that outputs the computer **price** in USD dollars depending on the following characteristics:
 
 	• Cpu Speed
 	• Memory Ram
@@ -17,7 +17,7 @@ An easy way to understand machine learning is to think in mathematical functions
 	• Reads per second
 	• Writes per second
 
-Also you have the following data to write your program:
+You have the following data available for you to write your program in this case the **price** is also given to you:
 
 | Cpu Speed(Ghz)  | Ram (Gb)  | Cache (Mb)  | Flops  |  Reads Per Second |  Writes per Second | Computer Price (usd)  |
 |:----------------|:----------|:------------|:-------|:------------------|:-------------------|:----------------------|
@@ -29,19 +29,29 @@ Also you have the following data to write your program:
 Specifically we want to create a function like this
 
 ```
-function  int CalculatePrice(int cpuSpeed,int ram,int cache, int flops, int reads, int writes){
+function  int CalculatePrice(int cpuSpeed, int ram, int cache, int flops, int reads, int writes){
 	/*implementation*/
 	return price;
 }
 ```
 
-Now our goal is to implement this function based on the data wa have, we can have some insights from the data, for example you can se that a high cpu speed appears to elevate the price of the computer also for the memory ram.
+Now our goal is to implement this function, we can have some insights from the data, for example you can see that a high CPU speed appears to increase the total price of the computer, the memory ram also seems to be an important factor for the price.
 
 So we could write some aproximation based on this insight:
 
 ```
 function  int CalculatePrice(int cpuSpeed,int ram,int cache, int flops, int reads, int writes){
-	var price = cpuSpeed*9+ram*9+cache*6+flops*5+reads*4+writes*3;
+	var cpuSpeedFactor = 9;
+    var ramFactor = 8;
+    var cacheFactor = 6;
+    var flopsFactor = 5;
+    var readsFactor = 4;
+    var writesFactor = 3;
+	var price = cpuSpeed*cpuSpeedFactor+
+    			  ram*ramFactor+cache*6+
+                  flops*flopsFactor+
+                  reads*readsFactor+
+                  writes*writesFactor;
 	return price;
 }
 ```

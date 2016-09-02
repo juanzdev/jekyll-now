@@ -75,8 +75,9 @@ Now lets try another value for cpuSpeedFactor for example **cpuSpeedFactor = 600
 
 
 {% raw %}
-  $$(3000-1040)+(2700-800)+(2500-680)+(600-420)=6100$$
+  $$\lvert(3000-3120)\rvert+\lvert(2700-2640)\rvert+\lvert(2500-2040)\rvert+\lvert(600-1260)\rvert=1300$$
 {% endraw %}
+
 
 
  Cpu Speed

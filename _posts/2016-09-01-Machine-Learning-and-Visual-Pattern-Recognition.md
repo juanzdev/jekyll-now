@@ -4,8 +4,7 @@ title: Machine Learning and Visual Pattern Recognition
 ---
 
 
-Natural Pattern Recognition
-
+## Natural Pattern Recognition
 
 Every single moment our brain is being exposed to light, sound, touch, smells and all kind of experiencies. It turns out that our brain does an outstanding job at getting familirized with all this new information, somehow it can interpret any kind of signal and remember it at any point of time, thanks to our memory capabilities and pattern recognition abilities we can somehow understand and remember abstract concepts from previous experiences.
 
@@ -13,9 +12,7 @@ Let me give you a clear example of this. For example a human baby doesnt know a 
 
 So our brain is exposed every day with tons of information, and if you take into account the number of seconds a human lives, thats a ton of information to learn things for!.
 
-
-The Problem  of Computer Visual Pattern Recognition
-
+## The Problem  of Computer Visual Pattern Recognition
 
 If we want to create computer programs with such pattern recognition capabilities we need to start thinking how to program a pattern recognition program engine that could handle all the information of the real world the same as our brain does.
 

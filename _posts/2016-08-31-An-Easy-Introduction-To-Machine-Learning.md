@@ -78,7 +78,7 @@ Now lets try another value for cpuSpeedFactor for example **cpuSpeedFactor = 600
   $$\lvert(3000-3120)\rvert+\lvert(2700-2640)\rvert+\lvert(2500-2040)\rvert+\lvert(600-1260)\rvert=1300$$
 {% endraw %}
 
-
+Our function predictions have an offset of 1300 usd dollars this time, much better! but is there an optimum value for cpuSpeedFactor that produces the minimum offset?
 
  Cpu Speed
 	• Memory Ram

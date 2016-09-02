@@ -8,9 +8,59 @@ Maybe you have already heard about machine learning and some of the amazing thin
 
 Machine learning covers a lot of topics and can have a lot of ramifications, but I like to define it as a set of techniques and specialized algoritms that generate mathematical functions from pure data, the output of these generated functions are of our special interest because they can give us very good estimates about new data based on previous knowledge, in other words this generated function will try to describe the data no matter how the data is structured.
 
-An easy way to understand machine learning is to think in mathematical functions, for example when you write a program using a 3rd generation language like C#, you think in variables, if-then statements, classes, methods, OOP etc. Lets say for example that you want to create a program that outputs the computer **price** in USD dollars depending on the following characteristics:
+An easy way to understand machine learning is to think in mathematical functions, for example when you write a program using a 3rd generation language like C#, you think in variables, if-then statements, classes, methods, OOP etc. Lets say for example that you want to create a program that outputs the computer **price** in USD dollars depending on the following characteristic:
 
 	• Cpu Speed
+
+You have the following data available for you to write your program in this case the **price** is also given to you:
+
+| Cpu Speed(Ghz)  |  Computer Price (usd)  |
+|:----------------|:-----------------------|
+| 	    5.2	      | 	      3000         |
+|       4.4       |           2700         |
+| 	    3.4	      |           2500         |
+|     	2.1	      |           600          |
+
+Specifically we want to create a function like this
+
+```
+function  int CalculatePrice(int cpuSpeed){
+	/*implementation*/
+	return price;
+}
+```
+
+Now our goal is to implement this function, we can have some insights from the data, for example is obvious that a high CPU speed appears to increase the total price of the computer.
+
+So we could write some code based on this insight:
+
+```
+function int CalculatePrice(int cpuSpeed){
+	
+    var cpuSpeedFactor = ? ; /* our guess */
+    var price = cpuSpeed * cpuSpeedFactor;
+    
+    return price;
+}
+```
+
+What value should cpuSpeedFactor needs so that our function outputs the exact same values of our given data? Ej:
+
+```
+CalculatePrice(5.2); // outputs 3000
+CalculatePrice(4.4); // outputs 2700
+CalculatePrice(3.4); // outputs 2500
+CalculatePrice(2.1); // outputs 600
+
+```
+Because this is a very small data set we can try with different values and come up with a fair solution, for example lets say that cpuSpeedFactor = 200
+
+{% raw %}
+  $$5.2*$$200=$$1040
+  $$4.4*$$200=$$800
+{% endraw %}
+
+ Cpu Speed
 	• Memory Ram
 	• Cache
 	• Flops
@@ -54,6 +104,8 @@ function int CalculatePrice(int cpuSpeed,int ram,int cache, int flops, int reads
     return price;
 }
 ```
+
+
 I ve created some _factor_ variables that gives each corresponding parameter a _weight_  the bigger the factor the more it influences the total price.
 Also, I ve have assigned a  higher value to the cpuSpeedFactor variable based on my own intuition, this function will give us an aproximation based on my own judgment. The problem with this approach is that we dont know how to specify the constant values or weights for each variable we are just guessing here, yes I know that based on the data we have that CPU speed have a high impact on the computer price, but we dont know if this impact have a value over the total price of a factor of 9. The same applies for the rest of the factor variables, we dont have any real clue how they influence the final computer price.
 

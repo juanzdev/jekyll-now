@@ -49,11 +49,11 @@ We assigned some random but higher value for the cpuSpeed variable, this functio
 What if we have a new computer with new specs that are not registered on our data-set, what price will our custom function will output?, i will be a precise value?
 As you can see its very difficult to extract logic from data, maybe for this small data set of 4 rows is achievable but what if we have a data set of +100 rows it would be extremelly difficult to think in some function that represents the dataset correctly.
 
-##Statistics to the rescue 
+## Statistics to the rescue 
 It turns out that the field of statistics is the one to extract insights from the data.
 Statistiscs uses the concept of models, models are mathematical methods that can adjust to data to help the statistician to get insights about the data in a easier way. Let me explain you the most basic model (but powerfull) in statistics, the Linear Regression Model.
 
-##Linear Regression
+## Linear Regression
 This simple but  powerfull model and still used nowdays can model a mathematical formula to estimate values from a set of data.
 
 For example lets say you gather some data, let say you ask a group of people their income and their age and you take this data and represent them in a cartesian diagram you will have a diagram in 2 dimensions where you can contrast the age vs income.
@@ -70,7 +70,7 @@ The ecuation that describes this straight line has the form y = c + b*x and it a
 
 As you can see linear regression gives us a function that represents a straight line, this has the advantage of generalize the data, this is usefull if we want to predict values because we expect that this function represent the trend of the data. A disadvantage of this straight line is that is limited to represent very basic data, for example if we want to describe a curve relationship it wouldnt be possible using linear regression, but there are a lot of models in statistics that can help us modelate more complex information.
 
-##The prediction/estimation concept
+## The prediction/estimation concept
 This is kind of a magical word, but when you see it in terms of statistics, for example in the case of linear regression it is actually pretty natural and simple word, for example with our modeled data and our model (rule) fitted to our data we already have an ecuation 
 
 y = 76+ 100*x

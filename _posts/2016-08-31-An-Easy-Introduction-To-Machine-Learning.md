@@ -73,10 +73,8 @@ As you can see linear regression gives us a function that represents a straight 
 ## The prediction/estimation concept
 This is kind of a magical word, but when you see it in terms of statistics, for example in the case of linear regression it is actually pretty natural and simple word, for example with our modeled data and our model (rule) fitted to our data we already have an ecuation 
 
-y = 76+ 100*x
-
  {% raw %}
-  $$a^2 + b^2 = c^2$$ --> note that all equations between these tags will not need escaping! 
+  $$y = 76 + 100*x$$
  {% endraw %}
 
 fitted to our data, if we want to know the income of a new age value (a value that we never registered in our data points) we can predict it or what i like to call it better "estimate it", this value is using our statistical linear regression model will give us a very good aproximate value.

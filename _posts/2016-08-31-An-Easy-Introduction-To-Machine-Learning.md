@@ -61,24 +61,28 @@ Maybe we can come up with a conbination of factor variables in such a way that t
 As you can see its very difficult to extract logic from data, maybe for this small data set of 4 rows is achievable, but ¿what if we have a data set of +100 rows? it would be extremelly difficult to think in some function that represents the dataset correctly.
 
 ## Statistics to the rescue 
-It turns out that Statistics can helps us a lot here. Statistiscs uses mathematical methods that can adjust to data to help the statistician to get insights about the data in a easier way. Let me explain you the most basic model (but powerfull) in statistics, the Linear Regression Model.
+It turns out that statistics can helps us a lot here. Statistiscs uses mathematical methods that can adjust to data to help gathering adittional insights. Let me explain you the most basic (but powerful) model in statistics, linear regression.
 
 ## Linear Regression
-This simple but  powerfull model and still used nowdays can model a mathematical formula to estimate values from a set of data.
+Linear Regression is a mathematical model that tries to fit a mathematical formula of a straight line to a set of  given points of data in a two-dimensional plane.
 
-For example lets say you gather some data, let say you ask a group of people their income and their age and you take this data and represent them in a cartesian diagram you will have a diagram in 2 dimensions where you can contrast the age vs income.
+For example lets say you gather some data, let say you ask a group of people their income and their age and you take this data and represent them in a cartesian diagram you will have plot of points in 2 dimensions where you can compare age vs income values.
 
+In this case you have a bunch of points representing the relationship between age and income, now with statistics and more specifically with a model like linear regression you can model a custom formula for your data that describes best this relationship, in the case of linear regression it will be a straight line, this formula will model a linear relationship that will follow  the form:
 
+{% raw %}
+  $$y = $$b\*$$x+$$C
+{% endraw %} 
 
-In this case you have a bunch of points representing the relationship between age and income, now with statistics and more specifically with a model like linear regression you can model a custom formula for your data that describes best this relationship, this formula will model a linear relationship that will follow  the  y = c + b*x  form where c is a constant (that gives the ability of the realtionship to move or translate on the y axis) , x is the independent variable say the age and y the dependant variable say the income, in this case we are assuming that the income in someway  is affected by the age of the person.
+where C is a constant that allows the straight line to translate vertically, x is the independent variable say the _age_ and y the dependant variable say the _income_, in this case we are assuming that the income in some way is affected by the age of the person.
 
-What linear regresion does is to try to create a linear relationship between our two variables , in this case age and income, to do this and without going too deep on how it do it, linear regression calculates the minimun distance for each data point to a straight line that covers the entire set of data points, for example
+What linear regresion does is to try to create a linear relationship between our two variables based on all data points that exist on the plane, in this case _age_ and _income_, linear regression calculates the minimun distance for each data point to a straight line that covers the entire set of data, for example:
 
+(diagram)
 
-Here you can see that the sum of the  vertical distance from the data point to the straight line is the minimun, linear regression gives us the minimun sum of this distance and hence gives us the best possible straight line that pass through the set of data points.
-The ecuation that describes this straight line has the form y = c + b*x and it actually tries to describe in the best way possible  with a straight line the relationship between the two variables. If you think of this, it is actually pretty usefull because you can think of trends or a more global picture about your specific data. You somehow have a rule that describes very good your data.
+A straight line that try to cover the entire set of data points is useful because we have a formula or a guide to represent data points that were not previusly seen. For example we can know the income of the age 34 and get a fair result, note that the age 34 was never contemplated in our set of data points, this is what is called in statistics and machine learning predict a value.
 
-As you can see linear regression gives us a function that represents a straight line, this has the advantage of generalize the data, this is usefull if we want to predict values because we expect that this function represent the trend of the data. A disadvantage of this straight line is that is limited to represent very basic data, for example if we want to describe a curve relationship it wouldnt be possible using linear regression, but there are a lot of models in statistics that can help us modelate more complex information.
+This same prediction ability gives us the capability to generalize, that is to create a function that represents the entire set of data points and also represent the hidden pattern that is happing behind the scenes so that when a new point comes to our function the output will have coherence. A straight line generalizes very well to all kind of data, but that can be bad in some cases because if our data is very complex our function will only be able to represent it with a line giving us wrong predictions. Sometimes the data is very complex and a linear regression is not enought to be able to  predict new values.
 
 ## The prediction/estimation concept
 This is kind of a magical word, but when you see it in terms of statistics, for example in the case of linear regression it is actually pretty natural and simple word, for example with our modeled data and our model (rule) fitted to our data we already have an ecuation 

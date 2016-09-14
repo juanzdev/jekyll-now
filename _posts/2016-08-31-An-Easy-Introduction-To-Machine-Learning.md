@@ -100,12 +100,15 @@ In this case you have a bunch of points representing the relationship between cp
 
 where C is a constant that allows the straight line to translate vertically, x is the independent variable in this case the _cpu_speed_ and y the dependant variable in this case the _price_.
 
-What linear regresion does is to try to create a linear relationship between our two variables based on all data points that exist on the plane, linear regression calculates the minimun distance for each data point to a straight line that covers the entire set of data:
+What linear regresion does is to try to create a linear relationship between our two variables based on all data points that exist on the plane, linear regression calculates the minimun distance for each data point to a straight line that covers the entire set of data (TODO explain in more detail how linear regression acheve this):
 
 ![CpuSpeedVsCompPriceLinear.PNG]({{site.baseurl}}/assets/CpuSpeedVsCompPriceLinear.PNG)
 
+A straight line that tries to cover the entire set of data points is really useful because we have an explicit guide that represent our data points, this line is represented by a mathematical function and because this line is continuous our function can output not only the values from the data-set but a lot of more values. For example we know that for cpu-speed of 5.2 Ghz the price is 3000 usd dollars but what about a new computer of speed 3.7 Ghz? if we use our straight line as a reference we can get an estimate. Our function gives us a new ability to estimate new unseen values from our fixed data, in statistics and machine learning this method at the most basic level is called prediction.
 
-A straight line that try to cover the entire set of data points is really useful because we have an explicit guide that represent our data points and because this line is continuous our function can output not only the values from the data-set but a lot of more values. For example we know that for cpu-speed of 5.2 Ghz the price is 3000 usd dollars but what about a new computer of speed 5.5 Ghz? if we use our straight line as a reference we can get a good estimate, our funtion gives us a new ability to estimate new unseen values from our fixed data, in statistics and machine learning this ability is called prediction.
+{% raw %}
+  $$y=748.9520*$$x+$$(-627.2939) \text{ y=mx+b form}\\ $$y=748.9520*$$3.7+$$(-627.2939) \text{ calculate price for 3.7 Ghz}
+{% endraw %}
 
 ## The prediction/estimation concept
 This same prediction ability gives us the capability to generalize, that is to create a function that represents the entire set of data points and also represent the hidden rules and patterns that our data have implicitly, so that when a new point comes to our function the new output will have coherence. A straight line generalizes very well to all kind of data, but that can be bad in some cases because if our data is very complex our function will only be able to represent it with a line giving us wrong predictions this is a well known machine learning problem called _underfitting_, in this case when the data is very complex our model is not powerfull enough to be able to fit the fixed data set.

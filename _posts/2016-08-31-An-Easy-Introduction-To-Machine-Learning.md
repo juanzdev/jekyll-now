@@ -101,7 +101,6 @@ where C is a constant that allows the straight line to translate vertically, x i
 
 What linear regresion does is to try to create a linear relationship between our two variables based on all data points that exist on the plane, in this case _cpu_speed_ and _price_, linear regression calculates the minimun distance for each data point to a straight line that covers the entire set of data, for example:
 
-![Computer Price vs Cpu Speed]({{site.baseurl}}/_posts/img/PriceVsCPu.PNG)
 ![PriceVsCPu.PNG]({{site.baseurl}}/assets/PriceVsCPu.PNG)
 
 

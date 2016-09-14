@@ -54,19 +54,19 @@ CalculatePrice(3.4); // outputs 2500
 CalculatePrice(2.1); // outputs 600
 
 ```
-Because this is a very small data set we can try with different values and come up with a fair solution, for example lets say that **cpuSpeedFactor = 200**
+Because this is a very small data set we can try with different values and come up with a acceptable solution, for example lets say that **cpuSpeedFactor = 200**
 
 {% raw %}
   $$5.2*200=1040 \text{ expected 3000}\\ 4.4*200=800 \text{ expected 2700}\\ 3.4*200=680 \text{ expected 2500}\\ 2.1*200=420 \text{ expected 600}$$
 {% endraw %}
 
-Lets calculate the total offset of our estimated values vs the values from the data set (real values)
+Lets calculate the total offset of our estimated values vs the values from the data set (the real values)
 
 {% raw %}
   $$\lvert(3000-1040)\rvert+\lvert(2700-800)\rvert+\lvert(2500-680)\rvert+\lvert(600-420)\rvert=6100$$
 {% endraw %}
 
-Our function predictions have an offset of 6100 usd dollars trying with values from the data set itself.
+Our function predictions have an offset of 6100 usd dollars testing with our data set.
 
 Now lets try another value for cpuSpeedFactor for example **cpuSpeedFactor = 600**
 
@@ -79,16 +79,16 @@ Now lets try another value for cpuSpeedFactor for example **cpuSpeedFactor = 600
   $$\lvert(3000-3120)\rvert+\lvert(2700-2640)\rvert+\lvert(2500-2040)\rvert+\lvert(600-1260)\rvert=1300$$
 {% endraw %}
 
-Our function predictions have an offset of 1300 usd dollars this time, much better! but is there an optimum value for cpuSpeedFactor that produces the minimum offset?
+Our function predictions now have an offset of 1300 usd dollars this time, much better! but is there an optimum value for cpuSpeedFactor that produces the minimum offset (this is to be as close as possible to our data-set)?
 
 
 ## Statistics to the rescue 
 It turns out that statistics can helps us a lot here. Statistiscs uses mathematical methods that can adjust to data to help gathering adittional insights. Let me explain you the most basic (but powerful) model in statistics, linear regression.
 
 ## Linear Regression
-Linear Regression is a mathematical model that tries to fit a mathematical formula of a straight line to a set of  given points of data in a two-dimensional plane.
+Linear Regression is a mathematical model that tries to fit a mathematical formula of a straight line to a set of given points of data in a two-dimensional plane.
 
-For example lets draw our given our data set about cpu speed vs computer.
+For example lets draw our given data-set (cpu speed vs computer price).
 (diagram)
 
 In this case you have a bunch of points representing the relationship between cpu-speed and price, now with linear regression you can model an ecuation that fits your data using a straight line, this line has the form of an ecuation:

@@ -44,9 +44,10 @@ function int CalculatePrice(int cpuSpeed){
 }
 ```
 
-What value should cpuSpeedFactor needs so that our function outputs the exact same values of our given data? Ej:
+What value should the variable _cpuSpeedFactor_ needs to be so that our function outputs the exact same values of our data-set? Ej:
 
 ```
+//compare it to our data-set
 CalculatePrice(5.2); // outputs 3000
 CalculatePrice(4.4); // outputs 2700
 CalculatePrice(3.4); // outputs 2500

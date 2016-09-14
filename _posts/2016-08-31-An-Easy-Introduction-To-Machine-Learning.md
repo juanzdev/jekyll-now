@@ -89,7 +89,8 @@ It turns out that statistics can helps us a lot here. Statistiscs uses mathemati
 Linear Regression is a mathematical model that tries to fit a mathematical formula of a straight line to a set of given points of data in a two-dimensional plane.
 
 For example lets draw our given data-set (cpu speed vs computer price).
-(diagram)
+
+![PriceVsCPu.PNG]({{site.baseurl}}/assets/PriceVsCPu.PNG)
 
 In this case you have a bunch of points representing the relationship between cpu-speed and price, now with linear regression you can model an ecuation that fits your data using a straight line, this line has the form of an ecuation:
 
@@ -101,7 +102,7 @@ where C is a constant that allows the straight line to translate vertically, x i
 
 What linear regresion does is to try to create a linear relationship between our two variables based on all data points that exist on the plane, in this case _cpu_speed_ and _price_, linear regression calculates the minimun distance for each data point to a straight line that covers the entire set of data, for example:
 
-![PriceVsCPu.PNG]({{site.baseurl}}/assets/PriceVsCPu.PNG)
+(diagram)
 
 A straight line that try to cover the entire set of data points is really useful because we have an explicit guide that represent our data points and because this line is continuous our function can output not only the values from the data-set but a lot of more values. For example we know that for cpu-speed of 5.2 Ghz the price is 3000 usd dollars but what about a new computer of speed 5.5 Ghz? if we use our straight line as a reference we can get a good estimate, our funtion gives us a new ability to estimate new unseen values from our fixed data, in statistics and machine learning this ability is called prediction.
 

@@ -6,13 +6,13 @@ published: true
 
 Maybe you have already heard about machine learning and some of the amazing things it can do, in this series of posts im going to explain in a very easy way what Machine Learning is and why it is so important for the future of technology.
 
-Machine learning covers a lot of topics and can have a lot of ramifications, but I like to define it as a set of techniques and specialized algoritms that generate mathematical functions from pure data, the output of these generated functions are of our special interest because they can give us very good estimates about new data based on previous knowledge, in other words this generated function will try to describe the data no matter how the data is structured.
+Machine learning covers a lot of topics and can have a lot of ramifications, but I like to define it as **a set of techniques and specialized algoritms that generate mathematical functions from pure data**, the output of these generated functions are of our special interest because they can give us very good estimates about new data based on previous knowledge, in other words this generated function will try to describe the data no matter how is structured.
 
-An easy way to understand machine learning is to think in mathematical functions, for example when you write a program using a 3rd generation language like C#, you think in variables, if-then statements, classes, methods, OOP etc. Lets say for example that you want to create a program that outputs the computer **price** in USD dollars depending on the following characteristic:
+An easy way to understand machine learning is to think in mathematical functions, for example when you write a program using a 3rd generation language like C# or Java, you think in variables, if-then statements, classes, methods, generics, loops etc. Now **our goal** is to create a program that outputs the computer **price** in USD dollars depending on the following characteristic:
 
 	• Cpu Speed
 
-You have the following data available for you to write your program in this case the **price** is also given to you:
+And you have the following data-set available, in this case the **price** is given to you in terms of CPU Speed, here we say that the CPU Speed is a feature of the computer price because it influence the price:
 
 | Cpu Speed(Ghz)  |  Computer Price (usd)  |
 |:----------------|:-----------------------|
@@ -21,7 +21,7 @@ You have the following data available for you to write your program in this case
 | 	    3.4	      |           2500         |
 |     	2.1	      |           600          |
 
-Specifically we want to create a function like this
+Thinking in code we want to create a function like this:
 
 ```
 function  int CalculatePrice(int cpuSpeed){
@@ -30,7 +30,7 @@ function  int CalculatePrice(int cpuSpeed){
 }
 ```
 
-Now our goal is to implement this function, we can have some insights from the data, for example is obvious that a high CPU speed appears to increase the total price of the computer.
+Now our goal is to implement the body of this function, we can have some insights from the data, for example is obvious that a high CPU speed appears to increase the total price of the computer this is they are directly proportional.
 
 So we could write some code based on this insight:
 

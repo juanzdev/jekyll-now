@@ -108,7 +108,8 @@ A straight line that tries to cover the entire set of data points is really usef
 
 {% raw %}
 \begin{multline}
-  $$y=748.9520*x-627.2939  $$y=748.9520*3.7-627.2939
+  $$y=748.9520*x-627.2939\\
+  $$y=748.9520*3.7-627.2939\\
 \end{multline}
 {% endraw %}
 

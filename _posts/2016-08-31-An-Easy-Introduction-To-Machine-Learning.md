@@ -107,7 +107,7 @@ What linear regresion does is to try to create a linear relationship between our
 A straight line that tries to cover the entire set of data points is really useful because we have an explicit guide that represent our data points, this line is represented by a mathematical function and because this line is continuous our function can output not only the values from the data-set but a lot of more values. For example we know that for cpu-speed of 5.2 Ghz the price is 3000 usd dollars but what about a new computer of speed 3.7 Ghz? if we use our straight line as a reference we can get an estimate. Our function gives us a new ability to estimate new unseen values from our fixed data, in statistics and machine learning this method at the most basic level is called prediction.
 
 {% raw %}
-  $$y=748.9520*$$x+$$(-627.2939) \text{ y=mx+b form}\\ $$y=748.9520*$$3.7+$$(-627.2939) \text{ calculate price for 3.7 Ghz}
+  $$y=748.9520*$$x+$$(-627.2939) \text{ y=mx+b form}\\	$$y=748.9520*$$3.7+$$(-627.2939) \text{ calculate price for 3.7 Ghz}
 {% endraw %}
 
 ## The prediction/estimation concept

@@ -121,7 +121,7 @@ A straight line that tries to cover the entire set of data points is really usef
 {% endraw %}
 
 ## The prediction/estimation concept
-This same prediction ability gives us the capability to generalize, that is to create a function that represents the entire set of data points and also represent the hidden rules and patterns that our data have implicitly, so that when a new point comes to our function the new output will have coherence. A straight line generalizes very well to all kind of data, but that can be bad in some cases because if our data is very complex our function will only be able to represent it with a line giving us wrong predictions this is a well known machine learning problem called _underfitting_, in this case when the data is very complex our model is not powerfull enough to be able to fit the fixed data set.
+This same prediction ability gives us the capability to generalize, that is to create a function that represents the entire set of data points and also represent the hidden rules and patterns that our data have implicitly, so that when a new point comes to our function the new output will have coherence. A straight line generalizes very well to simple data, but that can be bad in some cases because if our data is very complex our function will only be able to represent it with a line giving us wrong predictions this is a well known machine learning problem called _underfitting_, in this case when the data is very complex our model is not powerfull enough to be able to fit the fixed data set.
 
 For example with our modeled data and our model (rule) fitted to our data we already have an ecuation 
 

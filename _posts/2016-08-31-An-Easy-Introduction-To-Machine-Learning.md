@@ -103,7 +103,6 @@ What linear regresion does is to try to create a linear relationship between our
 
 ![PriceVsCPu.PNG]({{site.baseurl}}/assets/PriceVsCPu.PNG)
 
-
 A straight line that try to cover the entire set of data points is really useful because we have an explicit guide that represent our data points and because this line is continuous our function can output not only the values from the data-set but a lot of more values. For example we know that for cpu-speed of 5.2 Ghz the price is 3000 usd dollars but what about a new computer of speed 5.5 Ghz? if we use our straight line as a reference we can get a good estimate, our funtion gives us a new ability to estimate new unseen values from our fixed data, in statistics and machine learning this ability is called prediction.
 
 ## The prediction/estimation concept

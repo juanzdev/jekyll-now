@@ -191,5 +191,13 @@ As you can see its very difficult to extract logic from data, maybe for this sma
 
 Lets output the values of our function, with the same inputs from our new data-set:
 
+```
+//compare it to our data-set
+CalculatePrice(5.2); // outputs 3000
+CalculatePrice(4.4); // outputs 2700
+CalculatePrice(3.4); // outputs 2500
+CalculatePrice(2.1); // outputs 600
+
+```
 
 Now we know is better to let a statistical algorith do the hard work, lets apply L

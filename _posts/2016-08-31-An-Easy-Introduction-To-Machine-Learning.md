@@ -100,7 +100,7 @@ In this case you have a bunch of points representing the relationship between cp
 
 where C is a constant that allows the straight line to translate vertically, x is the independent variable in this case the _cpu_speed_ and y the dependant variable in this case the _price_.
 
-What linear regresion does is to try to create a linear relationship between our two variables based on all data points that exist on the plane, linear regression calculates the minimun distance for each data point to a straight line that covers the entire set of data (TODO explain in more detail how linear regression acheve this):
+What linear regresion does is to try to create a linear relationship between our two variables based on all data points that exist on the plane, linear regression calculates the minimun distance for each data point to a straight line that covers the entire set of data (TODO explain in more detail how linear regression achieve this):
 
 ![CpuSpeedVsCompPriceLinear.PNG]({{site.baseurl}}/assets/CpuSpeedVsCompPriceLinear.PNG)
 
@@ -111,6 +111,7 @@ Our new straight line is described by the ecuation
 {% endraw %}
 
 where m equals to the constant 748.95 and b equals to the constant -627.29.
+This can also be interpreted as: a unit increase in CPU speed is associated with 748.95  unit increase in the computer price.
 
 A straight line that tries to cover the entire set of data points is really useful because we have an explicit guide that represent our data points, this line is represented by a mathematical function and because it is continuous it can output not only the values from the data-set but a lot of more values (infinite values). For example we know that for cpu-speed of 5.2 Ghz the price is 3000 usd dollars but what about a new computer of speed 3.7 Ghz? if we use our straight line as a reference we can get an estimate. 
 

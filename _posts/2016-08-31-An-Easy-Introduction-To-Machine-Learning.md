@@ -132,6 +132,7 @@ Now lets calculate the offsets of this function tunned by Linear Regression
   $$\lvert(3000-3267,2565)\rvert+\lvert(2700-2668,0949)\rvert+\lvert(2500-1919,1429)\rvert+\lvert(600-945,5053)\rvert=1225,524$$
 {% endraw %}
 
+Much better! here get an offset minor to the previous one ( 1225 vs 1300 ).
 
 
 ## The prediction/estimation concept

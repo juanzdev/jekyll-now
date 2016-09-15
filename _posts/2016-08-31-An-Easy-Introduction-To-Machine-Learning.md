@@ -220,6 +220,7 @@ As you can see our new function outputs very different values as those from the 
 Now we know is better to let a statistical algorith do the hard work, but we have a problem, now we have 6 independant variables on our problem and linear regression only works with one independant variable.
 
 **Selecting the Statistical Model**
+
 This situation happens a lot in machine learning, our problem now is more complex and we as data scientist need to select the most appropiate model to tackle the problem.
 The truth is that we have a lot of models to choose for, there are TONS of models and posible solutions to this problem, and as we are going to see on a future chapter most of them do a great work!.
 In this case we could use a multivariable statistical model like Multiple Variable Linear Regression.

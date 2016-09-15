@@ -125,11 +125,11 @@ In statistics and machine learning this new ability to estimate new unseen value
 Now lets calculate the offsets of this function tunned by Linear Regression
 
 {% raw %}
-  $$5.2*748.9520-627.2939=3267,2565 \text{ expected 3000}\\ 4.4*748.9520-627.2939=2668,0949 \text{ expected 2700}\\ 3.4*748.9520-627.2939=1919,1429 \text{ expected 2500}\\ 2.1*748.9520-627.2939=945,5053 \text{ expected 600}$$
+  $$5.2*748.9520-627.2939=3267,25 \text{ expected 3000}\\ 4.4*748.9520-627.2939=2668,09 \text{ expected 2700}\\ 3.4*748.9520-627.2939=1919,14 \text{ expected 2500}\\ 2.1*748.9520-627.2939=945,50 \text{ expected 600}$$
 {% endraw %}
 
 {% raw %}
-  $$\lvert(3000-3267,2565)\rvert+\lvert(2700-2668,0949)\rvert+\lvert(2500-1919,1429)\rvert+\lvert(600-945,5053)\rvert=1225,524$$
+  $$\lvert(3000-3267,25)\rvert+\lvert(2700-2668,09)\rvert+\lvert(2500-1919,14)\rvert+\lvert(600-945,50)\rvert=1225,5$$
 {% endraw %}
 
 Much better! here get an offset minor to the previous one ( 1225 vs 1300 ).

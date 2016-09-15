@@ -217,11 +217,28 @@ As you can see our new function outputs very different values as those from the 
 
 
 
-Now we know is better to let a statistical algorith do the hard work, but we have a problem, now we have 6 indpendent variables on our problem and linear regression only works with one independant variable.
+Now we know is better to let a statistical algorith do the hard work, but we have a problem, now we have 6 independant variables on our problem and linear regression only works with one independant variable.
 
 **Selecting the Statistical Model**
 This situation happens a lot in machine learning, our problem now is more complex and we as data scientist need to select the most appropiate model to tackle the problem.
 The truth is that we have a lot of models to choose for, there are TONS of models and posible solutions to this problem, and as we are going to see on a future chapter most of them do a great work!.
 In this case we could use a multivariable statistical model like Multiple Variable Linear Regression.
+To solve this I will rely on the statsmodels libraries, statsmodels is a Python module that provide many tools and statistical models ready to use, in this case their linear regression implementation also includes multiple variable support specifically i will be using the OLS library that stands for Ordinary Least Squares.
+
+```
+import statsmodels.formula.api as smf
+
+# read data into a panda DataFrame
+data = pd.read_csv('http://www-bcf.usc.edu/~gareth/ISL/Advertising.csv', index_col=0)
+data.head()
+# print the shape of the DataFrame
+data.shape
+lm = smf.ols(formula='Computer Price vs RAM Cache Flops Reads Per Second Writes per Second', data=data).fit()
+# print the coefficients
+lm.params
+
+```
+
+
 
 

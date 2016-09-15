@@ -86,7 +86,7 @@ Our function predictions now have an offset of 1300 usd dollars this time, much 
 It turns out that statistics can helps us a lot here. Statistiscs uses mathematical methods that can adjust to data to help gathering adittional insights. Let me explain you the most basic (but powerful) model in statistics, linear regression.
 
 ## Linear Regression
-Linear Regression is a mathematical model that tries to fit a mathematical formula of a straight line to a set of given points of data in a two-dimensional plane.
+Linear Regression is a mathematical model that tries to fit a formula of a straight line to a set of given points of data in a two-dimensional plane.
 
 For example lets draw our given data-set (cpu speed vs computer price).
 

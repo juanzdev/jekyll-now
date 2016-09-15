@@ -167,7 +167,7 @@ function  int CalculatePrice(int cpuSpeed, int ram, int cache, int flops, int re
 Just as before we could write some code based on these analysis:
 
 ```
-function int CalculatePrice(int cpuSpeed,int ram,int cache, int flops, int reads, int writes){
+function CalculatePrice(cpuSpeed, ram, cache, flops, reads, writes){
 	
     var cpuSpeedFactor = 9;
     var ramFactor = 8;
@@ -193,11 +193,14 @@ Lets output the values of our function, with the same inputs from our new data-s
 
 ```
 //compare it to our data-set
-CalculatePrice(5.2,10,2,3500,4500,1500,3000); // outputs 3000
-CalculatePrice(4.4,7,1,2500,2500,1500,1500); // outputs 2700
-CalculatePrice(3.4,7,2,1500,4500,1500,2500); // outputs 2500
-CalculatePrice(2.1,2,1,1000,3000,1500,1000); // outputs 600
+CalculatePrice(5.2,10,2,3500,4500,1500,3000); // outputs 40138.8 vs 3000
+CalculatePrice(4.4,7,1,2500,2500,1500,1500); // outputs 27101.6 vs 1500
+CalculatePrice(3.4,7,2,1500,4500,1500,2500); // outputs 30098.6 vs 2500
+CalculatePrice(2.1,2,1,1000,3000,1500,1000); // outputs 21540.9 vs 1000
 
 ```
+As you can see our new function outputs very different values as those from the data-set, in this case is becoming much harder to guess a correct weight for each of the variables.
+
+
 
 Now we know is better to let a statistical algorith do the hard work, lets apply L

@@ -151,7 +151,7 @@ I like to think that Linear Regression is the most basic form of Machine Learnin
 Of course the value that our model gives us is not an exact value, it is an aproximation and for most of the real world problems that machine learning tackles this is acceptable.
 
 ## More Variables
-Now back to our example, lets say that now our data-set has more variables available, this means now that our computer price is describe not only by the CPU speed but by:
+Now back to our example, lets say that now our data-set has more variables available, this means now that our computer price is described not only by the CPU speed but by:
 
 	• Memory Ram
 	• Cache
@@ -216,4 +216,11 @@ As you can see our new function outputs very different values as those from the 
 
 
 
-Now we know is better to let a statistical algorith do the hard work, lets apply L
+Now we know is better to let a statistical algorith do the hard work, but we have a problem, now we have 6 indpendent variables on our problem and linear regression only works with one independant variable.
+
+**Selecting the Statistical Model**
+This situation happens a lot in machine learning, our problem now is more complex and we as data scientist need to select the most appropiate model to tackle the problem.
+The truth is that we have a lot of models to choose for, there are TONS of models and posible solutions to this problem, and as we are going to see on a future chapter most of them do a great work!.
+In this case we could use a multivariable statistical model like Multiple Variable Linear Regression.
+
+

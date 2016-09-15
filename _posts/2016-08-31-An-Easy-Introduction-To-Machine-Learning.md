@@ -122,6 +122,18 @@ In statistics and machine learning this new ability to estimate new unseen value
   $$y=2143,8$$
 {% endraw %}
 
+Now lets calculate the offsets of this function tunned by Linear Regression
+
+{% raw %}
+  $$5.2*748.9520-627.2939=3267,2565 \text{ expected 3000}\\ 4.4*748.9520-627.2939=2668,0949 \text{ expected 2700}\\ 3.4*748.9520-627.2939=1919,1429 \text{ expected 2500}\\ 2.1*748.9520-627.2939=945,5053 \text{ expected 600}$$
+{% endraw %}
+
+{% raw %}
+  $$\lvert(3000-3267,2565)\rvert+\lvert(2700-2668,0949)\rvert+\lvert(2500-1919,1429)\rvert+\lvert(600-945,5053)\rvert=1225,524$$
+{% endraw %}
+
+
+
 ## The prediction/estimation concept
 This same prediction ability gives us the capability to _generalize_, that is to create a function that represents the entire set of data points and also represent the hidden rules and patterns that our data have implicitly (we are finding a pattern in our data), so that when a new value is evaluated by our function the new output will have coherence because is based on that pattern. A straight line generalizes very well to simple data, but that can be bad in some cases because if our data is very complex our function will only be able to represent it with a simpel line resulting in wrong predictions, this is a well known machine learning problem called _underfitting_, in this case when the data is very complex our model is not powerfull enough to be able to fit the fixed data set.
 

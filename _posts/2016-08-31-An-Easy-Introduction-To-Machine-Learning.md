@@ -193,10 +193,10 @@ Lets output the values of our function, with the same inputs from our new data-s
 
 ```
 //compare it to our data-set
-CalculatePrice(5.2); // outputs 3000
-CalculatePrice(4.4); // outputs 2700
-CalculatePrice(3.4); // outputs 2500
-CalculatePrice(2.1); // outputs 600
+CalculatePrice(5.2,10,2,3500,4500,1500,3000); // outputs 3000
+CalculatePrice(4.4,7,1,2500,2500,1500,1500); // outputs 2700
+CalculatePrice(3.4,7,2,1500,4500,1500,2500); // outputs 2500
+CalculatePrice(2.1,2,1,1000,3000,1500,1000); // outputs 600
 
 ```
 

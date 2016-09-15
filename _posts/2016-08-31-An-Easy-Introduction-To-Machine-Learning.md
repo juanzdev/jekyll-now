@@ -112,7 +112,9 @@ Our new straight line is described by the ecuation
 
 where m equals to the constant 748.95 and b equals to the constant -627.29.
 
-A straight line that tries to cover the entire set of data points is really useful because we have an explicit guide that represent our data points, this line is represented by a mathematical function and because this line is continuous our function can output not only the values from the data-set but a lot of more values. For example we know that for cpu-speed of 5.2 Ghz the price is 3000 usd dollars but what about a new computer of speed 3.7 Ghz? if we use our straight line as a reference we can get an estimate. Our function gives us a new ability to estimate new unseen values from our fixed data, in statistics and machine learning this method at the most basic level is called prediction.
+A straight line that tries to cover the entire set of data points is really useful because we have an explicit guide that represent our data points, this line is represented by a mathematical function and because it is continuous it can output not only the values from the data-set but a lot of more values (infinite values). For example we know that for cpu-speed of 5.2 Ghz the price is 3000 usd dollars but what about a new computer of speed 3.7 Ghz? if we use our straight line as a reference we can get an estimate. 
+
+In statistics and machine learning this new ability to estimate new unseen values from our fixed data is called **prediction**.
 
 {% raw %}
   $$y=748.9520*x-627.2939$$\\
@@ -121,29 +123,30 @@ A straight line that tries to cover the entire set of data points is really usef
 {% endraw %}
 
 ## The prediction/estimation concept
-This same prediction ability gives us the capability to generalize, that is to create a function that represents the entire set of data points and also represent the hidden rules and patterns that our data have implicitly, so that when a new point comes to our function the new output will have coherence. A straight line generalizes very well to simple data, but that can be bad in some cases because if our data is very complex our function will only be able to represent it with a line giving us wrong predictions this is a well known machine learning problem called _underfitting_, in this case when the data is very complex our model is not powerfull enough to be able to fit the fixed data set.
+This same prediction ability gives us the capability to _generalize_, that is to create a function that represents the entire set of data points and also represent the hidden rules and patterns that our data have implicitly (we are finding a pattern in our data), so that when a new value is evaluated by our function the new output will have coherence because is based on that pattern. A straight line generalizes very well to simple data, but that can be bad in some cases because if our data is very complex our function will only be able to represent it with a simpel line resulting in wrong predictions, this is a well known machine learning problem called _underfitting_, in this case when the data is very complex our model is not powerfull enough to be able to fit the fixed data set.
 
-For example with our modeled data and our model (rule) fitted to our data we already have an ecuation 
+For example with our data-set and our function fitted to our data we already have the ecuation:
 
  {% raw %}
-  $$y = 100*x$$ + 76
+  $$y=748.9520*3.7-627.2939$$
  {% endraw %}
 
-fitted to our data, if we want to know the income of a new age value (a value that we never registered in our data points) we can predict it or what i like to call it better "estimate it", this value is using our statistical linear regression model will give us a very good aproximate value.
-I like to think that Linear Regression is the most basic form of Machine Learning, because when you research more on the topic you can somehow see that even the most complex Machine Learning Algorithms at a deep level are trying to  behave the same like Linear Regression, that is, trying to model a mathematical ecuation from data to try to describe in the best way posible the data set.
+if we want to know the income of a new age value (a value that we never registered in our data points) we can predict it or what i like to call it better "estimate it", this value is using our statistical linear regression model will give us a very good aproximate value.
 
-Of course the value that our model gives us is not exact, it is an aproximate, and in some cases this is very well accepted.
+I like to think that Linear Regression is the most basic form of Machine Learning, because when you research more on the topic you can somehow see that even the most complex Machine Learning Algorithms at a deep level are trying to behave the same like Linear Regression, that is, trying to model a mathematical ecuation from data to try to describe in the best way posible the data set.
 
+Of course the value that our model gives us is not an exact value, it is an aproximation and for most of the real world problems that machine learning tackles this is acceptable.
 
+## More Variables
+Now back to our example, lets say that now our data-set has more variables available, this means now that our computer price is describe not only by the CPU speed but by:
 
-Cpu Speed
 	• Memory Ram
 	• Cache
 	• Flops
 	• Reads per second
 	• Writes per second
 
-You have the following data available for you to write your program in this case the **price** is also given to you:
+So our new data-set is:
 
 | Cpu Speed(Ghz)  | Ram (Gb)  | Cache (Mb)  | Flops  |  Reads Per Second |  Writes per Second | Computer Price (usd)  |
 |:----------------|:----------|:------------|:-------|:------------------|:-------------------|:----------------------|
@@ -152,7 +155,7 @@ You have the following data available for you to write your program in this case
 | 	6 	  |     7     |      2      |  1500  |       4500        |        1500        |        2500           |
 | 	5	  |     2     |      1      |  1000  |       3000        |        1500        |        1000           |
 
-Specifically we want to create a function like this
+Now as before we want to create a function like this
 
 ```
 function  int CalculatePrice(int cpuSpeed, int ram, int cache, int flops, int reads, int writes){
@@ -161,9 +164,7 @@ function  int CalculatePrice(int cpuSpeed, int ram, int cache, int flops, int re
 }
 ```
 
-Now our goal is to implement this function, we can have some insights from the data, for example you can see that a high CPU speed appears to increase the total price of the computer, the memory ram also seems to be an important factor for the price.
-
-So we could write some code based on this insight:
+Just as before we could write some code based on these analysis:
 
 ```
 function int CalculatePrice(int cpuSpeed,int ram,int cache, int flops, int reads, int writes){
@@ -183,7 +184,12 @@ function int CalculatePrice(int cpuSpeed,int ram,int cache, int flops, int reads
 
 
 I ve created some _factor_ variables that gives each corresponding parameter a _weight_  the bigger the factor the more it influences the total price.
-Also, I ve have assigned a  higher value to the cpuSpeedFactor variable based on my own intuition, this function will give us an aproximation based on my own judgment. The problem with this approach is that we dont know how to specify the constant values or weights for each variable we are just guessing here, yes I know that based on the data we have that CPU speed have a high impact on the computer price, but we dont know if this impact have a value over the total price of a factor of 9. The same applies for the rest of the factor variables, we dont have any real clue how they influence the final computer price.
+Also, I ve have assigned a higher value to the cpuSpeedFactor variable based on my own intuition, this function will give us an aproximation based on my own judgment. The problem with this approach as stated before is that we dont know how to specify the constant values or weights for each variable, we are just guessing here, but for example we dont know if CPU speed have an impact over the total computer by a factor of 9. The same applies for the rest of the factor variables, we dont have any real clue how they influence the final computer price.
 
-Maybe we can come up with a conbination of factor variables in such a way that they represent our data exactly. But, ¿what if we have to guess the price of a new computer with new specs that are not registered on our data-set?, ¿what price will our custom function output?, ¿it will be a precise value?, ¿will our ouput have coherence with the dataset?.
+Maybe we can come up with a combination of factor variables in such a way that they represent our data exactly. But, ¿what if we have to guess the price of a new computer with new specs that are not registered on our data-set?, ¿what price will our custom function output?, ¿it will be a precise value?, ¿will our ouput have coherence with the dataset?.
 As you can see its very difficult to extract logic from data, maybe for this small data set of 4 rows is achievable, but ¿what if we have a data set of +100 rows? it would be extremelly difficult to think in some function that represents the dataset correctly.
+
+Lets output the values of our function, with the same inputs from our new data-set:
+
+
+Now we know is better to let a statistical algorith do the hard work, lets apply L

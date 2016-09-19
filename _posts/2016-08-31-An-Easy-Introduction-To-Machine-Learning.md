@@ -230,7 +230,7 @@ To solve this I will rely on the statsmodels libraries, statsmodels is a Python 
 import statsmodels.formula.api as smf
 
 # read data into a panda DataFrame
-data = pd.read_csv('http://www-bcf.usc.edu/~gareth/ISL/Advertising.csv', index_col=0)
+data = pd.read_csv('dataseturl', index_col=0)
 data.head()
 # print the shape of the DataFrame
 data.shape
@@ -239,7 +239,3 @@ lm = smf.ols(formula='Computer Price vs RAM Cache Flops Reads Per Second Writes 
 lm.params
 
 ```
-
-
-
-

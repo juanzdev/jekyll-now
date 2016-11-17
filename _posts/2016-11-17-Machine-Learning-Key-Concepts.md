@@ -1,6 +1,9 @@
 ---
-published: false
+layout: post
+title: An easy introduction to Machine Learning
+published: true
 ---
+
 ## Generalization
 
 ## Overfitting

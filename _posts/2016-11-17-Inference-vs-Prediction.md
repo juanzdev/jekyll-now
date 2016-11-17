@@ -1,6 +1,9 @@
 ---
+layout: post
+title: Prediction vs Inference in Machine Learning
 published: true
 ---
+
 Having a clear understanding about these two concepts is very important to undertand a lot of the concepts in machine learning.
 
 ##Prediction

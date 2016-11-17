@@ -3,13 +3,14 @@ layout: post
 title: Machine Learning and Visual Pattern Recognition
 tagline: Easy websites with GitHub Pages
 description: Minimal tutorial on making a simple website with GitHub Pages
+published: true
 ---
 
-Every single moment our brain is being exposed to light, sound, touch, smells and all kind of experiencies. It turns out that our brain does an outstanding job at getting familirized with all this new information, somehow it can interpret any kind of signal and remember it at any point of time, thanks to our memory capabilities and pattern recognition abilities we can somehow understand and remember abstract concepts from previous experiences.
+Every single moment our brain is being exposed to a bast amount of information in different forms like diferent light intensities, sounds, touch sensations, smells and a gazillion other more. It turns out that our brain does an outstanding job at getting familirized with all this new information that arrives every milisecond, thanks to our memory capabilities and pattern recognition abilities we can somehow understand and remember abstract concepts from previous experiences of the real world.
 
 ## Natural Pattern Recognition
 
-Let me give you a clear example of this. For example a human baby doesnt know a lot of things about this world, like what a car is or what a TV is, but the day-by-day exposure to the enviroment will eventually help him understand more and more what he is seeing. For example his mother will point out objects and saying what the object is (lets say a car), the baby without realizing is associating the abstract concept of that object with the sound of "car", his eyes capture a very unique shape with rectangles and circles, colors and sizes, all of this is being captured and being associated inside our heads.
+Let me give you a clear example of this, for example a human baby just born doesnt know a lot of stuff about this world, like for example what a car is or what a TV is, with the passing of days and with incounsius day-by-day exposure to different enviroments he will eventually began to understand the different abstractions, his brain by the vast amount of information has started to give it a shape and make it a classification witch is the same as creating a pattern. For example his mother will point out objects and saying what the object is (lets say a car), the baby without realizing is associating the abstract concept of that object with the sound of "car", his eyes capture a very unique shape with rectangles and circles, colors and sizes, all of this is being captured and being associated inside our heads.
 
 So our brain is exposed every day with tons of information, and if you take into account the number of seconds a human lives, thats a ton of information to learn things for!.
 

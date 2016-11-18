@@ -19,9 +19,8 @@ A parameter is a changing value of a statistical learning model, the parameter w
 ## Hyperparameter
 An hyperparameter is a configuration value that you can make to a statistical machine learning model, in machine learning there are a bunch of statistical models, this models have also some configurations for example one statistical model is neural networks, an hyperparameter in this case could be the number of neurons that it has per layer or the total number of layers.
 
-## Bias
-
-## Variance
+## High Bias/Low Bias High Variance/ Low Variance
+When you train a model with data there will be always an uncertainty that there will be some kind of error, no model is perfect in machine learning, if a model represents the data so well that in overfits the data we have a high variance problem, when our model is not able to repsresent the model but just a weak aproximation we have a high bias problem, this tradeoff must be regulated in machine learning to come up with the best results in ML.
 
 
 

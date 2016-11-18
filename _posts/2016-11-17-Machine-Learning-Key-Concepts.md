@@ -17,6 +17,7 @@ When you want to train a machine learning model with some data, and this data is
 A parameter is a changing value of a statistical learning model, the parameter will be adjusted with greater values or leesser values on the training process, at the end when you have a machine learning model ready for production it means the configured parameters represents the final and optimal solution that you were looking for.
 
 ## Hyperparameter
+An hyperparameter is a configuration value that you can make to a statistical machine learning model, in machine learning there are a bunch of statistical models, this models have also some configurations for example one statistical model is neural networks, an hyperparameter in this case could be the number of neurons that it has per layer or the total number of layers.
 
 ## Bias
 

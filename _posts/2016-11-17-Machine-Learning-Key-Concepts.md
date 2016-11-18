@@ -11,8 +11,10 @@ When you train a machine learning algorithm we know that the input data is chang
 When you train a machine learning algorithm with small amounts of data or maybe with bad data your model after training will try to describe your training set exactly as it is, this is bad because your model must be prepared to see unseen data on real world problems, in this case your model is so thighted to the training set that at the end is unpractical to use it on new data, a common way to overcome overfitting is to gatther much more data or ease the learned function. 
 
 ## Underfitting
+When you want to train a machine learning model with some data, and this data is kind of complex (maybe is too much data or the hidden rule is too complex to learn) and you choose a simple learning model it can happen that the model although we have lots of data is incapable of learning the complex relationships that describes the data, in this case is too hard for the choosen model to come up with a result function, a common way to overcome underfitting is to change the choosen model with more complex ones.
 
 ## Parameter
+A parameter is a changing value of a statistical learning model, the parameter will be adjusted with greater values or leesser values on the training process, at the end when you have a machine learning model ready for production it means the configured parameters represents the final and optimal solution that you were looking for.
 
 ## Hyperparameter
 

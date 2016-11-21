@@ -4,39 +4,40 @@ title: An easy introduction to Machine Learning
 published: true
 ---
 
-Maybe you have already heard about machine learning and some of the amazing things it can do, in this series of posts im going to explain in a very easy way what Machine Learning is and why it is so important for the future of technology.
 
-Machine learning covers a lot of topics and can have a lot of ramifications, but I like to define it as **a set of techniques and specialized algoritms that generate mathematical functions from pure data**, the output of these generated functions are of our special interest because they can give us very good estimates about new data based on previous knowledge, in other words this generated function will try to describe the data no matter how is structured.
+Maybe you have already heard about machine learning and some of the amazing things it can do, in this series of posts I'm going to explain in a very easy way what Machine Learning is and why it is so important for the future of technology.
 
-An easy way to understand machine learning is to think in mathematical functions, for example when you write a program using a 3rd generation language like C# or Java, you think in variables, if-then statements, classes, methods, generics, loops etc. Now **our goal** is to create a program that outputs the computer **price** in USD dollars depending on the following characteristic:
+Machine learning covers a lot of topics and can have a lot of ramifications, but I like to define it as **a set of techniques and specialized algorithms that generate mathematical functions from pure data**, the output of these generated functions are of our special interest because they can give us very good estimates about new data based on previous knowledge, in other words, this generated function will try to describe the data no matter how is structured.
 
-	• Cpu Speed
+An easy way to understand machine learning is to think of mathematical functions, for example when you write a program using a 3rd generation language like C# or Java, you think in variables, if-then statements, classes, methods, generics, loops etc. Now **our goal** is to create a program that outputs the computer **price** in USD dollars depending on the following characteristic:
 
-And you have the following data-set available, in this case the **price** is given to you in terms of CPU Speed, here we say that the CPU Speed is a feature of the computer price because it influence the price:
+    • Cpu Speed
 
-| Cpu Speed(Ghz)  |  Computer Price (usd)  |
+And you have the following dataset available, in this case, the **price** is given to you in terms of CPU Speed, here we say that the CPU Speed is a feature of the computer price because it influences the price:
+
+| Cpu Speed(GHz)  |  Computer Price (USD)  |
 |:----------------|:-----------------------|
-| 	    5.2	      | 	      3000         |
+|         5.2          |           3000         |
 |       4.4       |           2700         |
-| 	    3.4	      |           2500         |
-|     	2.1	      |           600          |
+|         3.4          |           2500         |
+|         2.1          |           600          |
 
 Thinking in code we want to create a function like this:
 
 ```
 function  int CalculatePrice(int cpuSpeed){
-	/*implementation*/
-	return price;
+    /*implementation*/
+    return price;
 }
 ```
 
-Now our goal is to implement the body of this function, we can have some insights from the data, for example is obvious that a high CPU speed appears to increase the total price of the computer this is they are directly proportional.
+Now our goal is to implement the body of this function, we can have some insights from the data, for example, is obvious that a high CPU speed appears to increase the total price of the computer this is they are directly proportional.
 
 So we could write some code based on this insight:
 
 ```
 function int CalculatePrice(int cpuSpeed){
-	
+    
     var cpuSpeedFactor = ? ; /* our guess */
     var price = cpuSpeed * cpuSpeedFactor;
     
@@ -54,19 +55,19 @@ CalculatePrice(3.4); // outputs 2500
 CalculatePrice(2.1); // outputs 600
 
 ```
-Because this is a very small data set we can try with different values and come up with a acceptable solution, for example lets say that **cpuSpeedFactor = 200**
+Because this is a very small data set we can try with different values and come up with an acceptable solution, for example, lets say that **cpuSpeedFactor = 200**
 
 {% raw %}
   $$5.2*200=1040 \text{ expected 3000}\\ 4.4*200=800 \text{ expected 2700}\\ 3.4*200=680 \text{ expected 2500}\\ 2.1*200=420 \text{ expected 600}$$
 {% endraw %}
 
-Lets calculate the total offset of our estimated values vs the values from the data set (the real values)
+Let's calculate the total offset of our estimated values vs the values from the data set (the real values)
 
 {% raw %}
   $$\lvert(3000-1040)\rvert+\lvert(2700-800)\rvert+\lvert(2500-680)\rvert+\lvert(600-420)\rvert=6100$$
 {% endraw %}
 
-Our function predictions have an offset of 6100 usd dollars testing with our data set.
+Our function predictions have an offset of 6100 USD dollars testing with our data set.
 
 Now lets try another value for cpuSpeedFactor for example **cpuSpeedFactor = 600**
 
@@ -79,41 +80,41 @@ Now lets try another value for cpuSpeedFactor for example **cpuSpeedFactor = 600
   $$\lvert(3000-3120)\rvert+\lvert(2700-2640)\rvert+\lvert(2500-2040)\rvert+\lvert(600-1260)\rvert=1300$$
 {% endraw %}
 
-Our function predictions now have an offset of 1300 usd dollars this time, much better! but is there an optimum value for cpuSpeedFactor that produces the minimum offset (this is to be as close as possible to our data-set)?
+Our function predictions now have an offset of 1300 USD dollars this time, much better! but is there an optimum value for cpuSpeedFactor that produces the minimum offset (this is to be as close as possible to our data-set)?
 
 
 ## Statistics to the rescue 
-It turns out that statistics can helps us a lot here. Statistiscs uses mathematical methods that can adjust to data to help gathering adittional insights. Let me explain you the most basic (but powerful) model in statistics, linear regression.
+It turns out that statistics can help us a lot here. Statistics uses mathematical methods that can adjust to data to help to gather additional insights. Let me explain you the most basic (but powerful) model in statistics, linear regression.
 
 ## Linear Regression
 Linear Regression is a mathematical model that tries to fit a formula of a straight line to a set of given points of data in a two-dimensional plane.
 
-For example lets draw our given data-set (cpu speed vs computer price).
+For example, lets draw our given dataset (CPU speed vs computer price).
 
 ![PriceVsCPu.PNG]({{site.baseurl}}/assets/PriceVsCPu.PNG)
 
-In this case you have a bunch of points representing the relationship between cpu-speed and price, now with linear regression you can model an ecuation that fits your data using a straight line, this line has the form of:
+In this case you have a bunch of points representing the relationship between CPU-speed and price, now with linear regression you can model an equation that fits your data using a straight line, this line has the form of:
 
 {% raw %}
   $$y = x*b+c$$
 {% endraw %} 
 
-where C is a constant that allows the straight line to translate vertically, x is the independent variable in this case the _cpu_speed_ and y the dependant variable in this case the _price_.
+where C is a constant that allows the straight line to translate vertically, x is the independent variable, in this case, the _cpu_speed_ and y the dependent variable, in this case, the _price_.
 
-What linear regresion does is to try to create a linear relationship between our two variables based on all data points that exist on the plane, linear regression calculates the minimun distance for each data point to a straight line that covers the entire set of data (TODO explain in more detail how linear regression achieve this):
+What linear regression does is to try to create a linear relationship between our two variables based on all data points that exist on the plane, linear regression calculates the minimum distance for each data point to a straight line that covers the entire set of data (TODO explain in more detail how linear regression achieve this):
 
 ![CpuSpeedVsCompPriceLinear.PNG]({{site.baseurl}}/assets/CpuSpeedVsCompPriceLinear.PNG)
 
-Our new straight line is described by the ecuation
+Our new straight line is described by the equation
 
 {% raw %}
   $$y = x*(748.9520)+(-627.2939)$$
 {% endraw %}
 
 where m equals to the constant 748.95 and b equals to the constant -627.29.
-This can also be interpreted as: a unit increase in CPU speed is associated with 748.95  unit increase in the computer price.
+This can also be interpreted as a unit increase in CPU speed is associated with 748.95  unit increase in the computer price.
 
-A straight line that tries to cover the entire set of data points is really useful because we have an explicit guide that represent our data points, this line is represented by a mathematical function and because it is continuous it can output not only the values from the data-set but a lot of more values (infinite values). For example we know that for cpu-speed of 5.2 Ghz the price is 3000 usd dollars but what about a new computer of speed 3.7 Ghz? if we use our straight line as a reference we can get an estimate. 
+A straight line that tries to cover the entire set of data points is really useful because we have an explicit guide that represents our data points, this line is represented by a mathematical function and because it is continuous it can output not only the values from the dataset but a lot of more values (infinite values). For example, we know that for CPU-speed of 5.2 Ghz the price is 3000 USD dollars but what about a new computer of speed 3.7 GHz? if we use our straight line as a reference we can get an estimate. 
 
 In statistics and machine learning this new ability to estimate new unseen values from our fixed data is called **prediction**.
 
@@ -123,7 +124,7 @@ In statistics and machine learning this new ability to estimate new unseen value
   $$y=2143,8$$
 {% endraw %}
 
-Now lets calculate the offsets of this function tunned by Linear Regression
+Now let's calculate the offsets of this function optimized by Linear Regression
 
 {% raw %}
   $$5.2*748.9520-627.2939=3267,25 \text{ expected 3000}\\ 4.4*748.9520-627.2939=2668,09 \text{ expected 2700}\\ 3.4*748.9520-627.2939=1919,14 \text{ expected 2500}\\ 2.1*748.9520-627.2939=945,50 \text{ expected 600}$$
@@ -133,7 +134,7 @@ Now lets calculate the offsets of this function tunned by Linear Regression
   $$\lvert(3000-3267,25)\rvert+\lvert(2700-2668,09)\rvert+\lvert(2500-1919,14)\rvert+\lvert(600-945,50)\rvert=1225,5$$
 {% endraw %}
 
-Much better! here get an offset minor to the previous one ( 1225 vs 1300 ).
+Much better! here get an offsetting minor to the previous one ( 1225 vs 1300 ).
 
 
 ## The prediction/estimation concept
@@ -154,27 +155,27 @@ Of course the value that our model gives us is not an exact value, it is an apro
 ## More Variables
 Now back to our example, lets say that now our data-set has more variables available, this means now that our computer price is described not only by the CPU speed but by:
 
-	• Memory Ram
-	• Cache
-	• Flops
-	• Reads per second
-	• Writes per second
+    • Memory Ram
+    • Cache
+    • Flops
+    • Reads per second
+    • Writes per second
 
 So our new data-set is:
 
 | Cpu Speed(Ghz)  | Ram (Gb)  | Cache (Mb)  | Flops  |  Reads Per Second |  Writes per Second | Computer Price (usd)  |
 |:----------------|:----------|:------------|:-------|:------------------|:-------------------|:----------------------|
-| 	5.2 	  | 	10    |      2      |  3500  |   4500   |   1500  |    3000      |
+|     5.2       |     10    |      2      |  3500  |   4500   |   1500  |    3000      |
 |   4.4      |     7     |      1      |  2500  |    2500  |    1500  |   1500     |
-| 	3.4      |     7     |      2      |  1500  |   4500   |  1500    |   2500      |
-| 	2.1	  |     2     |      1      |  1000  |   3000     |     1500  |    1000     |
+|     3.4      |     7     |      2      |  1500  |   4500   |  1500    |   2500      |
+|     2.1      |     2     |      1      |  1000  |   3000     |     1500  |    1000     |
 
 Now as before we want to create a function like this
 
 ```
 function  int CalculatePrice(int cpuSpeed, int ram, int cache, int flops, int reads, int writes){
-	/*implementation*/
-	return price;
+    /*implementation*/
+    return price;
 }
 ```
 
@@ -182,7 +183,7 @@ Just as before we could write some code based on these analysis:
 
 ```
 function CalculatePrice(cpuSpeed, ram, cache, flops, reads, writes){
-	
+    
     var cpuSpeedFactor = 9;
     var ramFactor = 8;
     var cacheFactor = 6;

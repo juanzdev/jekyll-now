@@ -4,6 +4,7 @@ title: When data is not enough in Machine Learning you should think in Synthetic
 published: true
 ---
 
+
 In machine learning is a common problem is the amount of data that we have, not always we can have gigabytes of information on our databases, data is the most precious result in machine learning and is understandable that is very scarce for our problems, the ones who own most of the data are the kings in the machine learning world, for example, Google has been gathering our data for years with only on objective in mind to mine this date using sophisticated statistics algorithms or machine learning algorithms.
 
 Most of the machine learning algorithms find patterns in the data, if this data is scarce the algorithm simply does not work, in this case, our only choice is to tweak the current data and feed it to the algorithm or create new data ourselves.

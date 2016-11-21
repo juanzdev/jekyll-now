@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 ---
 Our primary goal in machine learning is to predict a value based on a problem or an ouput variable, this value can be discrete or continous.
 

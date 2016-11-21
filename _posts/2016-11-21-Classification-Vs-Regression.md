@@ -1,4 +1,5 @@
 ---
+layout: post
 published: true
 title: Classification Vs Regression Comparission
 ---
@@ -13,6 +14,3 @@ When the output variable can have an infinte range of values we say the variable
 When a machine learning algorithm outputs a discrette variable we say this algorithm tackles a classification problem.
 
 When a machine learning algorithm outputs a continous variable we say this algorithm tackles a regression problem.
-
-Enter text in [Markdown](http://daringfireball.net/projects/markdown/). Use the toolbar above, or click the **?** button for formatting help.
- 

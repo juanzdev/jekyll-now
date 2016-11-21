@@ -55,7 +55,7 @@ CalculatePrice(3.4); // outputs 2500
 CalculatePrice(2.1); // outputs 600
 
 ```
-Because this is a very small data set we can try with different values and come up with an acceptable solution, for example, lets say that **cpuSpeedFactor = 200**
+Because this is a very small data set we can try with different values and come up with an acceptable solution, for example, let's say that **cpuSpeedFactor = 200**
 
 {% raw %}
   $$5.2*200=1040 \text{ expected 3000}\\ 4.4*200=800 \text{ expected 2700}\\ 3.4*200=680 \text{ expected 2500}\\ 2.1*200=420 \text{ expected 600}$$
@@ -80,7 +80,7 @@ Now lets try another value for cpuSpeedFactor for example **cpuSpeedFactor = 600
   $$\lvert(3000-3120)\rvert+\lvert(2700-2640)\rvert+\lvert(2500-2040)\rvert+\lvert(600-1260)\rvert=1300$$
 {% endraw %}
 
-Our function predictions now have an offset of 1300 USD dollars this time, much better! but is there an optimum value for cpuSpeedFactor that produces the minimum offset (this is to be as close as possible to our data-set)?
+Our function predictions now have an offset of 1300 USD dollars this time, much better! but is there an optimum value for cpuSpeedFactor that produces the minimum offset (this is to be as close as possible to our dataset)?
 
 
 ## Statistics to the rescue 
@@ -89,7 +89,7 @@ It turns out that statistics can help us a lot here. Statistics uses mathematica
 ## Linear Regression
 Linear Regression is a mathematical model that tries to fit a formula of a straight line to a set of given points of data in a two-dimensional plane.
 
-For example, lets draw our given dataset (CPU speed vs computer price).
+For example, let's draw our given dataset (CPU speed vs computer price).
 
 ![PriceVsCPu.PNG]({{site.baseurl}}/assets/PriceVsCPu.PNG)
 
@@ -138,7 +138,7 @@ Much better! here get an offsetting minor to the previous one ( 1225 vs 1300 ).
 
 
 ## The prediction/estimation concept
-This same prediction ability gives us the capability to _generalize_, that is to create a function that represents the entire set of data points and also represent the hidden rules and patterns that our data have implicitly (we are finding a pattern in our data), so that when a new value is evaluated by our function the new output will have coherence because is based on that pattern. A straight line generalizes very well to simple data, but that can be bad in some cases because if our data is very complex our function will only be able to represent it with a simpel line resulting in wrong predictions, this is a well known machine learning problem called _underfitting_, in this case when the data is very complex our model is not powerfull enough to be able to fit the fixed data set.
+This same prediction ability gives us the capability to _generalize_, that is to create a function that represents the entire set of data points and also represent the hidden rules and patterns that our data have implicitly (we are finding a pattern in our data), so that when a new value is evaluated by our function the new output will have coherence because is based on that pattern. A straight line generalizes very well to simple data, but that can be bad in some cases because if our data is very complex our function will only be able to represent it with a simple line resulting in wrong predictions, this is a well-known machine learning problem called _underfitting_, in this case when the data is very complex our model is not powerful enough to be able to fit the fixed data set.
 
 For example with our data-set and our function fitted to our data we already have the ecuation:
 
@@ -146,14 +146,14 @@ For example with our data-set and our function fitted to our data we already hav
   $$y=748.9520*3.7-627.2939$$
  {% endraw %}
 
-if we want to know the income of a new age value (a value that we never registered in our data points) we can predict it or what i like to call it better "estimate it", this value is using our statistical linear regression model will give us a very good aproximate value.
+if we want to know the income of a new age value (a value that we never registered in our data points) we can predict it or what i like to call it better "estimate it", this value is using our statistical linear regression model will give us a very good approximate value.
 
-I like to think that Linear Regression is the most basic form of Machine Learning, because when you research more on the topic you can somehow see that even the most complex Machine Learning Algorithms at a deep level are trying to behave the same like Linear Regression, that is, trying to model a mathematical ecuation from data to try to describe in the best way posible the data set.
+I like to think that Linear Regression is the most basic form of Machine Learning, because when you research more on the topic you can somehow see that even the most complex Machine Learning Algorithms at a deep level are trying to behave the same like Linear Regression, that is, trying to model a mathematical equation from data to try to describe in the best way possible the data set.
 
-Of course the value that our model gives us is not an exact value, it is an aproximation and for most of the real world problems that machine learning tackles this is acceptable.
+Of course, the value that our model gives us is not an exact value, it is an approximation and for most of the real world problems that machine learning tackles this is acceptable.
 
 ## More Variables
-Now back to our example, lets say that now our data-set has more variables available, this means now that our computer price is described not only by the CPU speed but by:
+Now back to our example, let's say that now our dataset has more variables available, this means now that our computer price is described not only by the CPU speed but by:
 
     • Memory Ram
     • Cache
@@ -179,7 +179,7 @@ function  int CalculatePrice(int cpuSpeed, int ram, int cache, int flops, int re
 }
 ```
 
-Just as before we could write some code based on these analysis:
+Just as before we could write some code based on this analysis:
 
 ```
 function CalculatePrice(cpuSpeed, ram, cache, flops, reads, writes){
@@ -198,11 +198,11 @@ function CalculatePrice(cpuSpeed, ram, cache, flops, reads, writes){
 ```
 
 
-I ve created some _factor_ variables that gives each corresponding parameter a _weight_  the bigger the factor the more it influences the total price.
-Also, I ve have assigned a higher value to the cpuSpeedFactor variable based on my own intuition, this function will give us an aproximation based on my own judgment. The problem with this approach as stated before is that we dont know how to specify the constant values or weights for each variable, we are just guessing here, but for example we dont know if CPU speed have an impact over the total computer by a factor of 9. The same applies for the rest of the factor variables, we dont have any real clue how they influence the final computer price.
+I 've created some _factor_ variables that give each corresponding parameter a _weight_  the bigger the factor the more it influences the total price.
+Also, I 've have assigned a higher value to the cpuSpeedFactor variable based on my own intuition, this function will give us an approximation based on my own judgment. The problem with this approach as stated before is that we don't know how to specify the constant values or weights for each variable, we are just guessing here, but for example, we don't know if CPU speed has an impact on the total computer by a factor of 9. The same applies for the rest of the factor variables, we don't have any real clue how they influence the final computer price.
 
-Maybe we can come up with a combination of factor variables in such a way that they represent our data exactly. But, ¿what if we have to guess the price of a new computer with new specs that are not registered on our data-set?, ¿what price will our custom function output?, ¿it will be a precise value?, ¿will our ouput have coherence with the dataset?.
-As you can see its very difficult to extract logic from data, maybe for this small data set of 4 rows is achievable, but ¿what if we have a data set of +100 rows? it would be extremelly difficult to think in some function that represents the dataset correctly.
+Maybe we can come up with a combination of factor variables in such a way that they represent our data exactly. But, ¿what if we have to guess the price of a new computer with new specs that are not registered on our dataset? ¿what price will our custom function output?, ¿it will be a precise value?, ¿will our output has coherence with the dataset?.
+As you can see its very difficult to extract logic from data, maybe for this small data set of 4 rows is achievable, but ¿what if we have a dataset of +100 rows? it would be extremely difficult to think of some function that represents the dataset correctly.
 
 Lets output the values of our function, with the same inputs from our new data-set:
 
@@ -214,18 +214,18 @@ CalculatePrice(3.4,7,2,1500,4500,1500,2500); // outputs 30098.6 vs 2500
 CalculatePrice(2.1,2,1,1000,3000,1500,1000); // outputs 21540.9 vs 1000
 
 ```
-As you can see our new function outputs very different values as those from the data-set, in this case is becoming much harder to guess a correct weight for each of the variables.
+As you can see our new function outputs very different values as those from the dataset, in this case, is becoming much harder to guess a correct weight for each of the variables.
 
 
 
-Now we know is better to let a statistical algorith do the hard work, but we have a problem, now we have 6 independant variables on our problem and linear regression only works with one independant variable.
+Now we know is better to let a statistical algorithm do the hard work, but we have a problem, now we have 6 independent variables on our problem and linear regression only works with one independent variable.
 
 **Selecting the Statistical Model**
 
-This situation happens a lot in machine learning, our problem now is more complex and we as data scientist need to select the most appropiate model to tackle the problem.
-The truth is that we have a lot of models to choose for, there are TONS of models and posible solutions to this problem, and as we are going to see on a future chapter most of them do a great work!.
-In this case we could use a multivariable statistical model like Multiple Variable Linear Regression.
-To solve this I will rely on the statsmodels libraries, statsmodels is a Python module that provide many tools and statistical models ready to use, in this case their linear regression implementation also includes multiple variable support specifically i will be using the OLS library that stands for Ordinary Least Squares.
+This situation happens a lot in machine learning, our problem now is more complex and we as data scientist need to select the most appropriate model to tackle the problem.
+The truth is that we have a lot of models to choose for, there are TONS of models and possible solutions to this problem, and as we are going to see on a future chapter most of them do a great work!.
+In this case, we could use a multivariable statistical model like Multiple Variable Linear Regression.
+To solve this I will rely on the statsmodels libraries, statsmodels is a Python module that provides many tools and statistical models ready to use, in this case, their linear regression implementation also includes multiple variable support specifically I will be using the OLS library that stands for Ordinary Least Squares.
 
 ```
 import statsmodels.formula.api as smf

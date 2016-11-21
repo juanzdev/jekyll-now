@@ -14,3 +14,4 @@ When a machine learning algorithm outputs a discrette variable we say this algor
 When a machine learning algorithm outputs a continous variable we say this algorithm tackles a regression problem.
 
 Enter text in [Markdown](http://daringfireball.net/projects/markdown/). Use the toolbar above, or click the **?** button for formatting help.
+ 

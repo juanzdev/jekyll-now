@@ -1,0 +1,8 @@
+If you think Azure ML is the solution for the machine learning problems for the common user think again, Azure ML is great in fact
+is the first SaaS for machine learning on the cloud, here you have a dashboard and a bunch of tools to drag to. You can get a 
+quick start by using their templates, is simple just drag an input source, then a transformation box select some columns, filter some text
+split the data to another transofmration component, then pass it to a neural network then drag the train component, hit run
+and the neural network is trained, easy eh? I dont think so!, not so fast. First of all i think is very important to remark that 
+all the users of this tool need to know the machine learning concepts to be able to confirue correctly each element
+Azure ml does a wondefull job at exposing all this machine learning artifacts, my point is that you need know what you are doing!
+Fore example you need to understand your iput data and your hyperparameters, how much?

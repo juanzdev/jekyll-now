@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Introduction to Convolutional Neural Networks
+published: false
 ---
 
 Intro , commenting past post about image pattern recognition
@@ -26,4 +27,3 @@ Max Pooling
 Backpropagation for weight adjustement
 
 What a convolutional neural network learns
-

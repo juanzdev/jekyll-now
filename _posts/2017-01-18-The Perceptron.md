@@ -18,7 +18,7 @@ The mathematical definition of the perceptron goes like this:
   $$y=2143,8$$
 {% endraw %}
 
-
+{% raw %}
 \documentclass{article}
 \begin{document}
 This is your only binary choices
@@ -31,6 +31,7 @@ This is your only binary choices
   \right.
 \end{math}
 \end{document}
+{% endraw %}
 
 In machine learning we call this functions score functions, because they gives us some unique number from multiple inputs they gives us a score, in this case because our neuron is a binary neuron it will gives us 1 or 0. 
 

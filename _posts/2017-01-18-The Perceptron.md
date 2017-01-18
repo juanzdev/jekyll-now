@@ -14,7 +14,7 @@ The mathematical definition of the perceptron goes like this:
 
 {% raw %}
 $$
-f(x) = \begin{cases}1 & -1 \le x < 0 \\ \frac{1}{2} & x = 0 \\ 1 - x^2 & \text{otherwise} \end{cases}
+f(x) = \begin{cases}1 & wx+b \le 0 \\ \frac{1}{2} & x = 0 \\ 1 - x^2 & \text{otherwise} \end{cases}
 $$
 {% endraw %}
 

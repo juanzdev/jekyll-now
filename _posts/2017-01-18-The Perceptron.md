@@ -13,26 +13,7 @@ The mathematical definition of the perceptron goes like this:
 
 
 {% raw %}
-  $$y=748.9520*x-627.2939$$\\
-  $$y=748.9520*3.7-627.2939$$\\
-  $$y=2143,8$$
-{% endraw %}
-ttest
-{% raw %}
-$$
-\documentclass{article}
-\begin{document}
-This is your only binary choices
-\begin{math}
-  \left\{
-    \begin{array}{l}
-      0\\
-      1
-    \end{array}
-  \right.
-\end{math}
-\end{document}
-$$
+$f(x) = \begin{cases}1 & -1 \le x < 0 \\ \frac{1}{2} & x = 0 \\ 1 - x^2 & \text{otherwise} \end{cases}$
 {% endraw %}
 
 In machine learning we call this functions score functions, because they gives us some unique number from multiple inputs they gives us a score, in this case because our neuron is a binary neuron it will gives us 1 or 0. 

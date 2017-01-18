@@ -13,7 +13,9 @@ The mathematical definition of the perceptron goes like this:
 
 
 {% raw %}
-$f(x) = \begin{cases}1 & -1 \le x < 0 \\ \frac{1}{2} & x = 0 \\ 1 - x^2 & \text{otherwise} \end{cases}$
+$$
+f(x) = \begin{cases}1 & -1 \le x < 0 \\ \frac{1}{2} & x = 0 \\ 1 - x^2 & \text{otherwise} \end{cases}
+$$
 {% endraw %}
 
 In machine learning we call this functions score functions, because they gives us some unique number from multiple inputs they gives us a score, in this case because our neuron is a binary neuron it will gives us 1 or 0. 

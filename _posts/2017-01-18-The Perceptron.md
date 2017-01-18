@@ -13,7 +13,7 @@ The mathematical definition of the perceptron goes like this:
 
 {% raw %}
 $$
-f(x) = \begin{cases}1 & wx+b \le 0 \\ \0 & \text{otherwise} \end{cases}
+f(x) = \begin{cases}1 & wx+b \le 0 \\ 0 & \text{otherwise} \end{cases}
 $$
 {% endraw %}
 

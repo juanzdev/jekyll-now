@@ -16,8 +16,7 @@ In machine learning we call this functions score functions, because they gives u
 
 As you can see we have negative and positive inputs and our perceptron will gives us an arbitrary binary number.
 
-Now for example we want our perceptron to outputs the following states
-
+Now for example we want our perceptron to outputs the following states:
 
 
 | Input 1   |      Input 2      |  Output |
@@ -26,3 +25,7 @@ Now for example we want our perceptron to outputs the following states
 | 1 |   0  |   0 |
 | 0 | 1 |    0|
 | 0 | 0 |    0|
+
+
+With our current configuration the output is completelly off, the only way we can tune our perceptron is by start changing the weights, the weights is the only variable that we can change.
+We can start changing weights and start trying if the desired output match exactly with the objective ouput.

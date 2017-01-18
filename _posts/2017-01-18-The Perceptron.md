@@ -1,5 +1,7 @@
 ---
-published: false
+layout: post
+title: The Perceptron
+published: true
 ---
 
 ## Perceptron

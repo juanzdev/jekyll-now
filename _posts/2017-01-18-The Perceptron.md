@@ -8,4 +8,7 @@ The perceptron is a network that receives multiples fixed inputs of data specifi
 
 The mathematical definition of the perceptron goes like this:
 
+formula
+
+
 

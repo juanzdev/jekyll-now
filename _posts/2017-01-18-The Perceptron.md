@@ -9,7 +9,7 @@ The perceptron is a network that receives multiples fixed inputs of data specifi
 The mathematical definition of the perceptron goes like this:
 **formula**
 
-In machine learning we call this functions score functions, because they gives us some unique number from multiple inputs.
+In machine learning we call this functions score functions, because they gives us some unique number from multiple inputs they gives us a score.
 
 
 

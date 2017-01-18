@@ -4,7 +4,7 @@ title: The Perceptron
 published: true
 ---
 
-In Machine Learning to know the history and the inner workings of the perceptrons is important because it could be said that is the first architecture that tries to learn patterns with inputs of data.
+In Machine Learning the first version of neural networks are related to perceptrons, and is quite important to understand them to grasp some important concepts that will be too common even on the latest ML topics.
 
 The perceptron is a network that receives multiples fixed inputs of data specifically numbers, those inputs are connected to a special neuron by a set of synapses or weighs, the neuron will calculate a weighed sum over the inputs and the wieghs and will perform an activation function in this case a binary one.
 

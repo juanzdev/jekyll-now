@@ -30,4 +30,18 @@ Now for example we want our perceptron to outputs the following states:
 
 
 With our current configuration the output is completelly off, the only way we can tune our perceptron is by start changing the weights, the weights is the only variable that we can change.
-We can start changing weights and start trying if the desired output match exactly with the objective ouput.
+We can start changing weights and start trying if the desired output match exactly with the objective ouput. lets try one time changing the weighs:
+
+**new set of weights**
+
+we can see that the result is not our expected ouput, we can keep trying but this will be too cumbersome and there is a better way to achieve this and that is learning the weights, to be able to do that we need aside from our score function a loss function.
+
+**Loss Function**
+You will start seeing this pattern a lot on machine learning models, we have a score function accompanied by a loss function, both are necessary for the learning to happen as we will see. For now lets concentrate on what a loss function is.
+
+The loss function will tell us how bad or good our **score** function is behaving, as simply as that. There are a lot of loss functions from simply ones to more complex, here we are going to see the simplest loss function in Machine Learning the square diferences.
+
+
+
+**The Perceptron Learning Procedure**
+

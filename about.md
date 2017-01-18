@@ -4,12 +4,12 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+Juan Zapata
 
 ### More Information
 
-A place to include any other types of information that you'd like to include about yourself.
+Software Developer Enthusiast, Computer Science, Research, Machine Learning, Mobile Development, Space. Those are some of the things i like.
 
 ### Contact me
 
-[email@domain.com](mailto:email@domain.com)
+[juan.zapata.dev@gmail.com](mailto:juan.zapata.dev@gmail.com)

@@ -14,7 +14,7 @@ In machine learning we call this functions score functions, because they gives u
 
 **diagram of basic example of perceptron with positive and negative inputs and the output as a single bit**
 
-
+As you can see we have negative and positive inputs and our perceptron will gives us an arbitrary binary number.
 
 
 

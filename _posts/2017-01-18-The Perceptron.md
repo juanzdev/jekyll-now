@@ -58,3 +58,5 @@ We will see if this result is correct or not correct by applying our loss functi
 If our loss function is >0 that means that our predicted ouput was incorrect, and if the expected ouput was 1, then we will substract our input vector to the current weight configuration.
 If our loss function is >0 that means that our predicted output was incorrect, and if the expected output was 0, then we will add out input vector to the current weight configuration.
 
+Now we need to do this learning algorithm a couple of times and our wieghs will be configured correctly.
+

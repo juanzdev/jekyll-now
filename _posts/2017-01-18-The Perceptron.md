@@ -11,6 +11,14 @@ The perceptron is a network that receives multiples fixed inputs of data specifi
 The mathematical definition of the perceptron goes like this:
 **formula**
 
+
+{% raw %}
+  $$y=748.9520*x-627.2939$$\\
+  $$y=748.9520*3.7-627.2939$$\\
+  $$y=2143,8$$
+{% endraw %}
+
+
 \documentclass{article}
 \begin{document}
 This is your only binary choices

@@ -39,9 +39,15 @@ we can see that the result is not our expected ouput, we can keep trying but thi
 **Loss Function**
 You will start seeing this pattern a lot on machine learning models, we have a score function accompanied by a loss function, both are necessary for the learning to happen as we will see. For now lets concentrate on what a loss function is.
 
-The loss function will tell us how bad or good our **score** function is behaving, as simply as that. There are a lot of loss functions from simply ones to more complex, here we are going to see the simplest loss function in Machine Learning the square diferences.
+The loss function will tell us how bad or good our **score** function is behaving, as simply as that. There are a lot of loss functions from simply ones to more complex, here we are going to see the simplest loss function in Machine Learning the square error.
 
+**square error ecuation**
 
+this function is making a subraction of our predicted ouput to the target value, the power of two happens just to have a positive difference, the half on at the begining is just there to simplify things later.
+
+now if we apply our loss function to our current ouputs we will have a value this value will tell us if our perceptron is correct or not and by how much.
+
+Now that we have our loss function in place we can start with the weigh learning to do that we need a learning procedure.
 
 **The Perceptron Learning Procedure**
 

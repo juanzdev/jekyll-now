@@ -11,6 +11,19 @@ The perceptron is a network that receives multiples fixed inputs of data specifi
 The mathematical definition of the perceptron goes like this:
 **formula**
 
+\documentclass{article}
+\begin{document}
+This is your only binary choices
+\begin{math}
+  \left\{
+    \begin{array}{l}
+      0\\
+      1
+    \end{array}
+  \right.
+\end{math}
+\end{document}
+
 In machine learning we call this functions score functions, because they gives us some unique number from multiple inputs they gives us a score, in this case because our neuron is a binary neuron it will gives us 1 or 0. 
 
 

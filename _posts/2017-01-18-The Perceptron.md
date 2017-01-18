@@ -1,6 +1,12 @@
 ---
 published: false
 ---
+---
+layout: post
+published: true
+title: The Perceptron
+---
+
 ## Perceptron
 In Machine Learning to know the history and the inner workings of the perceptrons is important because it could be said that is the first architecture that tries to learn patterns with inputs of data.
 

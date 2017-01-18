@@ -39,11 +39,11 @@ we can see that the result is not our expected ouput, we can keep trying but thi
 **Loss Function**
 You will start seeing this pattern a lot on machine learning models, we have a score function accompanied by a loss function, both are necessary for the learning to happen as we will see. For now lets concentrate on what a loss function is.
 
-The loss function will tell us how bad or good our **score** function is behaving, as simply as that. There are a lot of loss functions from simply ones to more complex, here we are going to see the simplest loss function in Machine Learning the square error.
+The loss function will tell us how bad or good our **score** function is behaving, as simply as that. There are a lot of loss functions from simply ones to more complex, here we are going to see the simplest loss function in Machine Learning in this case just the difference between our target and predicted input.
 
-**square error ecuation**
+**square error ecuation without squares**
 
-this function is making a subraction of our predicted ouput to the target value, the power of two happens just to have a positive difference, the half on at the begining is just there to simplify things later.
+this function is making a subraction of our predicted ouput to the target value, the power of two happens just to have a positive difference.
 
 now if we apply our loss function to our current ouputs we will have a value this value will tell us if our perceptron is correct or not and by how much.
 
@@ -51,3 +51,9 @@ Now that we have our loss function in place we can start with the weigh learning
 
 **The Perceptron Learning Procedure**
 
+We start by making our weighs randomized
+We make a evaluation of all our inputs to our current perceptron with our current weight configuration
+Our perceptron will ouput 1 or 0
+We will see if this result is correct or not correct by applying our loss function
+If our loss function is >0 that means that our predicted ouput was incorrect, and if the expected ouput was 1, then we will substract our input vector to the current weight configuration.
+If our loss function is >0 that means that our predicted output was incorrect, and if the expected output was 0, then we will add out input vector to the current weight configuration.

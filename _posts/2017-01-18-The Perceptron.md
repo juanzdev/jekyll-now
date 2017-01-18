@@ -11,10 +11,9 @@ The perceptron is a network that receives multiples fixed inputs of data specifi
 The mathematical definition of the perceptron goes like this:
 **formula**
 
-
 {% raw %}
 $$
-f(x) = \begin{cases}1 & wx+b \le 0 \\ \frac{1}{2} & x = 0 \\ 1 - x^2 & \text{otherwise} \end{cases}
+f(x) = \begin{cases}1 & wx+b \le 0 \\ \0 & \text{otherwise} \end{cases}
 $$
 {% endraw %}
 

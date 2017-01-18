@@ -16,5 +16,13 @@ In machine learning we call this functions score functions, because they gives u
 
 As you can see we have negative and positive inputs and our perceptron will gives us an arbitrary binary number.
 
+Now for example we want our perceptron to outputs the following states
 
 
+
+| Input 1   |      Input 2      |  Output |
+|----------|:-------------:|------:|
+| 1 |  1 |1 |
+| 1 |   0  |   0 |
+| 0 | 1 |    0|
+| 0 | 0 |    0|

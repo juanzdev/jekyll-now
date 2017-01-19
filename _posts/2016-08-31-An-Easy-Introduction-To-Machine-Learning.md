@@ -1,6 +1,6 @@
 ---
 layout: post
-title: An easy introduction to Machine Learning
+title: An easy introduction to Machine Learning part 1
 published: true
 ---
 

@@ -1,15 +1,15 @@
 ---
 layout: post
 published: true
-title: Classification Vs Regression Comparission
+title: Classification vs Regression comparission
 ---
 Our primary goal in machine learning is to predict a value based on a problem or an output variable, this value can be discrete or continuous.
 
 ## Discrete
-When the output variable can be described or classified in groups then we can say that the variable is discrete, for example, our machine learning algorithm predicts wether tomorrow is going to rain or not, here our universe of choices is only reduced to two (yes or no) 
+When the output variable can be described or classified in groups then we can say that the variable is discrete, for example, our machine learning algorithm predicts weather tomorrow is going to rain or not, here our universe of choices is only reduced to two (yes or no) 
 
 ## Continous
-When the output variable can have an infinite range of values we say the variable is continuous, for example, our machine learning algorithm predicts the temperature of tomorrows day, this value can be 10 degrees or 11 degrees or maybe 10.1 or 10.12 this range is infinite if you think about it.
+When the output variable can have an infinite range of values we say the variable is continuous, for example, our machine learning algorithm predicts the temperature of tomorrow's day, this value can be 10 degrees or 11 degrees or maybe 10.1 or 10.12 this range is infinite if you think about it.
 
 When a machine learning algorithm outputs a discrete variable we say this algorithm tackles a classification problem.
 

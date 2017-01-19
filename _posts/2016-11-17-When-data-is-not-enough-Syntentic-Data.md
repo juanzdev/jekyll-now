@@ -1,6 +1,6 @@
 ---
 layout: post
-title: When data is not enough in Machine Learning you should think in Synthetic Data
+title: 'When data is not enough, Synthetic Data'
 published: true
 ---
 

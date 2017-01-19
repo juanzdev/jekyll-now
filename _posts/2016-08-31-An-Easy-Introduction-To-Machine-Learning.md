@@ -22,7 +22,7 @@ And you have the following dataset available, in this case, the **price** is giv
 |         3.4          |           2500         |
 |         2.1          |           600          |
 
-Thinking in code we want to create a function like this:
+Thinking in the code we want to create a function like this:
 
 ```
 function  int CalculatePrice(int cpuSpeed){
@@ -93,7 +93,7 @@ For example, let's draw our given dataset (CPU speed vs computer price).
 
 ![PriceVsCPu.PNG]({{site.baseurl}}/assets/PriceVsCPu.PNG)
 
-In this case you have a bunch of points representing the relationship between CPU-speed and price, now with linear regression you can model an equation that fits your data using a straight line, this line has the form of:
+In this case, you have a bunch of points representing the relationship between CPU-speed and price, now with linear regression, you can model an equation that fits your data using a straight line, this line has the form of:
 
 {% raw %}
   $$y = x*b+c$$
@@ -116,7 +116,7 @@ This can also be interpreted as a unit increase in CPU speed is associated with 
 
 A straight line that tries to cover the entire set of data points is really useful because we have an explicit guide that represents our data points, this line is represented by a mathematical function and because it is continuous it can output not only the values from the dataset but a lot of more values (infinite values). For example, we know that for CPU-speed of 5.2 Ghz the price is 3000 USD dollars but what about a new computer of speed 3.7 GHz? if we use our straight line as a reference we can get an estimate. 
 
-In statistics and machine learning this new ability to estimate new unseen values from our fixed data is called **prediction**.
+In statistics and machine learning, this new ability to estimate new unseen values from our fixed data is called **prediction**.
 
 {% raw %}
   $$y=748.9520*x-627.2939$$\\
@@ -146,7 +146,7 @@ For example with our data-set and our function fitted to our data we already hav
   $$y=748.9520*3.7-627.2939$$
  {% endraw %}
 
-if we want to know the income of a new age value (a value that we never registered in our data points) we can predict it or what i like to call it better "estimate it", this value is using our statistical linear regression model will give us a very good approximate value.
+if we want to know the income of a new age value (a value that we never registered in our data points) we can predict it or what I like to call it better "estimate it", this value is using our statistical linear regression model will give us a very good approximate value.
 
 I like to think that Linear Regression is the most basic form of Machine Learning, because when you research more on the topic you can somehow see that even the most complex Machine Learning Algorithms at a deep level are trying to behave the same like Linear Regression, that is, trying to model a mathematical equation from data to try to describe in the best way possible the data set.
 
@@ -201,7 +201,7 @@ function CalculatePrice(cpuSpeed, ram, cache, flops, reads, writes){
 I 've created some _factor_ variables that give each corresponding parameter a _weight_  the bigger the factor the more it influences the total price.
 Also, I 've have assigned a higher value to the cpuSpeedFactor variable based on my own intuition, this function will give us an approximation based on my own judgment. The problem with this approach as stated before is that we don't know how to specify the constant values or weights for each variable, we are just guessing here, but for example, we don't know if CPU speed has an impact on the total computer by a factor of 9. The same applies for the rest of the factor variables, we don't have any real clue how they influence the final computer price.
 
-Maybe we can come up with a combination of factor variables in such a way that they represent our data exactly. But, ¿what if we have to guess the price of a new computer with new specs that are not registered on our dataset? ¿what price will our custom function output?, ¿it will be a precise value?, ¿will our output has coherence with the dataset?.
+Maybe we can come up with a combination of factor variables in such a way that they represent our data exactly. But, ¿what if we have to guess the price of a new computer with new specs that are not registered on our dataset? ¿what price will our custom function output? ¿it will be a precise value? ¿will our output has coherence with the dataset?.
 As you can see its very difficult to extract logic from data, maybe for this small data set of 4 rows is achievable, but ¿what if we have a dataset of +100 rows? it would be extremely difficult to think of some function that represents the dataset correctly.
 
 Lets output the values of our function, with the same inputs from our new data-set:
@@ -223,7 +223,7 @@ Now we know is better to let a statistical algorithm do the hard work, but we ha
 **Selecting the Statistical Model**
 
 This situation happens a lot in machine learning, our problem now is more complex and we as data scientist need to select the most appropriate model to tackle the problem.
-The truth is that we have a lot of models to choose for, there are TONS of models and possible solutions to this problem, and as we are going to see on a future chapter most of them do a great work!.
+The truth is that we have a lot of models to choose for, there are TONS of models and possible solutions to this problem, and as we are going to see in a future chapter most of them do a great work!.
 In this case, we could use a multivariable statistical model like Multiple Variable Linear Regression.
 To solve this I will rely on the statsmodels libraries, statsmodels is a Python module that provides many tools and statistical models ready to use, in this case, their linear regression implementation also includes multiple variable support specifically I will be using the OLS library that stands for Ordinary Least Squares.
 

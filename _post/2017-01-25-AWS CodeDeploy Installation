@@ -36,4 +36,3 @@ BTApplication/deploy-push.bat
 
 To start the deployment of the uploaded object on S3 run:
 create-deployment.bat
-

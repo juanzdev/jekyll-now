@@ -7,6 +7,8 @@ published: true
 
 Althouth not machine related it can help you with your EC2 environment if you are planning to use AWS ML, this set up was very handy for me to help me speed up my deployments to EC2 instances in no time.
 
+#Set up a source repository
+In my case I didnt use any in particular but S3 Buckets, in this 
 Create Bucket with policy from bucket-policy.txt, be sure to change the principal for your account
 
 Create the service role for CodeDeploy to allow it read the EC2 tags

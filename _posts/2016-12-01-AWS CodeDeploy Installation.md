@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Detailed Guide to AWS CodeDeploy Installation
-published: true
+published: false
 ---
 ## Detailed Guide to AWS CodeDeploy Installation
 

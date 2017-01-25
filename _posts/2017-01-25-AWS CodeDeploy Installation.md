@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 ---
 ## Detailed Guide to AWS CodeDeploy Installation
 

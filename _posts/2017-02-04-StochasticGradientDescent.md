@@ -1,6 +1,9 @@
 ---
-published: false
+layout: post
+title: Stochastic Gradient Descent recomendations
+published: true
 ---
+
 Here are some recommendations when using Gradient Descent
 
 Is not optimal to compute the gradient for your weights on the entire training set

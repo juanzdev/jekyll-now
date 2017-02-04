@@ -22,6 +22,7 @@ Here are some recommendations when using Gradient Descent
     
 **Basic Mini-Batch gradient descent algorithm**
 The basic steps for doing a basic mini-batch gradient descent:
+
     * Guess the initial learning rate
     * If the error keeps getting worse or oscillates wildly, reduce the learning rate.
     * If the error is falling fairly consistent but SLOW, increase the learning rate.

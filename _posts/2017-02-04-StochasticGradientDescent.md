@@ -6,7 +6,7 @@ published: true
 
 Here are some recommendations when using Gradient Descent
 
-*Is not optimal to compute the gradient for your weights on the entire training set
+* Is not optimal to compute the gradient for your weights on the entire training set
     * If you compute the gradient on the half of your training data and also on the other half of the training data, you will always get the same answer, so it's not necessary to do that, instead you should compute the gradient on the first half, then update the weights then compute the gradient on the second half
     * The extreme version of this approach is called Online Learning, where you compute the gradient for just a training case then update the weights and keep with another training case
     * In general, the Online Learning is quite extreme and we don't want to go that far, is better and more used to use a batch learning approach with small mini-batches typically 10 or 100 examples or even 1000 examples

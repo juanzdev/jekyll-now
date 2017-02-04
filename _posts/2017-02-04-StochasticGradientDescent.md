@@ -21,8 +21,8 @@ Here are some recommendations when using Gradient Descent
     * So there are actually two methods for learning (full batch vs mini-batch), for full batch you can make it more optimal by applying conjugate gradient and other numerous methods created by the optimization community
     
 **Basic Mini-Batch gradient descent algorithm**
-The basic steps for doing a basic mini-batch gradient descent:
 
+* The basic steps for doing a basic mini-batch gradient descent:
     * Guess the initial learning rate
     * If the error keeps getting worse or oscillates wildly, reduce the learning rate.
     * If the error is falling fairly consistent but SLOW, increase the learning rate.

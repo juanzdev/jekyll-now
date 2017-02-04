@@ -20,10 +20,11 @@ Here are some recommendations when using Gradient Descent
     
     * So there are actually two methods for learning (full batch vs mini-batch), for full batch you can make it more optimal by applying conjugate gradient and other numerous methods created by the optimization community
     
-Basic Mini-Batch gradient descent algorithm
-    • Guess the initial learning rate
-    • If the error keeps getting worse or oscillates wildly, reduce the learning rate.
-    • If the error is falling fairly consistent but SLOW, increase the learning rate.
-    • Towards the end of minibatch learning it always helps to turn down the learning rate, this removes fluctuations in the final weights caused by the variations between mini batches, AND you want a fine set of weights that is good for many mini batches.
-    • The behavior mentioned above can be automated in a simple program
-A good time to turn down the learning rate is when the error stops decreasing consistently, and good criteria to affirm that the error stops decreasing consistently is to use the ERROR metric on a separate VALIDATION SET(this is a bunch of examples that are not used for training nor for the test set)
+**Basic Mini-Batch gradient descent algorithm**
+The basic steps for doing a basic mini-batch gradient descent:
+    * Guess the initial learning rate
+    * If the error keeps getting worse or oscillates wildly, reduce the learning rate.
+    * If the error is falling fairly consistent but SLOW, increase the learning rate.
+    * Towards the end of minibatch learning it always helps to turn down the learning rate, this removes fluctuations in the final weights caused by the variations between mini batches, AND you want a fine set of weights that is good for many mini batches.
+    * The behavior mentioned above can be automated in a simple program
+    * A good time to turn down the learning rate is when the error stops decreasing consistently, and good criteria to affirm that the error stops decreasing consistently is to use the ERROR metric on a separate VALIDATION SET(this is a bunch of examples that are not used for training nor for the test set)

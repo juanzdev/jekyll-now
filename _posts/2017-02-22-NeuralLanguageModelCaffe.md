@@ -4,12 +4,13 @@ title: Neural Language Model with Caffe
 published: false
 ---
 
-In this blog post I will explain how you can implement a Word Embeddings implementation in Caffe using Bengio Neural Model and based on Hinton Coursera course code in Octave.
+In this blog post I will explain how you can implement a Word Embeddings implementation in Caffe using Bengio Neural Model and based on Hinton Coursera course code in Octave. This is just a practical fun exercise I made to see if it was possible to model this problem in the Caffe deep learning framework.
 
+The problem that this model is trying to solve is creating a Neural Model that is capable to predict the next word given three previous words, the predicted word needs to make sense according to the previous context, and with training data the model will be able to learn knowledge about word relationships and at the end it will be very capable of doing this task.
 
 A neural network is compossed of what is called hidden layers, the state of this layers will be unknown, they are very useful because they are a representation of our data in different dimensions, this is the same as saying that the hidden layers are transformation of our features, this is commonly called different feature representations.
 
-By working with different feature representations is possible to create very abstract associations of the data, for example when training a classifier of pictures we can create boundaries in high dimensional space to group "concepts" of pictures and to be able to differentiate how similar or diferent a picture is to other picture, this is possible because in those high dimensions the concept of a picture can be represented with a bunch of number combinations in a high dimensional data space.
+By working with different feature representations is possible to create very abstract associations of the data, for example when training a classifier of pictures we can create boundaries in high dimensional space to group "concepts" of pictures and be able to differentiate how similar or diferent a picture is to other picture, this is possible because in those high dimensions the concept of a picture can be represented with a bunch of number combinations in a high dimensional data space and in this high dimensional space we can start talking about distances between high dimensional vectors to see how close a vector relates to each other.
 
 ## Word Embeddings
 A high dimensional representation of a word is called a word embed, by having a different feature representation of the words we can group words by similarity not in syntax but in context.
@@ -18,8 +19,10 @@ Bengio was the first to propose an neural architecture for the word embedding pr
 
 -image of bengio neural net architecture-
 
-This net works by the premisse that you have a static vocabulary with word codes(250 codes in total), this is, for each word we are going to assign it a unique code, in this case an integer. Then a look-up operation will take place over the embeed matrix, this means that initially this matrix will have random values but after back propagation each row of this matrix will represent the different and expanded feature representation of each word, this is the reason why this matrix is 250 by 50, in this case the number 50 is the expanded representation of each word, this is an hyperparameter and you can try with different values.
+This net works by the premisse that you have a static vocabulary with word codes (250 codes in total), this is, for each word we are going to assign it a unique code, in this case an integer. Then a look-up operation will take place over the embeed matrix, this means that initially this matrix will have random values but after the back-propagation learning procedure each row of this matrix will represent the different and expanded feature representation of each word of the vocabulary, this is the reason why this matrix is 250 by 50, in this case the number 50 is the expanded representation of each word, this is an hyperparameter and you can try with different values.
 
-The net is followed then by a hidden layer with 200 neurons in a fully connected fashion, this layer will help to add more complexity to our internal representations and to be able to be more flexible with more non-linearities.
+The net is followed then by a hidden layer with 200 neurons in a fully connected fashion, this layer will help to add more complexity to our internal representations by being more flexible with more non-linearities.
+
+The net is then follwed by a softmax layer to be able to represent the final result with probabilities, at the end of the this net we are going to have the most probable words that come next to our previous three.
 
 

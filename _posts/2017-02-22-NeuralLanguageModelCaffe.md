@@ -20,4 +20,6 @@ Bengio was the first to propose an neural architecture for the word embedding pr
 
 This net works by the premisse that you have a static vocabulary with word codes(250 codes in total), this is, for each word we are going to assign it a unique code, in this case an integer. Then a look-up operation will take place over the embeed matrix, this means that initially this matrix will have random values but after back propagation each row of this matrix will represent the different and expanded feature representation of each word, this is the reason why this matrix is 250 by 50, in this case the number 50 is the expanded representation of each word, this is an hyperparameter and you can try with different values.
 
+The net is followed then by a hidden layer with 200 neurons in a fully connected fashion, this layer will help to add more complexity to our internal representations and to be able to be more flexible with more non-linearities, this 
+
 

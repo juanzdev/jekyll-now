@@ -25,4 +25,9 @@ The net is followed then by a hidden layer with 200 neurons in a fully connected
 
 The net is then follwed by a softmax layer to be able to represent the final result with probabilities, at the end of the this net we are going to have the most probable words that come next to our previous three.
 
+## Caffe Implementation
+The main goal of this exercise was to be able to create this neural net to Caffe based on the code already provided by Hinton in his Neural Network course.
+
+1. HDF5 Data Extraction 
+The first thing we have to do is bulk all our training, validation and test data to a HDF5 file, this is one of the files that Caffe supports for data, because this is not image data is recommended to use HDF5, Caffe is mainly a deep learning framework oriented towards image processing but they state that is perfectly fine to use non image data, doing some research I found
 

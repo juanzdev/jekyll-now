@@ -110,7 +110,7 @@ If you follow into the code you can see that this simple script only save all ou
 
 As you can see this files are all binary, now the next step is to start creating our neural network architecture in Caffe:
 
-2.  Caffe Neural Network
+2.  Caffe NeuralNet training model definition
 Creating a net in Caffe requires to write all the definition in prototxt files, this files have a JSON notation so is very easy to write them.
 
 The first prototxt file we need to create will be called train_val.prototxt here we will store all the architecture for our netural network this includes all the layers and what types of neurons will have, also here we are going to define the data layer that will read our HDF5 files. This file is called train_val because here will be defined the architecture for the training phase as well as for the validation phase.
@@ -234,3 +234,24 @@ Finally we do an inner product to fit the dimensions of our desired output (250)
 
 When we have this vector of 250 dimensions with numbers we can pass it through a softmax layer to calculate a probability distribution, specifficaly this layer is called SoftmaxWithLoss this layer calculate the probability distribution and also calculates the loss with respect to our target labels.
 
+3.  Caffe NeuralNet deploy model definition
+In Caffe you can have multiples models of a network, in this case we want a deploy model, this model will be used only when all our weights are trained and we have our network ready for production, this invovles some small changes to the original architecture.
+What we do here is to copy the train_val.prototxt to a new file called deploy.prototxt, and we are going to do some small modifications:
+
+First we remove the HDF5 layers because the training was already made, instead we replace this two layers with a single one of type Input:
+
+```json
+layer {
+	name: "data"
+	type: "Input"
+	top: "data"
+	input_param{
+		shape {
+		  dim: 1
+		  dim: 3
+		}
+	}
+}
+```
+
+this new input layer will have the desired dimensions for our trained network, this is 1 by 3 because the input of this network will receive just a vector of 3 dimensions specifiing the first 3 words (code-words) to predict the 4th.

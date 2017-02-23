@@ -108,4 +108,115 @@ If you follow into the code you can see that this simple script only save all ou
 
 --picture of .h5 files--
 
-As you can see this files are all binary, now the next step is to start
+As you can see this files are all binary, now the next step is to start creating our neural network architecture in Caffe:
+
+2.  Caffe Neural Network
+Creating a net in Caffe requires to write all the definition in prototxt files, this files have a JSON notation so is very easy to write them.
+
+The first prototxt file we need to create will be called train_val.prototxt here we will store all the architecture for our netural network this includes all the layers and what types of neurons will have, also here we are going to define the data layer that will read our HDF5 files. This file is called train_val because here will be defined the architecture for the training phase as well as for the validation phase.
+
+```json
+name: "LanguageNet"
+
+layer {
+	name: "4gramsDataSet"
+	type: "HDF5Data"
+	top: "data"
+	top: "label"
+	hdf5_data_param {
+		source: "model/train.txt"
+		batch_size: 100
+		shuffle: true
+	}
+	include: { phase: TRAIN }
+}
+
+layer {
+	name: "4gramsDataSet"
+	type: "HDF5Data"
+	top: "data"
+	top: "label"
+	hdf5_data_param {
+		source: "model/test.txt"
+		batch_size: 100
+		shuffle: false
+	}
+	include: { phase: TEST }
+}
+
+layer{
+	name: "ipWordEmbedding"
+	type: "Embed"
+	bottom: "data"
+	top: "ipWordEmbedding"
+	embed_param {
+		input_dim: 251
+		num_output: 50
+		weight_filler {
+    		type: "xavier"
+    	}
+    	bias_filler {
+      		type: "constant"
+      		value: 0
+    	}
+	}
+}
+
+layer{
+	name: "ipHidden"
+	type: "InnerProduct"
+	bottom: "ipWordEmbedding"
+	top: "ipHidden"
+	inner_product_param {
+		num_output: 200
+		weight_filler {
+     		type: "xavier"
+    	}
+    	bias_filler {
+      		type: "constant"
+      		value: 0
+    	}
+	}
+}
+
+layer {
+  name: "relu1"
+  type: "Sigmoid"
+  bottom: "ipHidden"
+  top: "reluOutput"
+}
+
+layer{
+	name: "inputToSoftmax"
+	type: "InnerProduct"
+	bottom: "reluOutput"
+	top: "inputToSoftmax"
+	inner_product_param {
+		num_output: 251
+		weight_filler {
+     		type: "xavier"
+    	}
+    	bias_filler {
+      		type: "constant"
+      		value: 0
+    	}
+	}
+}
+
+layer{
+	name: "SoftmaxLoss"
+	type: "SoftmaxWithLoss"
+	bottom: "inputToSoftmax"
+	bottom: "label"
+	top: "loss"
+}
+
+layer {
+  name: "accuracy"
+  type: "Accuracy"
+  bottom: "inputToSoftmax"
+  bottom: "label"
+  top: "accuracy"
+  include: { phase: TEST }
+}
+```

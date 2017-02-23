@@ -378,3 +378,15 @@ this line feeds our net with our custom input
 out = net.forward()
 ```
 finally we perform a single forward propagation with this line, remember that this is a very fast operation because behind the scenes a bunch of matrix multiplications are happening, and this is a very fast thing to do.
+
+Finally the result of the fprop will give us 250 probabilities, but we only want the top 5
+
+```python
+##top 5 predictions
+top5Indexes = np.argsort(-out['prediction'][0])[:5].astype("int")
+
+print "Top 5 predictions:"
+for x in xrange(0, 5):
+	print " %s" %(myVocab[top5Indexes[x]-1])
+	print out['prediction'][0][top5Indexes[x]]
+```

@@ -220,3 +220,8 @@ layer {
   include: { phase: TEST }
 }
 ```
+
+The code is self-explanatory althouth there are some important things to highlight:
+
+the first layer of type HDF5Data reads a train.txt file and not our HDF5 file directly, this txt file has the path of the HDF5 file, that just how Caffe works.
+You can see that we have two HDF5Data layers, this is because for the train phase we are going to use a different dataset than the test phase, the test phase will reference the HDF5Data that corresponds to our test set.

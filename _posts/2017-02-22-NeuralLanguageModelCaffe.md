@@ -96,3 +96,5 @@ f.create_dataset('data', data = data)
 f.create_dataset('label',  data = labels)
 f.close()
 ```
+
+If you follow into the code you can see that this simple script only save all our training data into an object called data and all our label data into an object called label, this is required by Caffe to know where to read data and labels.

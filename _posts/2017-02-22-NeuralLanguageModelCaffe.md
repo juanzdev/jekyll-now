@@ -4,33 +4,33 @@ title: Neural Language Model with Caffe
 published: true
 ---
 
-In this blog post I will explain how you can implement a Word Embeddings implementation in Caffe using Bengio Neural Model and based on Hinton Coursera course code in Octave. This is just a practical fun exercise I made to see if it was possible to model this problem in the Caffe deep learning framework.
+In this blog post, I will explain how you can implement a Word Embeddings implementation in Caffe using Bengio Neural Model and based on Hinton Coursera course code in Octave. This is just a practical fun exercise I made to see if it was possible to model this problem in the Caffe deep learning framework.
 
-The problem that this model is trying to solve is creating a Neural Model that is capable to predict the next word given three previous words, the predicted word needs to make sense according to the previous context, and with training data the model will be able to learn knowledge about word relationships and at the end it will be very capable of doing this task.
+The problem that this model is trying to solve is creating a Neural Model that is capable of predicting the next word given three previous words, the predicted word needs to make sense according to the previous context, and with training data the model will be able to learn knowledge about word relationships and at the end it will be very capable of doing this task.
 
-A neural network is compossed of what is called hidden layers, the state of this layers will be unknown, they are very useful because they are a representation of our data in different dimensions, this is the same as saying that the hidden layers are transformation of our features, this is commonly called different feature representations.
+A neural network is composed of what is called hidden layers, the state of this layers will be unknown, they are very useful because they are a representation of our data in different dimensions, this is the same as saying that the hidden layers are transformation of our features, this is commonly called different feature representations.
 
-By working with different feature representations is possible to create very abstract associations of the data, for example when training a classifier of pictures we can create boundaries in high dimensional space to group "concepts" of pictures and be able to differentiate how similar or diferent a picture is to other picture, this is possible because in those high dimensions the concept of a picture can be represented with a bunch of number combinations in a high dimensional data space and in this high dimensional space we can start talking about distances between high dimensional vectors to see how close a vector relates to each other.
+By working with different feature representations is possible to create very abstract associations of the data, for example when training a classifier of pictures we can create boundaries in high dimensional space to group "concepts" of pictures and be able to differentiate how similar or different a picture is to other picture, this is possible because in those high dimensions the concept of a picture can be represented with a bunch of number combinations in a high dimensional data space and in this high dimensional space we can start talking about distances between high dimensional vectors to see how close a vector relates to each other.
 
 ## Word Embeddings
 A high dimensional representation of a word is called a word embed, by having a different feature representation of the words we can group words by similarity not in syntax but in context.
 
-Bengio was the first to propose an neural architecture for the word embedding problem:
+Bengio was the first to propose a neural architecture for the word embedding problem:
 
 -image of bengio neural net architecture-
 
-This net works by the premisse that you have a static vocabulary with word codes (250 codes in total), this is, for each word we are going to assign it a unique code, in this case an integer. Then a look-up operation will take place over the embeed matrix, this means that initially this matrix will have random values but after the back-propagation learning procedure each row of this matrix will represent the different and expanded feature representation of each word of the vocabulary, this is the reason why this matrix is 250 by 50, in this case the number 50 is the expanded representation of each word, this is an hyperparameter and you can try with different values.
+This net works by the premise that you have a static vocabulary with word codes (250 codes in total), this is, for each word we are going to assign it a unique code, in this case, an integer. Then a look-up operation will take place over the embedded matrix, this means that initially, this matrix will have random values but after the back-propagation learning procedure each row of this matrix will represent the different and expanded feature representation of each word in the vocabulary, this is the reason why this matrix is 250 by 50, in this case, the number 50 is the expanded representation of each word, this is an hyperparameter and you can try with different values.
 
 The net is followed then by a hidden layer with 200 neurons in a fully connected fashion, this layer will help to add more complexity to our internal representations by being more flexible with more non-linearities.
 
-The net is then follwed by a softmax layer to be able to represent the final result with probabilities, at the end of the this net we are going to have the most probable words that come next to our previous three.
+The net is then followed by a softmax layer to be able to represent the final result with probabilities, at the end of this net we are going to have the most probable words that come next to our previous three.
 
 ## Caffe Implementation
 The main goal of this exercise was to be able to create this neural net to Caffe based on the code already provided by Hinton in his Neural Network course.
 
 1. HDF5 Data Extraction 
-The first thing we have to do is bulk all our training, validation and test data to a HDF5 file, this is one of the files that Caffe supports for data, HDF5 format is recommended on Caffe when we are not using image data.
-Caffe is mainly a deep learning framework oriented towards image processing but they state that is perfectly fine to use non image data. 
+The first thing we have to do is bulk all our training, validation and test data to an HDF5 file, this is one of the files that Caffe supports for data, the HDF5 format is recommended on Caffe when we are not using image data.
+Caffe is mainly a deep learning framework oriented towards image processing but they state that is perfectly fine to use nonimage data. 
 
 Because the initial data is on a .mat format on octave is necessary to export this to CSV, this is Octave code:
 
@@ -49,7 +49,7 @@ This command exports our data file to a nice format:
 
 --picture of comma separated values
 
-Now towards the code, the first script we have to do is read all this csv data and store it in a HDF5 compatible format
+Now towards the code, the first script we have to do is read all this CSV data and store it in an HDF5 compatible format
 
 ```python
 import h5py, os
@@ -63,16 +63,16 @@ testTFilePath = 'csv/test_t.csv'
 
 #read csv training data
 with open(trainXFilePath,'rb') as f:
-	reader = csv.reader(f)
-	data_as_list = list(reader)
+    reader = csv.reader(f)
+    data_as_list = list(reader)
 
 #shape (372550, 3)
 data = np.array(data_as_list).astype("int")
 
 #read csv training data labels
 with open(trainTFilePath,'rb') as f:
-	reader = csv.reader(f)
-	data_as_list = list(reader)
+    reader = csv.reader(f)
+    data_as_list = list(reader)
 
 #shape (372550, 1)
 labels = np.array(data_as_list).astype("int")
@@ -85,15 +85,15 @@ f.close()
 
 #read csv test data
 with open(testXFilePath,'rb') as f:
-	reader = csv.reader(f)
-	data_as_list = list(reader)
+    reader = csv.reader(f)
+    data_as_list = list(reader)
 
 data = np.array(data_as_list).astype("int")
 
 #read csv test data labels
 with open(testTFilePath,'rb') as f:
-	reader = csv.reader(f)
-	data_as_list = list(reader)
+    reader = csv.reader(f)
+    data_as_list = list(reader)
 
 labels = np.array(data_as_list).astype("int")
 
@@ -104,79 +104,79 @@ f.create_dataset('label',  data = labels)
 f.close()
 ```
 
-If you follow into the code you can see that this simple script only save all our training data into an object called data and all our label data into an object called label, this is required by Caffe to know where to read data and labels.
+If you follow the code you can see that this simple script only save all our training data into an object called data and all our label data into an object called label, this is required by Caffe to know where to read data and labels.
 
 --picture of .h5 files--
 
-As you can see this files are all binary, now the next step is to start creating our neural network architecture in Caffe:
+As you can see these files are all binary, now the next step is to start creating our neural network architecture in Caffe:
 
 2.  Caffe NeuralNet training model definition
-Creating a net in Caffe requires to write all the definition in prototxt files, this files have a JSON notation so is very easy to write them.
+Creating a net in Caffe requires to write all the definition in prototxt files, these files have a JSON notation so is very easy to write them.
 
-The first prototxt file we need to create will be called train_val.prototxt here we will store all the architecture for our netural network this includes all the layers and what types of neurons will have, also here we are going to define the data layer that will read our HDF5 files. This file is called train_val because here will be defined the architecture for the training phase as well as for the validation phase.
+The first prototxt file we need to create will be called train_val.prototxt here we will store all the architecture for our neural network this includes all the layers and what types of neurons will have, also here we are going to define the data layer that will read our HDF5 files. This file is called train_val because here will be defined the architecture for the training phase as well as for the validation phase.
 
 ```json
 name: "LanguageNet"
 
 layer {
-	name: "4gramsDataSet"
-	type: "HDF5Data"
-	top: "data"
-	top: "label"
-	hdf5_data_param {
-		source: "model/train.txt"
-		batch_size: 100
-		shuffle: true
-	}
-	include: { phase: TRAIN }
+    name: "4gramsDataSet"
+    type: "HDF5Data"
+    top: "data"
+    top: "label"
+    hdf5_data_param {
+        source: "model/train.txt"
+        batch_size: 100
+        shuffle: true
+    }
+    include: { phase: TRAIN }
 }
 
 layer {
-	name: "4gramsDataSet"
-	type: "HDF5Data"
-	top: "data"
-	top: "label"
-	hdf5_data_param {
-		source: "model/test.txt"
-		batch_size: 100
-		shuffle: false
-	}
-	include: { phase: TEST }
+    name: "4gramsDataSet"
+    type: "HDF5Data"
+    top: "data"
+    top: "label"
+    hdf5_data_param {
+        source: "model/test.txt"
+        batch_size: 100
+        shuffle: false
+    }
+    include: { phase: TEST }
 }
 
 layer{
-	name: "ipWordEmbedding"
-	type: "Embed"
-	bottom: "data"
-	top: "ipWordEmbedding"
-	embed_param {
-		input_dim: 251
-		num_output: 50
-		weight_filler {
-    		type: "xavier"
-    	}
-    	bias_filler {
-      		type: "constant"
-      		value: 0
-    	}
-	}
+    name: "ipWordEmbedding"
+    type: "Embed"
+    bottom: "data"
+    top: "ipWordEmbedding"
+    embed_param {
+        input_dim: 251
+        num_output: 50
+        weight_filler {
+            type: "xavier"
+        }
+        bias_filler {
+              type: "constant"
+              value: 0
+        }
+    }
 }
 
 layer{
-	name: "ipHidden"
-	type: "InnerProduct"
-	bottom: "ipWordEmbedding"
-	top: "ipHidden"
-	inner_product_param {
-		num_output: 200
-		weight_filler {
-     		type: "xavier"
-    	}
-    	bias_filler {
-      		type: "constant"
-      		value: 0
-    	}
-	}
+    name: "ipHidden"
+    type: "InnerProduct"
+    bottom: "ipWordEmbedding"
+    top: "ipHidden"
+    inner_product_param {
+        num_output: 200
+        weight_filler {
+             type: "xavier"
+        }
+        bias_filler {
+              type: "constant"
+              value: 0
+        }
+    }
 }
 
 layer {
@@ -187,28 +187,28 @@ layer {
 }
 
 layer{
-	name: "inputToSoftmax"
-	type: "InnerProduct"
-	bottom: "reluOutput"
-	top: "inputToSoftmax"
-	inner_product_param {
-		num_output: 251
-		weight_filler {
-     		type: "xavier"
-    	}
-    	bias_filler {
-      		type: "constant"
-      		value: 0
-    	}
-	}
+    name: "inputToSoftmax"
+    type: "InnerProduct"
+    bottom: "reluOutput"
+    top: "inputToSoftmax"
+    inner_product_param {
+        num_output: 251
+        weight_filler {
+             type: "xavier"
+        }
+        bias_filler {
+              type: "constant"
+              value: 0
+        }
+    }
 }
 
 layer{
-	name: "SoftmaxLoss"
-	type: "SoftmaxWithLoss"
-	bottom: "inputToSoftmax"
-	bottom: "label"
-	top: "loss"
+    name: "SoftmaxLoss"
+    type: "SoftmaxWithLoss"
+    bottom: "inputToSoftmax"
+    bottom: "label"
+    top: "loss"
 }
 
 layer {
@@ -221,56 +221,56 @@ layer {
 }
 ```
 
-The code is self-explanatory althouth there are some important things to highlight:
+The code is self-explanatory although there are some important things to highlight:
 
 the first layer of type HDF5Data reads a train.txt file and not our HDF5 file directly, this txt file has the path of the HDF5 file, that just how Caffe works.
-You can see that we have two HDF5Data layers, this is because for the train phase we are going to use a different dataset than the test phase, the test phase will reference the HDF5Data that corresponds to our test set.
+You can see that we have two HDF5Data layers, this is because for the training phase we are going to use a different dataset than the test phase, the test phase will reference the HDF5Data that corresponds to our test set.
 
-Another thing to highlight is the Embeed layer, althouth the documentation is very scarce about this type of layer on the web I think I managed to make it work correctly, this layer will specify the input dimensions to 250 this will be our total vocabulary and the expanded vector of 50 as specified by the output property, this means that this layer will store on a blob a matrix of 250 by 50 where each row or word will have a different feature representation of 50 dimensions, this layer will do a lookup operation for each index in our vocabulary, this functionallity is required to be able to implement a word-embedding functionallity correctly.
+Another thing to highlight is the Embed layer, although the documentation, is very scarce about this type of layer on the web I think I managed to make it work correctly, this layer will specify the input dimensions to 250 this will be our total vocabulary and the expanded vector of 50 as specified by the output property, this means that this layer will store on a blob a matrix of 250 by 50 where each row or word will have a different feature representation of 50 dimensions, this layer will do a lookup operation for each index in our vocabulary, this functionality is required to be able to implement a word-embedding functionality correctly.
 
-After the Embed layer we specify a hidden layer with Relu neurons, specifically 200 neurons, this will allow us to transform even more our feature representations of word embeddings on a non-linearity fashion.
+After the Embed layer, we specify a hidden layer with relu neurons, specifically 200 neurons, this will allow us to transform even more our feature representations of word embeddings on a non-linearity fashion.
 
-Finally we do an inner product to fit the dimensions of our desired output (250), because at the end we want to output a long vector of 250 dimensions full of probabilities.
+Finally, we do an inner product to fit the dimensions of our desired output (250), because at the end we want to output a long vector of 250 dimensions full of probabilities.
 
-When we have this vector of 250 dimensions with numbers we can pass it through a softmax layer to calculate a probability distribution, specifficaly this layer is called SoftmaxWithLoss this layer calculate the probability distribution and also calculates the loss with respect to our target labels.
+When we have this vector of 250 dimensions with numbers we can pass it through a softmax layer to calculate a probability distribution, specifically, this layer is called SoftmaxWithLoss this layer calculates the probability distribution and also calculates the loss with respect to our target labels.
 
 --picture of neural net architecture generated by caffe--
 
 3.  Caffe NeuralNet deploy model definition
-In Caffe you can have multiples models of a network, in this case we want a deploy model, this model will be used only when all our weights are trained and we have our network ready for production, this invovles some small changes to the original architecture.
+In Caffe you can have multiples models of a network, in this case, we want a deployed model, this model will be used only when all our weights are trained and we have our network ready for production, this involves some small changes to the original architecture.
 What we do here is to copy the train_val.prototxt to a new file called deploy.prototxt, and we are going to do some small modifications:
 
-First we remove the HDF5 layers because the training was already made, instead we replace this two layers with a single one of type Input:
+First, we remove the HDF5 layers because the training was already made, instead we replace this two layers with a single one of type Input:
 
 ```json
 layer {
-	name: "data"
-	type: "Input"
-	top: "data"
-	input_param{
-		shape {
-		  dim: 1
-		  dim: 3
-		}
-	}
+    name: "data"
+    type: "Input"
+    top: "data"
+    input_param{
+        shape {
+          dim: 1
+          dim: 3
+        }
+    }
 }
 ```
 
-this new input layer will have the desired dimensions for our trained network, this is 1 by 3 because the input of this network will receive just a vector of 3 dimensions specifiing the first 3 words (code-words) to predict the 4th.
-The rest of the network will be the same except for the ouputlayer, we are going to chop the SoftmaxWithLoss layer and replaced with a new type of layer called Softmax:
+this new input layer will have the desired dimensions for our trained network, this is 1 by 3 because the input of this network will receive just a vector of 3 dimensions specifying the first 3 words (code-words) to predict the 4th.
+The rest of the network will be the same except for the output layer, we are going to chop the SoftmaxWithLoss layer and replaced with a new type of layer called Softmax:
 
 ```json
 layer{
-	name: "softmax"
-	type: "Softmax"
-	bottom: "inputToSoftmax"
-	top: "prediction"
+    name: "softmax"
+    type: "Softmax"
+    bottom: "inputToSoftmax"
+    top: "prediction"
 }
 ```
-This makes sense because we dont want to calculate any loss on a production phase (because we dont have target labels) we just want to make a simple fordward pass through all our learning weights to output some result, in this case just the Softmax probabilities without any loss associated, makes sense right?
+This makes sense because we don't want to calculate any loss on a production phase (because we don't have target labels) we just want to make a simple forward pass through all our learning weights to output some result, in this case, just the Softmax probabilities without any loss associated, makes sense right?
 
 3. Solver
-Now we need to specify one more prototxt file called solver, this file will hold a lot of hyperparameters for our model, you can play with this settings to achieve better results with your model, here for example you can specify what optimization method you want to learn the weights, what regularization strategy you want, also you can specify the number of epocs you need to achieve good results, here you can very easy to switch to GPU for fast training!.
+Now we need to specify one more prototxt file called solver, this file will hold a lot of hyperparameters for our model, you can play with this settings to achieve better results with your model, here, for example, you can specify what optimization method you want to learn the weights, what regularization strategy you want, also you can specify the number of epocs you need to achieve good results, here you can very easy to switch to GPU for fast training!.
 
 ```json
 # The train/test net protocol buffer definition
@@ -299,7 +299,7 @@ solver_mode: CPU
 ```
 
 4. Using the training network
-Using the training network for production usage or just for fun requires the use of the file deploy.prototxt, as I said this file is very similar of the train-val.prototxt with just a small set of changes, the input layer is now ready to receive just one row of data and not a batch, and the last layer doesnt calculate the loss but instead only the softmax probabilities, now we need to write some python script to use our deploy net with the trained weights.
+Using the training network for production usage or just for fun requires the use of the file deploy.prototxt, as I said this file is very similar of the train-val.prototxt with just a small set of changes, the input layer is now ready to receive just one row of data and not a batch, and the last layer doesn't calculate the loss but instead only the softmax probabilities, now we need to write some python script to use our deploy net with the trained weights.
 
 ```python
 import numpy as np
@@ -318,8 +318,8 @@ myIndexInput = [-1,-1,-1]
 vocabFile = open('csv/vocab.csv', "r")
 myVocab = []
 for line in vocabFile.readlines()[:]:
-	word = line.split('=')[1].strip()
-	myVocab.append(word)
+    word = line.split('=')[1].strip()
+    myVocab.append(word)
 
 # 3-gram words
 myIndexInput[0] = myVocab.index(myWordsInput[0])+1
@@ -330,8 +330,8 @@ net = caffe.Net('model/deploy.prototxt','model_snapshot/snap_iter_100000.caffemo
 net.blobs['data'].data[...] = myIndexInput
 
 print "Forward Prop with values %d %d %d - %s %s %s - %s %s %s" %(myIndexInput[0],myIndexInput[1],myIndexInput[2],
-			myWordsInput[0],myWordsInput[1],myWordsInput[2],
-			myVocab.index(myWordsInput[0]),myVocab.index(myWordsInput[1]),myVocab.index(myWordsInput[2]))
+            myWordsInput[0],myWordsInput[1],myWordsInput[2],
+            myVocab.index(myWordsInput[0]),myVocab.index(myWordsInput[1]),myVocab.index(myWordsInput[2]))
 
 out = net.forward()
 
@@ -341,8 +341,8 @@ top5Indexes = np.argsort(-out['prediction'][0])[:5].astype("int")
 
 print "Top 5 predictions:"
 for x in xrange(0, 5):
-	print " %s" %(myVocab[top5Indexes[x]-1])
-	print out['prediction'][0][top5Indexes[x]]
+    print " %s" %(myVocab[top5Indexes[x]-1])
+    print out['prediction'][0][top5Indexes[x]]
 
 #print net.blobs
 #print "EMBED"
@@ -358,7 +358,7 @@ for x in xrange(0, 5):
 ```
 
 I need to explain some points:
-This script will read the vocab.csv file, this file has all the vocabulary on the form of id value pairs for a total of 250 words, we need this just to ouput the predicted word and not a meaningless id.
+This script will read the vocab.csv file, this file has all the vocabulary on the form of id value pairs for a total of 250 words, we need this just to output the predicted word and not a meaningless id.
 
 this line:
 
@@ -377,9 +377,9 @@ this line feeds our net with our custom input
 ```python
 out = net.forward()
 ```
-finally we perform a single forward propagation with this line, remember that this is a very fast operation because behind the scenes a bunch of matrix multiplications are happening, and this is a very fast thing to do.
+finally, we perform a single forward propagation with this line, remember that this is a very fast operation because behind the scenes a bunch of matrix multiplications are happening, and this is a very fast thing to do.
 
-Finally the result of the fprop will give us 250 probabilities, but we only want the top 5
+Finally, the result of the fprop will give us 250 probabilities, but we only want the top 5
 
 ```python
 ##top 5 predictions
@@ -387,6 +387,6 @@ top5Indexes = np.argsort(-out['prediction'][0])[:5].astype("int")
 
 print "Top 5 predictions:"
 for x in xrange(0, 5):
-	print " %s" %(myVocab[top5Indexes[x]-1])
-	print out['prediction'][0][top5Indexes[x]]
+    print " %s" %(myVocab[top5Indexes[x]-1])
+    print out['prediction'][0][top5Indexes[x]]
 ```

@@ -32,11 +32,18 @@ The main goal of this exercise was to be able to create this neural net to Caffe
 The first thing we have to do is bulk all our training, validation and test data to a HDF5 file, this is one of the files that Caffe supports for data, HDF5 format is recommended on Caffe when we are not using image data.
 Caffe is mainly a deep learning framework oriented towards image processing but they state that is perfectly fine to use non image data. 
 
-Because the initial data is on a .mat format on octave is necessary to export this to CSV
+Because the initial data is on a .mat format on octave is necessary to export this to CSV, this is Octave code:
 
-csvexport(model,"train_x.csv")
-csvexport(model,"train_x.csv")
-csvexport(model,"train_x.csv")
+```python
+%generate dataset from octave
+[train_x, train_t, valid_x, valid_t, test_x, test_t, vocab] = load_data(372500);
+csvwrite("train_x.csv",train_x')
+csvwrite("train_t.csv",train_t')
+csvwrite("valid_x.csv",valid_x')
+csvwrite("valid_t.csv",valid_t')
+csvwrite("test_x.csv",test_x')
+csvwrite("test_t.csv",test_t')
+```
 
 This command exports our data file to a nice format:
 
@@ -98,3 +105,7 @@ f.close()
 ```
 
 If you follow into the code you can see that this simple script only save all our training data into an object called data and all our label data into an object called label, this is required by Caffe to know where to read data and labels.
+
+--picture of .h5 files--
+
+As you can see this files are all binary, now the next step is to start

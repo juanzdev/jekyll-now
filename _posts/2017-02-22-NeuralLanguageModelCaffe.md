@@ -298,3 +298,62 @@ snapshot_prefix: "model_snapshot/snap"
 solver_mode: CPU
 ```
 
+4. Using the training network
+Using the training network for production usage or just for fun requires the use of the file deploy.prototxt, as I said this file is very similar of the train-val.prototxt with just a small set of changes, the input layer is now ready to receive just one row of data and not a batch, and the last layer doesnt calculate the loss but instead only the softmax probabilities, now we need to write some python script to use our deploy net with the trained weights.
+
+```python
+import numpy as np
+import sys
+import caffe
+
+#myWordsInput = ['they','are','well'] #23 ,
+#myWordsInput = ['are','well',','] #55 she
+#myWordsInput = ['how','are','you'] #55 she
+#myWordsInput = ['they','had','to'] #55 she
+#myWordsInput = ['there','are','times'] #55 she
+#myWordsInput = ['how','are','you']
+myWordsInput = ['i','did','nt']
+myIndexInput = [-1,-1,-1]
+
+vocabFile = open('csv/vocab.csv', "r")
+myVocab = []
+for line in vocabFile.readlines()[:]:
+	word = line.split('=')[1].strip()
+	myVocab.append(word)
+
+# 3-gram words
+myIndexInput[0] = myVocab.index(myWordsInput[0])+1
+myIndexInput[1] = myVocab.index(myWordsInput[1])+1
+myIndexInput[2] = myVocab.index(myWordsInput[2])+1
+
+net = caffe.Net('model/deploy.prototxt','model_snapshot/snap_iter_100000.caffemodel',caffe.TEST)
+net.blobs['data'].data[...] = myIndexInput
+
+print "Forward Prop with values %d %d %d - %s %s %s - %s %s %s" %(myIndexInput[0],myIndexInput[1],myIndexInput[2],
+			myWordsInput[0],myWordsInput[1],myWordsInput[2],
+			myVocab.index(myWordsInput[0]),myVocab.index(myWordsInput[1]),myVocab.index(myWordsInput[2]))
+
+out = net.forward()
+
+print "Word prediction: %s - %s" %(myVocab[out['prediction'].argmax()-1],out['prediction'].argmax())
+##top 5 predictions
+top5Indexes = np.argsort(-out['prediction'][0])[:5].astype("int")
+
+print "Top 5 predictions:"
+for x in xrange(0, 5):
+	print " %s" %(myVocab[top5Indexes[x]-1])
+	print out['prediction'][0][top5Indexes[x]]
+
+#print net.blobs
+#print "EMBED"
+#print net.params['ipWordEmbedding'][0].data
+#print "HIDDEN"
+#print net.params['ipHidden'][0].data
+#print "RELU"
+#print net.params['reluOutput'][0].data
+#print "INPUT TO SOFTMAX"
+#print net.params['inputToSoftmax'][0].data
+#print "PREDICTION"
+#print net.params['inputToSoftmax'][0].data
+```
+

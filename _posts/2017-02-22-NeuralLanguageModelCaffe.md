@@ -227,3 +227,10 @@ the first layer of type HDF5Data reads a train.txt file and not our HDF5 file di
 You can see that we have two HDF5Data layers, this is because for the train phase we are going to use a different dataset than the test phase, the test phase will reference the HDF5Data that corresponds to our test set.
 
 Another thing to highlight is the Embeed layer, althouth the documentation is very scarce about this type of layer on the web I think I managed to make it work correctly, this layer will specify the input dimensions to 250 this will be our total vocabulary and the expanded vector of 50 as specified by the output property, this means that this layer will store on a blob a matrix of 250 by 50 where each row or word will have a different feature representation of 50 dimensions, this layer will do a lookup operation for each index in our vocabulary, this functionallity is required to be able to implement a word-embedding functionallity correctly.
+
+After the Embed layer we specify a hidden layer with Relu neurons, specifically 200 neurons, this will allow us to transform even more our feature representations of word embeddings on a non-linearity fashion.
+
+Finally we do an inner product to fit the dimensions of our desired output (250), because at the end we want to output a long vector of 250 dimensions full of probabilities.
+
+When we have this vector of 250 dimensions with numbers we can pass it through a softmax layer to calculate a probability distribution, specifficaly this layer is called SoftmaxWithLoss this layer calculate the probability distribution and also calculates the loss with respect to our target labels.
+

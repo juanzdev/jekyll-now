@@ -357,3 +357,24 @@ for x in xrange(0, 5):
 #print net.params['inputToSoftmax'][0].data
 ```
 
+I need to explain some points:
+This script will read the vocab.csv file, this file has all the vocabulary on the form of id value pairs for a total of 250 words, we need this just to ouput the predicted word and not a meaningless id.
+
+this line:
+
+```python
+net = caffe.Net('model/deploy.prototxt','model_snapshot/snap_iter_100000.caffemodel',caffe.TEST)
+```
+
+use the Caffe binding that is available for python, using this library we can import the caffe net to the python environment to use it with our developments, this line in particular imports the caffe deploy net but with the trained weights that we used using the train-val model
+
+```python
+net.blobs['data'].data[...] = myIndexInput
+```
+
+this line feeds our net with our custom input
+
+```python
+out = net.forward()
+```
+finally we perform a single forward propagation with this line, remember that this is a very fast operation because behind the scenes a bunch of matrix multiplications are happening, and this is a very fast thing to do.

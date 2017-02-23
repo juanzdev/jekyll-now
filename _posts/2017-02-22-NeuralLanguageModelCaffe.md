@@ -255,3 +255,15 @@ layer {
 ```
 
 this new input layer will have the desired dimensions for our trained network, this is 1 by 3 because the input of this network will receive just a vector of 3 dimensions specifiing the first 3 words (code-words) to predict the 4th.
+The rest of the network will be the same except for the ouputlayer, we are going to chop the SoftmaxWithLoss layer and replaced with a new type of layer called Softmax:
+
+```json
+layer{
+	name: "softmax"
+	type: "Softmax"
+	bottom: "inputToSoftmax"
+	top: "prediction"
+}
+```
+This makes sense because we dont want to calculate any loss on a production phase (because we dont have target labels) we just want to make a simple fordward pass through all our learning weights to output some result, in this case just the Softmax probabilities without any loss associated, makes sense right?
+

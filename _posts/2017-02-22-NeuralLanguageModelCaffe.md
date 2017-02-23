@@ -29,5 +29,70 @@ The net is then follwed by a softmax layer to be able to represent the final res
 The main goal of this exercise was to be able to create this neural net to Caffe based on the code already provided by Hinton in his Neural Network course.
 
 1. HDF5 Data Extraction 
-The first thing we have to do is bulk all our training, validation and test data to a HDF5 file, this is one of the files that Caffe supports for data, because this is not image data is recommended to use HDF5, Caffe is mainly a deep learning framework oriented towards image processing but they state that is perfectly fine to use non image data, doing some research I found
+The first thing we have to do is bulk all our training, validation and test data to a HDF5 file, this is one of the files that Caffe supports for data, HDF5 format is recommended on Caffe when we are not using image data.
+Caffe is mainly a deep learning framework oriented towards image processing but they state that is perfectly fine to use non image data. 
 
+Because the initial data is on a .mat format on octave is necessary to export this to CSV
+
+csvexport(model,"train_x.csv")
+csvexport(model,"train_x.csv")
+csvexport(model,"train_x.csv")
+
+This command exports our data file to a nice format:
+
+--picture of comma separated values
+
+Now towards the code, the first script we have to do is read all this csv data and store it in a HDF5 compatible format
+
+```python
+import h5py, os
+import numpy as np
+import csv
+
+trainXFilePath = 'csv/train_x.csv'
+trainTFilePath = 'csv/train_t.csv'
+testXFilePath = 'csv/test_x.csv'
+testTFilePath = 'csv/test_t.csv'
+
+#read csv training data
+with open(trainXFilePath,'rb') as f:
+	reader = csv.reader(f)
+	data_as_list = list(reader)
+
+#shape (372550, 3)
+data = np.array(data_as_list).astype("int")
+
+#read csv training data labels
+with open(trainTFilePath,'rb') as f:
+	reader = csv.reader(f)
+	data_as_list = list(reader)
+
+#shape (372550, 1)
+labels = np.array(data_as_list).astype("int")
+
+#create HDF5 file with training data and labels
+f = h5py.File('hdf5/train.h5', 'w')
+f.create_dataset('data', data = data)
+f.create_dataset('label',  data = labels)
+f.close()
+
+#read csv test data
+with open(testXFilePath,'rb') as f:
+	reader = csv.reader(f)
+	data_as_list = list(reader)
+
+data = np.array(data_as_list).astype("int")
+
+#read csv test data labels
+with open(testTFilePath,'rb') as f:
+	reader = csv.reader(f)
+	data_as_list = list(reader)
+
+labels = np.array(data_as_list).astype("int")
+
+#create HDF5 file with test data and labels
+f = h5py.File('hdf5/test.h5', 'w')
+f.create_dataset('data', data = data)
+f.create_dataset('label',  data = labels)
+f.close()
+```

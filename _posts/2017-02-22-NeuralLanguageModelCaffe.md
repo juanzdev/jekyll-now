@@ -267,3 +267,32 @@ layer{
 ```
 This makes sense because we dont want to calculate any loss on a production phase (because we dont have target labels) we just want to make a simple fordward pass through all our learning weights to output some result, in this case just the Softmax probabilities without any loss associated, makes sense right?
 
+3. Solver
+Now we need to specify one more prototxt file called solver, this file will hold a lot of hyperparameters for our model, you can play with this settings to achieve better results with your model, here for example you can specify what optimization method you want to learn the weights, what regularization strategy you want, also you can specify the number of epocs you need to achieve good results, here you can very easy to switch to GPU for fast training!.
+
+```json
+# The train/test net protocol buffer definition
+net: "model/train_val.prototxt"
+test_iter: 1000
+# Carry out testing every 500 training iterations.
+test_interval: 1000
+# The base learning rate, momentum and the weight decay of the network.
+base_lr: 0.01
+momentum: 0.9
+weight_decay: 0.0005
+# The learning rate policy
+lr_policy: "step"
+gamma: 0.1
+stepsize:20000
+power: 0.75
+# Display every 100 iterations
+display: 1000
+# The maximum number of iterations
+max_iter: 100000
+# snapshot intermediate results
+snapshot: 50000
+snapshot_prefix: "model_snapshot/snap"
+# solver mode: CPU or GPU
+solver_mode: CPU
+```
+

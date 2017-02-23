@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Neural Language Model with Caffe
-published: false
+published: true
 ---
 
 In this blog post I will explain how you can implement a Word Embeddings implementation in Caffe using Bengio Neural Model and based on Hinton Coursera course code in Octave. This is just a practical fun exercise I made to see if it was possible to model this problem in the Caffe deep learning framework.

@@ -237,8 +237,43 @@ Finally we can convert this 250 vector to a vector of probabilities using a soft
 
 ![architecture]({{site.baseurl}}/assets/architectureWordEmbeddingsNet.jpg)
 
+3.Solver
+Now we need to specify one more prototxt file called solver, this file will hold a lot of hyperparameters for our model, you can play with this settings to achieve better results with your model, here, for example, you can specify what optimization method you want to learn the weights, what regularization strategy you want, also you can specify the number of Epocs you need, you can also specify if you want GPU for faster training!.
 
-3.Caffe neural net deploy model definition
+```json
+# The train/test net protocol buffer definition
+net: "model/train_val.prototxt"
+test_iter: 1000
+# Carry out testing every 500 training iterations.
+test_interval: 1000
+# The base learning rate, momentum and the weight decay of the network.
+base_lr: 0.01
+momentum: 0.9
+weight_decay: 0.0005
+# The learning rate policy
+lr_policy: "step"
+gamma: 0.1
+stepsize:20000
+power: 0.75
+# Display every 100 iterations
+display: 1000
+# The maximum number of iterations
+max_iter: 100000
+# snapshot intermediate results
+snapshot: 50000
+snapshot_prefix: "model_snapshot/snap"
+# solver mode: CPU or GPU
+solver_mode: CPU
+```
+
+4.Training the neural net
+Now that the neural net model is ready we can train it using the following command:
+
+```python
+caffe.bin train --solver=model/solver.prototxt
+```
+
+4.Caffe neural net deploy model definition
 In Caffe you can have multiples models of a network, in this case, we want a ready to use model, this model will be used only when all our weights are trained and we have our network ready for production, this involves some small changes to the original architecture.
 
 What we have to do is copy the train_val.prototxt to a new file called deploy.prototxt then make some small modifications:
@@ -272,36 +307,9 @@ layer{
 ```
 This makes sense because we don't want to calculate any loss on a production phase (because we don't have target labels) we just want to make a simple forward pass through all our learning weights to output some result, in this case, just the Softmax probabilities without any loss associated, ¿makes sense right?
 
-3.Solver
-Now we need to specify one more prototxt file called solver, this file will hold a lot of hyperparameters for our model, you can play with this settings to achieve better results with your model, here, for example, you can specify what optimization method you want to learn the weights, what regularization strategy you want, also you can specify the number of Epocs you need, you can also specify if you want GPU for faster training!.
 
-```json
-# The train/test net protocol buffer definition
-net: "model/train_val.prototxt"
-test_iter: 1000
-# Carry out testing every 500 training iterations.
-test_interval: 1000
-# The base learning rate, momentum and the weight decay of the network.
-base_lr: 0.01
-momentum: 0.9
-weight_decay: 0.0005
-# The learning rate policy
-lr_policy: "step"
-gamma: 0.1
-stepsize:20000
-power: 0.75
-# Display every 100 iterations
-display: 1000
-# The maximum number of iterations
-max_iter: 100000
-# snapshot intermediate results
-snapshot: 50000
-snapshot_prefix: "model_snapshot/snap"
-# solver mode: CPU or GPU
-solver_mode: CPU
-```
 
-4.Using the training network
+5.Using the training network
 Using the training network for production usage requires the use of the file deploy.prototxt, as I said this file is very similar to the train-val.prototxt file with just a small set of changes, the input layer is now ready to receive just one row of data and not a batch, and the last layer doesn't calculate the loss but instead only the softmax probabilities, now we need to write some python script to use our deploy net with the trained weights:
 
 ```python

@@ -5,7 +5,6 @@ published: true
 ---
 
 In Machine Learning the first version of neural networks are related to perceptrons and is quite important to understand them to grasp some important concepts that will be too common even on the latest ML topics.
-
 The perceptron is a network that receives multiples fixed inputs of data specifically numbers, those inputs are connected to a special neuron by a set of synapses or weighs, the neuron will calculate a weighted sum of the inputs and the weights and will perform an activation function, in this case, a binary one.
 
 The mathematical definition of the perceptron neuron or binary threshold neuron is defined as:
@@ -64,4 +63,3 @@ If our loss function is >0 that means that our predicted output was incorrect, a
 If our loss function is >0 that means that our predicted output was incorrect, and if the expected output was 0, then we will add out input vector to the current weight configuration.
 
 Now we need to do this learning algorithm a couple of times and our weight will be configured correctly.
-

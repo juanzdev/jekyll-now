@@ -4,20 +4,21 @@ title: Neural Language Model with Caffe
 published: true
 ---
 
-In this blog post, I will explain how you can implement a Word Embeddings implementation in Caffe using Bengio Neural Model and based on Hinton Coursera course code in Octave. This is just a practical fun exercise I made to see if it was possible to model this problem in the Caffe deep learning framework.
+In this blog post, I will explain how you can implement a neural language model in Caffe using Bengio's Neural Model architecture and Hinton's Coursera Octave code. This is just a practical exercise I made to see if it was possible to model this problem in Caffe.
 
-The problem that this model is trying to solve is creating a Neural Model that is capable of predicting the next word given three previous words, the predicted word needs to make sense according to the previous context, and with training data the model will be able to learn knowledge about word relationships and at the end it will be very capable of doing this task.
+A neural model is capable of predicting the next word given a set of previous words, the predicted word has to relate to the previous context.
 
-A neural network is composed of what is called hidden layers, the state of this layers will be unknown, they are very useful because they are a representation of our data in different dimensions, this is the same as saying that the hidden layers are transformation of our features, this is commonly called different feature representations.
-
-By working with different feature representations is possible to create very abstract associations of the data, for example when training a classifier of pictures we can create boundaries in high dimensional space to group "concepts" of pictures and be able to differentiate how similar or different a picture is to other picture, this is possible because in those high dimensions the concept of a picture can be represented with a bunch of number combinations in a high dimensional data space and in this high dimensional space we can start talking about distances between high dimensional vectors to see how close a vector relates to each other.
+A neural network is composed of hidden layers, they are a representation of our data in different dimensions, they are helpful because we can convert our data to other data representations.
+By working with different representations is possible to extract extra information about our data, for example we can learn to classify images with a neural net because we can represent our images with different feature representations stored on the hidden layers, in those high dimensions a picture can be represented as a single point in the high dimensional space and you can calculate distances between points to get a sense of similarity between pictures.
 
 ## Word Embeddings
-A high dimensional representation of a word is called a word embed, by having a different feature representation of the words we can group words by similarity not in syntax but in context.
+A high dimensional representation of a word is called a word embed, by having a different feature representation of the words we can group words by meaning similarity. That means that we can group words by their concepts, for example fruits (apple,orange,strawberry) they all are fruits and should have a certain degree of similarity even if they written very different)
 
 Bengio proposed the following architecture for the word-embeddings problem:
 
--image of bengio neural net architecture-
+
+![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
+
 
 This net works by the premise that you have a static vocabulary with word codes (250 codes in total), this is, for each word we are going to assign it a unique code, in this case, an integer. Then a look-up operation will take place over the embedded matrix, this means that initially, this matrix will have random values but after the back-propagation learning procedure each row of this matrix will represent the different and expanded feature representation of each word in the vocabulary, this is the reason why this matrix is 250 by 50, in this case, the number 50 is the expanded representation of each word, this is an hyperparameter and you can try with different values.
 

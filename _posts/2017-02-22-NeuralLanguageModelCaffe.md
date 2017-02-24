@@ -310,7 +310,7 @@ This makes sense because we don't want to calculate any loss on a production pha
 
 
 
-### 6. Using the training network
+### 6. Using the trained network
 Using the training network for production usage requires the use of the file deploy.prototxt, as I said this file is very similar to the train-val.prototxt file with just a small set of changes, the input layer is now ready to receive just one row of data and not a batch, and the last layer doesn't calculate the loss but instead only the softmax probabilities, now we need to write some python script to use our deploy net with the trained weights:
 
 ```python

@@ -27,13 +27,14 @@ The net is followed then by a hidden layer with 200 neurons (in our case) in a f
 The net is then followed by a softmax layer to represent the final result with 250 probabilities, the bigger probabilities are the index words of our vocabulary that will have the most in common with our input context.
 
 ## Caffe Implementation
-The main goal of this exercise was to be able to create this neural net to Caffe based on the code already provided by Hinton in his Neural Network course.
+The main goal of this exercise was to create this neural net in Caffe based on the code already provided by Hinton in his Coursera Neural Network course.
 
-1. HDF5 Data Extraction 
-The first thing we have to do is bulk all our training, validation and test data to an HDF5 file, this is one of the files that Caffe supports for data, the HDF5 format is recommended on Caffe when we are not using image data.
-Caffe is mainly a deep learning framework oriented towards image processing but they state that is perfectly fine to use nonimage data. 
+1.HDF5 Data Extraction 
+The first thing we have to do is bulk all our training, validation and test data to an HDF5 file, this is one of the files that Caffe supports for data, the HDF5 format is recommended when we are not using image data in Caffe.
 
-Because the initial data is on a .mat format on octave is necessary to export this to CSV, this is Octave code:
+Caffe is mainly a deep learning framework focused on image processing but they state that is perfectly fine to use non-image data to make machine learning models. 
+
+Because the initial data is on a .mat format in octave, is necessary to export this to a csv file, this is Octave code required to do that:
 
 ```python
 %generate dataset from octave
@@ -46,11 +47,11 @@ csvwrite("test_x.csv",test_x')
 csvwrite("test_t.csv",test_t')
 ```
 
-This command exports our data file to a nice format:
+This command exports our data file to a nice comma separated value format:
 
 ![train data]({{site.baseurl}}/assets/trainx.jpg)
 
-Now towards the code, the first script we have to do is read all this CSV data and store it in an HDF5 compatible format
+Now the first script we have to do, is a script that reads all this csv data files and stores them  in an HDF5 compatible format:
 
 ```python
 import h5py, os
@@ -105,14 +106,14 @@ f.create_dataset('label',  data = labels)
 f.close()
 ```
 
-If you follow the code you can see that this simple script only save all our training data into an object called data and all our label data into an object called label, this is required by Caffe to know where to read data and labels.
+If you follow the code you can see that this script only save all our training data into an object called "data" and all our label data into an object called "label", this is required by Caffe to know where to read the data and the target labels. 
+The next step is create our neural network architecture in Caffe.
 
-As you can see these files are all binary, now the next step is to start creating our neural network architecture in Caffe:
+2.Caffe neural net training model definition
 
-2.  Caffe NeuralNet training model definition
-Creating a net in Caffe requires to write all the definition in prototxt files, these files have a JSON notation so is very easy to write them.
+To create a neural net in Caffe is necessary to write prototxt files, these files represent the neural net architecture and all the configurations required using a simple JSON notation.
 
-The first prototxt file we need to create will be called train_val.prototxt here we will store all the architecture for our neural network this includes all the layers and what types of neurons will have, also here we are going to define the data layer that will read our HDF5 files. This file is called train_val because here will be defined the architecture for the training phase as well as for the validation phase.
+The first prototxt file we need to create will be called train_val.prototxt, in this file we will store all the architecture for our neural network, this includes all the layers and what types of neurons will have, also in this file we are going to define the data layer that will read our HDF5 files. This file is called train_val because it will define the architecture for the training phase as well as for the validation phase:
 
 ```json
 name: "LanguageNet"
@@ -222,21 +223,22 @@ layer {
 
 The code is self-explanatory although there are some important things to highlight:
 
-the first layer of type HDF5Data reads a train.txt file and not our HDF5 file directly, this txt file has the path of the HDF5 file, that just how Caffe works.
+The first layer of type HDF5Data reads a train.txt file and not our HDF5 file directly, this txt file has the path of the HDF5 file.
+
 You can see that we have two HDF5Data layers, this is because for the training phase we are going to use a different dataset than the test phase, the test phase will reference the HDF5Data that corresponds to our test set.
 
-Another thing to highlight is the Embed layer, although the documentation, is very scarce about this type of layer on the web I think I managed to make it work correctly, this layer will specify the input dimensions to 250 this will be our total vocabulary and the expanded vector of 50 as specified by the output property, this means that this layer will store on a blob a matrix of 250 by 50 where each row or word will have a different feature representation of 50 dimensions, this layer will do a lookup operation for each index in our vocabulary, this functionality is required to be able to implement a word-embedding functionality correctly.
+Another thing to highlight is the embed layer, although I couldnt find much information about how this layer works I think I managed to make it work correctly, this layer will specify the input dimensions to 250 this will be our total vocabulary and the expanded vector of 50 as specified by the output property, this means that this layer will store on a blob a matrix of 250 by 50 where each row or word will have a different feature representation of 50 dimensions, this layer will do a lookup operation (instead of a multiplication operation) for each index in our vocabulary, this functionality is required to be able to implement a word-embedding functionality correctly.
 
-After the Embed layer, we specify a hidden layer with relu neurons, specifically 200 neurons, this will allow us to transform even more our feature representations of word embeddings on a non-linearity fashion.
+After the embed layer, we specify a hidden layer with rectified linear neurons, specifically 200 neurons, this will allow us to combine the three different word embeddings to a different feature representation dimensionality.
 
-Finally, we do an inner product to fit the dimensions of our desired output (250), because at the end we want to output a long vector of 250 dimensions full of probabilities.
+Finally, we do an inner product to fit the dimensions of our last layer (200) to the desired 250 dimension for the output.
 
-When we have this vector of 250 dimensions with numbers we can pass it through a softmax layer to calculate a probability distribution, specifically, this layer is called SoftmaxWithLoss this layer calculates the probability distribution and also calculates the loss with respect to our target labels.
+Finally we can convert this 250 vector to a vector of probabilities using a softmax layer to calculate a probability distribution, specifically, this layer is called SoftmaxWithLoss because it calculates a probability distribution and also calculates the loss with respect to our target labels.
 
 ![architecture]({{site.baseurl}}/assets/architectureWordEmbeddingsNet.jpg)
 
 
-3.  Caffe NeuralNet deploy model definition
+3.Caffe neural net deploy model definition
 In Caffe you can have multiples models of a network, in this case, we want a deployed model, this model will be used only when all our weights are trained and we have our network ready for production, this involves some small changes to the original architecture.
 What we do here is to copy the train_val.prototxt to a new file called deploy.prototxt, and we are going to do some small modifications:
 

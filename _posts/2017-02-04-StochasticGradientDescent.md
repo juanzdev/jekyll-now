@@ -5,7 +5,7 @@ published: true
 ---
 If you compute the gradient on the half of your training data and also on the other half of the training data, you will always get the same answer on both of them, is better to compute the gradient on the first half, then update the weights and then compute the gradient on the second half.
 Typically we use a mini batch size of 10 or 100 examples or 1000 examples.
-So we can conclude that ** Is not optimal to compute the gradient for your weights on the entire training set.**
+So we can conclude that is not optimal to compute the gradient for your weights on the entire training set.
 
 **Online Learning**
 The extreme version of the mini-batch learning approach is called online learning, where you compute the gradient for just one training case, update the weights and then keep with another training case.

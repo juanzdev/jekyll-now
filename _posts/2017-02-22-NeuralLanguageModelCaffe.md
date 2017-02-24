@@ -47,7 +47,7 @@ csvwrite("test_t.csv",test_t')
 
 This command exports our data file to a nice format:
 
-![train data]({{site.baseurl}}/_posts/trainx.jpg)
+![train data]({{site.baseurl}}/assets/trainx.jpg)
 
 Now towards the code, the first script we have to do is read all this CSV data and store it in an HDF5 compatible format
 

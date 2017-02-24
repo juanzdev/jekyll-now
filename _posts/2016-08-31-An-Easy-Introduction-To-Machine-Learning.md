@@ -5,9 +5,7 @@ published: true
 ---
 
 
-Maybe you have already heard about machine learning and some of the amazing things it can do, in this series of posts I'm going to explain in a very easy way what Machine Learning is and why it is so important for the future of technology.
-
-Machine learning covers a lot of topics and can have a lot of ramifications, but I like to define it as **a set of techniques and specialized algorithms that generate mathematical functions from pure data**, the output of these generated functions are of our special interest because they can give us very good estimates about new data based on previous knowledge, in other words, this generated function will try to describe the data no matter how is structured.
+Maybe you have already heard about machine learning and some of the amazing things it can do, in this series of posts I'm going to explain in a very easy way what machine learning is and why it is so important for the future of technology. Machine learning covers a lot of topics and can have a lot of ramifications, but I like to define it as **a set of techniques and specialized algorithms that generate mathematical functions from pure data**, the output of these generated functions are of our special interest because they can give us very good estimates about new data based on previous knowledge, in other words, this generated function will try to describe the data no matter how is structured.
 
 An easy way to understand machine learning is to think of mathematical functions, for example when you write a program using a 3rd generation language like C# or Java, you think in variables, if-then statements, classes, methods, generics, loops etc. Now **our goal** is to create a program that outputs the computer **price** in USD dollars depending on the following characteristic:
 

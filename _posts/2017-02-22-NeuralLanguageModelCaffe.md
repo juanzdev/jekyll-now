@@ -5,7 +5,6 @@ published: true
 ---
 
 In this blog post, I will explain how you can implement a neural language model in Caffe using Bengio's Neural Model architecture and Hinton's Coursera Octave code. This is just a practical exercise I made to see if it was possible to model this problem in Caffe.
-
 A neural model is capable of predicting the next word given a set of previous words, the predicted word has to relate to the previous context.
 
 A neural network is composed of hidden layers, they are a representation of our data in different dimensions, they are helpful because we can convert our data to other data representations.

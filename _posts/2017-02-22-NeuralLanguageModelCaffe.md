@@ -15,7 +15,7 @@ By working with different feature representations is possible to create very abs
 ## Word Embeddings
 A high dimensional representation of a word is called a word embed, by having a different feature representation of the words we can group words by similarity not in syntax but in context.
 
-Bengio was the first to propose a neural architecture for the word embedding problem:
+Bengio proposed the following architecture for the word-embeddings problem:
 
 -image of bengio neural net architecture-
 
@@ -47,7 +47,7 @@ csvwrite("test_t.csv",test_t')
 
 This command exports our data file to a nice format:
 
---picture of comma separated values
+![train data]({{site.baseurl}}/_posts/trainx.jpg)
 
 Now towards the code, the first script we have to do is read all this CSV data and store it in an HDF5 compatible format
 

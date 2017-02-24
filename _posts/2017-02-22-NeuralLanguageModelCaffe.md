@@ -404,4 +404,4 @@ for x in xrange(0, 5):
     print out['prediction'][0][top5Indexes[x]]
 ```
 
-You can find all the source code here: https://github.com/juanzdev/word-embeddings-caffe
+You can find all the source code here: [https://github.com/juanzdev/word-embeddings-caffe](https://github.com/juanzdev/word-embeddings-caffe)

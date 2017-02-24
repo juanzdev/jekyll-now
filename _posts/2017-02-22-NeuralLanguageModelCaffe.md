@@ -29,7 +29,8 @@ The net is then followed by a softmax layer to represent the final result with 2
 ## Caffe Implementation
 The main goal of this exercise was to create this neural net in Caffe based on the code already provided by Hinton in his Coursera Neural Network course.
 
-1.HDF5 Data Extraction 
+
+### 1.HDF5 Data Extraction 
 The first thing we have to do is bulk all our training, validation and test data to an HDF5 file, this is one of the files that Caffe supports for data, the HDF5 format is recommended when we are not using image data in Caffe.
 
 Caffe is mainly a deep learning framework focused on image processing but they state that is perfectly fine to use non-image data to make machine learning models. 
@@ -109,7 +110,7 @@ f.close()
 If you follow the code you can see that this script only save all our training data into an object called "data" and all our label data into an object called "label", this is required by Caffe to know where to read the data and the target labels. 
 The next step is create our neural network architecture in Caffe.
 
-2.Caffe neural net training model definition
+### 2.Caffe neural net training model definition
 
 To create a neural net in Caffe is necessary to write prototxt files, these files represent the neural net architecture and all the configurations required using a simple JSON notation.
 
@@ -237,7 +238,7 @@ Finally we can convert this 250 vector to a vector of probabilities using a soft
 
 ![architecture]({{site.baseurl}}/assets/architectureWordEmbeddingsNet.jpg)
 
-3.Solver
+### 3.Solver
 Now we need to specify one more prototxt file called solver, this file will hold a lot of hyperparameters for our model, you can play with this settings to achieve better results with your model, here, for example, you can specify what optimization method you want to learn the weights, what regularization strategy you want, also you can specify the number of Epocs you need, you can also specify if you want GPU for faster training!.
 
 ```json
@@ -266,14 +267,14 @@ snapshot_prefix: "model_snapshot/snap"
 solver_mode: CPU
 ```
 
-4.Training the neural net
+### 4.Training the neural net
 Now that the neural net model is ready we can train it using the following command:
 
 ```python
 caffe.bin train --solver=model/solver.prototxt
 ```
 
-4.Caffe neural net deploy model definition
+### 5.Caffe neural net deploy model definition
 In Caffe you can have multiples models of a network, in this case, we want a ready to use model, this model will be used only when all our weights are trained and we have our network ready for production, this involves some small changes to the original architecture.
 
 What we have to do is copy the train_val.prototxt to a new file called deploy.prototxt then make some small modifications:
@@ -309,7 +310,7 @@ This makes sense because we don't want to calculate any loss on a production pha
 
 
 
-5.Using the training network
+### 6.Using the training network
 Using the training network for production usage requires the use of the file deploy.prototxt, as I said this file is very similar to the train-val.prototxt file with just a small set of changes, the input layer is now ready to receive just one row of data and not a batch, and the last layer doesn't calculate the loss but instead only the softmax probabilities, now we need to write some python script to use our deploy net with the trained weights:
 
 ```python

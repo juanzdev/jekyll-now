@@ -20,11 +20,11 @@ Bengio proposed the following architecture for the word-embeddings problem:
 ![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
 
-This net works by the premise that you have a static vocabulary with word codes (250 codes in total), this is, for each word we are going to assign it a unique code, in this case, an integer. Then a look-up operation will take place over the embedded matrix, this means that initially, this matrix will have random values but after the back-propagation learning procedure each row of this matrix will represent the different and expanded feature representation of each word in the vocabulary, this is the reason why this matrix is 250 by 50, in this case, the number 50 is the expanded representation of each word, this is an hyperparameter and you can try with different values.
+This net works by the premise that you have a static vocabulary with word codes (250 codes in the Hinton's coursera implementation), so for each word we are going to assign a unique code. Then a look-up operation will take place over the embedded matrix, this means that initially, this matrix will have random values but after the back-propagation learning procedure each row of this embed matrix will represent an expanded feature representation of each word in the vocabulary, this is the reason why this matrix is 250 by 50, 50 is the expanded representation of each word to 50 dimensions, this value is considered an hyperparameter and can be changed.
 
-The net is followed then by a hidden layer with 200 neurons in a fully connected fashion, this layer will help to add more complexity to our internal representations by being more flexible with more non-linearities.
+The net is followed then by a hidden layer with 200 neurons (in our case) in a fully connected multiplication, this layer will combine the 3 input words (in form of word embeddings) and will learn to associate them using non-linearity neurons.
 
-The net is then followed by a softmax layer to be able to represent the final result with probabilities, at the end of this net we are going to have the most probable words that come next to our previous three.
+The net is then followed by a softmax layer to represent the final result with 250 probabilities, the bigger probabilities are the index words of our vocabulary that will have the most in common with our input context.
 
 ## Caffe Implementation
 The main goal of this exercise was to be able to create this neural net to Caffe based on the code already provided by Hinton in his Neural Network course.

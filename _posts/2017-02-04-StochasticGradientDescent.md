@@ -3,24 +3,21 @@ layout: post
 title: Stochastic Gradient Descent recomendations
 published: false
 ---
-
-Those are some practical tips when optimizing your machine learning models using gradient descent, specifically I'm going to talk about the full batch aproach vs the mini batch aproach.
-
-**Full-batch learning vs Mini-batch learning**
-If you compute the gradient on the half of your training data and also on the other half of the training data, you will always get the same answer on both of them, is better to compute the gradient on the first half, then update the weights and then compute the gradient on the second half. The extreme version of this approach is called Online Learning, where you compute the gradient for just a training case then update the weights and keep with another training case. So we can conclude that ** Is not optimal to compute the gradient for your weights on the entire training set.**
+If you compute the gradient on the half of your training data and also on the other half of the training data, you will always get the same answer on both of them, is better to compute the gradient on the first half, then update the weights and then compute the gradient on the second half.
+Typically we use a mini batch size of 10 or 100 examples or 1000 examples.
+So we can conclude that ** Is not optimal to compute the gradient for your weights on the entire training set.**
 
 **Online Learning**
-    In general, the Online Learning is quite extreme and we don't want to go that far, is better to use a batch learning approach with small mini-batches, typically 10 or 100 examples or 1000 examples per batch.
- 
-    
-    
-    * One advantage of batch learning is that less computation is used for weight updates.
-    
-    * Another advantage of batch learning is that you can compute the gradient for a whole bunch of cases in parallel because of the nature of matrix multiplication, it is pretty fast.
-    
-    * On thing to have into account when doing batch learning is that for each batch, the training cases must be very different with respect to their label, if a batch will have the same answer(label) that will unnecessarily slosh the weights and the training will not be so efficient, to be able to have very characteristic batches (unique) is just to simply apply a random function over your sorting of training data.
-    
-    * So there are actually two methods for learning (full batch vs mini-batch), for full batch, you can make it more optimal by applying conjugate gradient and other numerous methods created by the optimization community
+The extreme version of the mini-batch learning approach is called online learning, where you compute the gradient for just one training case, update the weights and then keep with another training case.
+In general, the Online Learning is quite extreme for most applications so is better to use the mini-batches most of the time.
+
+**Full batch learning advantages**
+One advantage of full batch learning is that less computation is used for weight updates. Another advantage of batch learning is that you can compute the gradient for a whole bunch of cases in parallel because of the nature of matrix multiplication.
+Conjugate gradient is a full-batch technique that can be very efficient too.
+  
+**Randomize your data**
+On thing to have into account when doing full batch or mini batch learning is that for each batch, the training cases must be very different with respect to their label, if a group batch have most of their training cases of the same type this will unnecessarily update the weights in a bad way and the training will not be so efficient at the end, to be able to have very unique batches just apply a random over all your data before training.
+
     
 **Basic Mini-Batch gradient descent algorithm**
 

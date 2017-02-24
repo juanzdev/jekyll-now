@@ -232,7 +232,7 @@ Finally, we do an inner product to fit the dimensions of our desired output (250
 
 When we have this vector of 250 dimensions with numbers we can pass it through a softmax layer to calculate a probability distribution, specifically, this layer is called SoftmaxWithLoss this layer calculates the probability distribution and also calculates the loss with respect to our target labels.
 
-![architecture]({{site.baseurl}}/assets/architectureWordEmbeddingsNet.png)
+![architecture]({{site.baseurl}}/assets/architectureWordEmbeddingsNet.jpg)
 
 
 3.  Caffe NeuralNet deploy model definition

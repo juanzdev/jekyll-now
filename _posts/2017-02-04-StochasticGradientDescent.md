@@ -16,7 +16,7 @@ One advantage of full batch learning is that less computation is used for weight
 Conjugate gradient is a full-batch technique that can be very efficient too.
   
 **Randomize your data**
-On thing to have into account when doing full batch or mini batch learning is that for each batch, the training cases must be very different with respect to their label, if a group batch have most of their training cases of the same type this will unnecessarily update the weights in a bad way and the training will not be so efficient at the end, to be able to have very unique batches just apply a random over all your data before training.
+On thing to have into account when doing full batch or mini-batch learning is that for each batch, the training cases must be very different with respect to their label, if a group batch have most of their training cases of the same type this will unnecessarily update the weights in a bad way and the training will not be so efficient at the end, to be able to have a very unique batch just apply a random function over all your data before training.
 
     
 **Basic Mini-Batch gradient descent algorithm**

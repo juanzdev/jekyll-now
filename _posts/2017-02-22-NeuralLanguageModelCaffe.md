@@ -239,10 +239,11 @@ Finally we can convert this 250 vector to a vector of probabilities using a soft
 
 
 3.Caffe neural net deploy model definition
-In Caffe you can have multiples models of a network, in this case, we want a deployed model, this model will be used only when all our weights are trained and we have our network ready for production, this involves some small changes to the original architecture.
-What we do here is to copy the train_val.prototxt to a new file called deploy.prototxt, and we are going to do some small modifications:
+In Caffe you can have multiples models of a network, in this case, we want a ready to use model, this model will be used only when all our weights are trained and we have our network ready for production, this involves some small changes to the original architecture.
 
-First, we remove the HDF5 layers because the training was already made, instead we replace this two layers with a single one of type Input:
+What we have to do is copy the train_val.prototxt to a new file called deploy.prototxt then make some small modifications:
+
+First, we remove all the HDF5 layers, no training data is necessary because we already trained our model, then we add a new layer of type Input:
 
 ```json
 layer {
@@ -258,8 +259,8 @@ layer {
 }
 ```
 
-this new input layer will have the desired dimensions for our trained network, this is 1 by 3 because the input of this network will receive just a vector of 3 dimensions specifying the first 3 words (code-words) to predict the 4th.
-The rest of the network will be the same except for the output layer, we are going to chop the SoftmaxWithLoss layer and replaced with a new type of layer called Softmax:
+This new input layer will have the desired dimensions for a single input, this is 1 by 3 because the input of this network will receive just a vector of 3 dimensions specifying the first 3 words (code-words) to predict the 4th.
+The rest of the network will be the same except for the output layer, we are going to chop the SoftmaxWithLoss layer and replace it with a new type of layer called Softmax:
 
 ```json
 layer{
@@ -269,10 +270,10 @@ layer{
     top: "prediction"
 }
 ```
-This makes sense because we don't want to calculate any loss on a production phase (because we don't have target labels) we just want to make a simple forward pass through all our learning weights to output some result, in this case, just the Softmax probabilities without any loss associated, makes sense right?
+This makes sense because we don't want to calculate any loss on a production phase (because we don't have target labels) we just want to make a simple forward pass through all our learning weights to output some result, in this case, just the Softmax probabilities without any loss associated, ¿makes sense right?
 
-3. Solver
-Now we need to specify one more prototxt file called solver, this file will hold a lot of hyperparameters for our model, you can play with this settings to achieve better results with your model, here, for example, you can specify what optimization method you want to learn the weights, what regularization strategy you want, also you can specify the number of epocs you need to achieve good results, here you can very easy to switch to GPU for fast training!.
+3.Solver
+Now we need to specify one more prototxt file called solver, this file will hold a lot of hyperparameters for our model, you can play with this settings to achieve better results with your model, here, for example, you can specify what optimization method you want to learn the weights, what regularization strategy you want, also you can specify the number of Epocs you need, you can also specify if you want GPU for faster training!.
 
 ```json
 # The train/test net protocol buffer definition
@@ -300,8 +301,8 @@ snapshot_prefix: "model_snapshot/snap"
 solver_mode: CPU
 ```
 
-4. Using the training network
-Using the training network for production usage or just for fun requires the use of the file deploy.prototxt, as I said this file is very similar of the train-val.prototxt with just a small set of changes, the input layer is now ready to receive just one row of data and not a batch, and the last layer doesn't calculate the loss but instead only the softmax probabilities, now we need to write some python script to use our deploy net with the trained weights.
+4.Using the training network
+Using the training network for production usage requires the use of the file deploy.prototxt, as I said this file is very similar to the train-val.prototxt file with just a small set of changes, the input layer is now ready to receive just one row of data and not a batch, and the last layer doesn't calculate the loss but instead only the softmax probabilities, now we need to write some python script to use our deploy net with the trained weights:
 
 ```python
 import numpy as np
@@ -360,28 +361,29 @@ for x in xrange(0, 5):
 ```
 
 I need to explain some points:
-This script will read the vocab.csv file, this file has all the vocabulary on the form of id value pairs for a total of 250 words, we need this just to output the predicted word and not a meaningless id.
+This script will read the vocab.csv file that has all the vocabulary in the form of id,value pairs for a total of 250 words, we need this just to output the predicted word in form of text and not in a code.
 
-this line:
+This line:
 
 ```python
 net = caffe.Net('model/deploy.prototxt','model_snapshot/snap_iter_100000.caffemodel',caffe.TEST)
 ```
 
-use the Caffe binding that is available for python, using this library we can import the caffe net to the python environment to use it with our developments, this line in particular imports the caffe deploy net but with the trained weights that we used using the train-val model
+Use the Caffe binding that is available for python, with this library we can import the caffe trained net to the python environment and use it with your developments, this line in particular imports the caffe deploy net but with the trained weights that we learned using the train-val model.
+
+This line feeds our net with the custom input:
 
 ```python
 net.blobs['data'].data[...] = myIndexInput
 ```
 
-this line feeds our net with our custom input
+Finally, we perform a single forward pass with this line, remember that this is a very fast operation because behind the scenes a bunch of matrix multiplications are happening:
 
 ```python
 out = net.forward()
 ```
-finally, we perform a single forward propagation with this line, remember that this is a very fast operation because behind the scenes a bunch of matrix multiplications are happening, and this is a very fast thing to do.
 
-Finally, the result of the fprop will give us 250 probabilities, but we only want the top 5
+Finally, the result of the fprop will give us 250 probabilities, but we only want the top 5:
 
 ```python
 ##top 5 predictions

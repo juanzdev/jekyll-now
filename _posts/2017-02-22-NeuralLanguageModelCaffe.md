@@ -9,10 +9,10 @@ In this blog post, I will explain how you can implement a neural language model 
 A neural model is capable of predicting the next word given a set of previous words, the predicted word has to relate to the previous context.
 
 A neural network is composed of hidden layers, they are a representation of our data in different dimensions, they are helpful because we can convert our data to other data representations.
-By working with different representations is possible to extract extra information about our data, for example we can learn to classify images with a neural net because we can represent our images with different feature representations stored on the hidden layers, in those high dimensions a picture can be represented as a single point in the high dimensional space and you can calculate distances between points to get a sense of similarity between pictures.
+By working with different representations is possible to extract extra information about our data, for example we can learn to classify images with a neural net because we can represent our images with different feature representations stored in the hidden layers, in those high dimensions a picture can be represented as a single point in the high dimensional space and you can calculate distances between points to get a sense of similarity between pictures.
 
 ## Word Embeddings
-A high dimensional representation of a word is called a word embed, by having a different feature representation of the words we can group words by meaning similarity. That means that we can group words by their concepts, for example fruits (apple,orange,strawberry) they all are fruits and should have a certain degree of similarity even if they written very different)
+A high dimensional representation of a word is called a word embed, by having a different feature representation of the words we can group words by meaning similarity. That means that we can group words by their concepts, for example, fruits (apple, orange, strawberry) they all are fruits and should have a certain degree of similarity even if they are written differently)
 
 Bengio proposed the following architecture for the word-embeddings problem:
 
@@ -20,7 +20,7 @@ Bengio proposed the following architecture for the word-embeddings problem:
 ![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
 
-This net works by the premise that you have a static vocabulary with word codes (250 codes in the Hinton's coursera implementation), so for each word we are going to assign a unique code. Then a look-up operation will take place over the embedded matrix, this means that initially, this matrix will have random values but after the back-propagation learning procedure each row of this embed matrix will represent an expanded feature representation of each word in the vocabulary, this is the reason why this matrix is 250 by 50, 50 is the expanded representation of each word to 50 dimensions, this value is considered an hyperparameter and can be changed.
+This net works by the premise that you have a static vocabulary with word codes (250 codes in the Hinton's Coursera implementation), so for each word we are going to assign a unique code. Then a lookup operation will take place over the embedded matrix, this means that initially, this matrix will have random values but after the back-propagation learning procedure each row of this embed matrix will represent an expanded feature representation of each word in the vocabulary, this is the reason why this matrix is 250 by 50, 50 is the expanded representation of each word in 50 dimensions, this value is considered an hyperparameter and can be changed.
 
 The net is followed then by a hidden layer with 200 neurons (in our case) in a fully connected multiplication, this layer will combine the 3 input words (in form of word embeddings) and will learn to associate them using non-linearity neurons.
 
@@ -52,7 +52,7 @@ This command exports our data file to a nice comma separated value format:
 
 ![train data]({{site.baseurl}}/assets/trainx.jpg)
 
-Now the first script we have to do, is a script that reads all this csv data files and stores them  in an HDF5 compatible format:
+Now the first script needs to read all these csv data files and store them  in an HDF5 compatible format:
 
 ```python
 import h5py, os
@@ -228,13 +228,13 @@ The first layer of type HDF5Data reads a train.txt file and not our HDF5 file di
 
 You can see that we have two HDF5Data layers, this is because for the training phase we are going to use a different dataset than the test phase, the test phase will reference the HDF5Data that corresponds to our test set.
 
-Another thing to highlight is the embed layer, although I couldnt find much information about how this layer works I think I managed to make it work correctly, this layer will specify the input dimensions to 250 this will be our total vocabulary and the expanded vector of 50 as specified by the output property, this means that this layer will store on a blob a matrix of 250 by 50 where each row or word will have a different feature representation of 50 dimensions, this layer will do a lookup operation (instead of a multiplication operation) for each index in our vocabulary, this functionality is required to be able to implement a word-embedding functionality correctly.
+Another thing to highlight is the embed layer, although I couldn't find much information about how this layer works I think I managed to make it work correctly, this layer will specify the input dimensions to 250 this will be our total vocabulary and the expanded vector of 50 as specified by the output property, this means that this layer will store on a blob a matrix of 250 by 50 where each row or word will have a different feature representation of 50 dimensions, this layer will do a lookup operation (instead of a multiplication operation) for each index in our vocabulary, this functionality is required to be able to implement a word-embedding functionality correctly.
 
 After the embed layer, we specify a hidden layer with rectified linear neurons, specifically 200 neurons, this will allow us to combine the three different word embeddings to a different feature representation dimensionality.
 
 Finally, we do an inner product to fit the dimensions of our last layer (200) to the desired 250 dimension for the output.
 
-Finally we can convert this 250 vector to a vector of probabilities using a softmax layer to calculate a probability distribution, specifically, this layer is called SoftmaxWithLoss because it calculates a probability distribution and also calculates the loss with respect to our target labels.
+Finally, we can convert this 250 vector to a vector of probabilities using a softmax layer to calculate a probability distribution, specifically, this layer is called SoftmaxWithLoss because it calculates a probability distribution and also calculates the loss with respect to our target labels.
 
 ![architecture]({{site.baseurl}}/assets/architectureWordEmbeddingsNet.jpg)
 
@@ -370,7 +370,7 @@ for x in xrange(0, 5):
 ```
 
 I need to explain some points:
-This script will read the vocab.csv file that has all the vocabulary in the form of id,value pairs for a total of 250 words, we need this just to output the predicted word in form of text and not in a code.
+This script will read the vocab.csv file that has all the vocabulary in the form of id, value pairs for a total of 250 words, we need this just to output the predicted word in form of text and not in a code.
 
 This line:
 

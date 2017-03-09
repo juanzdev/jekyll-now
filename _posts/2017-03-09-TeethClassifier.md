@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Teeth Classifier using Convolutional Neural Networks
-published: true
+published: false
 ---
 
 In this blog post I'm going to explain how you can create a complete machine learning system for teeth detection over a face, I will show the main challenges that I faced implementing this task.

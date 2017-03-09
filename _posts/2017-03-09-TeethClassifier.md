@@ -27,6 +27,37 @@ Now there is some manual process involved here but is necessary only for the mod
 
 //picture of the manual labelling tool in action
 
+Note that I could spend much time labelling the rest of the data (up to 3755 faces) and also start manual labeling more and more faces (you got the idea) but for time constrains I did only this process for the 700 first images.
+
+Also note that this labeled data is not our training set yet, because we have such small data set we have to help the model litle bit, in this case we are going to get rid of unnecessary data and noise, that means that we are going to detect the face region and discard the rest of the image.
+
+#Detect the face region
+
+There are a number of very good methods to substract the face region from an image, in this case I'm going to use a method called Histogram of Gradients or HOG to transform the image to another representation of values for easy interpretation then I will extract the landmark features of the face and finally I will transform the face using the landmark to have a frontal face, lucky for us those three steps can be simplified a lot by using the dlib library.
+
+#code fragment for HOG
+#code fragment for landmark detection
+#code fragment for face afine
+
+Now that we have frontal faces we can focus on the mouth region, a simple region is to divide this image in two and take the bottom region, for sake of simplicity I'm going to use this approach.
+
+#picture of muct sample facing side
+#picture of HOG face
+#picture of landmark detection for face
+#picture of face afined (facing frontal)
+#picture of mouth region 
+
+#picture of a bunch of mouths
+
+#Highlithing the teeth 
+Now a quick tecnique to highlight the teeth on the mouth region is inverting the image pixels, this is converting the image to the negative image
+
+//code for extracting the negative image
+
+//picture of mouth enhanced with negative pattern
+
+This pre-processing will help a lot our convolutional neural network, but also note that we are doing this because in this particular case we are working with small sets of data, we had millions of images we could easily pass the entire image to the net and it will surely learn teeth features.
+
 
 
 

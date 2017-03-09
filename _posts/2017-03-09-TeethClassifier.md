@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 ---
 In this blog post I'm going to explain how you can create a complete machine learning system for teeth detection over a face, I will show the main challenges that I faced implementing this task.
 
@@ -139,7 +139,3 @@ Testing our net with real video!
 alghouth training a convnet is a very slow process, testing it is not!, in fact it takes milliseconds to test the trained model, to prove you that I'm going to call the trianed net in each frame of a video to show the predictions on realtime.
 
 //gif of a video runnning with the net showing if the person is showing the teeth or not
-
-
-
-

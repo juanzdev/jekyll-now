@@ -20,7 +20,16 @@ There are a lof of datasets with faces on the web, I choose an open dataset call
 
 //picture of the girl picture (3 pictures)
 
-This dataset has a lot of variation in lighing, people type faces and expressions. For the purpouse of this post I only used one part of this dataset called muct-a-jpg-v1.tar.gz, this file contains 700+ faces. Although this is a small number for training a ML model, it is possible to obtain good results using data augmentation.
+This dataset has a lot of variation in lighing, people face types and expressions. For the purpouse of this post I only used one part of this dataset called muct-a-jpg-v1.tar.gz, this file contains 700+ faces. Although this is a small number for training a ML model, it is possible to obtain good results using data augmentation, the reason I choose only this subset of data is because at some point in the process is necesssary to do manual labeling of the data.
+
+#Gathering the right data for the training set
+Now there is some manual process involved here but is necessary only for the model training, we are going to label each of the 700 faces with the label (1 for showing teeth, 0 not showing teeth), the label will be stored on the filename of the image. Because this can be a tedious process I created a simple tool for labeling images if you push the button yes it will add to the existing filename the label _true or _false otherwise, if you want to use this tool for your purpouses feel free to pull it from git hub and modify it to your needs here //link to github 
+
+
+
+
+
+
 
 
 

@@ -25,7 +25,7 @@ This dataset has a lot of variation in lighing, people face types and expression
 #Gathering the right data for the training set
 Now there is some manual process involved here but is necessary only for the model training, we are going to label each of the 700 faces with the label (1 for showing teeth, 0 not showing teeth), the label will be stored on the filename of the image. Because this can be a tedious process I created a simple tool for labeling images if you push the button yes it will add to the existing filename the label _true or _false otherwise, if you want to use this tool for your purpouses feel free to pull it from git hub and modify it to your needs here //link to github 
 
-
+//picture of the manual labelling tool in action
 
 
 

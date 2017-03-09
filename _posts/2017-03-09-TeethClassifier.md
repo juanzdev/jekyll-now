@@ -66,12 +66,31 @@ Because we are working with small sets of data we need to augment our data, this
 
 * Mirroring
 Foreach image we are going to create a mirrored clone, this will gives us 2x the data.
-
+//example of mirroring with a muct image
 * Shearing
 Foreach image we are going to make small rotations, specifically -30,-20,-10,+10,+20,+30 degrees of rotation this will give us 8x the data.
-
+//example of shearing with a muct image
 * Scaling
 Foreach image we are going scale it by small factors, this will give us 2x the data
+//example of scaling with a muct image
+
+//code for mirroring
+
+//code for shearing
+
+//code for scaling
+
+#Preparing the data for the ConvNet
+Now that we have our data ready, we need to split it into two subsets, we are going to use an 80/20 rule, 80 percernt of our transformed data is going to the training set and the rest of the 20 percent is going to the validation set, in this case I move the data accordingly to their respective folders training_data and validation_data
+
+With the data inplace we are going to generate two text files, each contianing the path of the image plus the label (1 or 0),  this text files are required by the Caffe deep learning framework
+
+#code for generating those text files
+
+//image of the plaint text showing the format
+
+
+
 
 
 

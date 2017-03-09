@@ -61,6 +61,19 @@ Now a quick tecnique to highlight the teeth on the mouth region is inverting the
 
 This pre-processing will help a lot our convolutional neural network, but also note that we are doing this because in this particular case we are working with small sets of data, we had millions of images we could easily pass the entire image to the net and it will surely learn teeth features.
 
+#Data Augmentation
+Because we are working with small sets of data we need to augment our data, this is create artificial data using a bunchh of common techniques, for this particular case we are going to do the following transformations for each image in our dataset.
+
+* Mirroring
+Foreach image we are going to create a mirrored clone, this will gives us 2x the data.
+
+* Shearing
+Foreach image we are going to make small rotations, specifically -30,-20,-10,+10,+20,+30 degrees of rotation this will give us 8x the data.
+
+* Scaling
+Foreach image we are going scale it by small factors, this will give us 2x the data
+
+
 
 
 

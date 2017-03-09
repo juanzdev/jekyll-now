@@ -104,6 +104,12 @@ compute_image_mean -backend=lmdb train_lmdb mean.binaryproto
 
 This will generate a file called mean.binaryproto, this file will have matrix data related to the overal mean of our training set, this will be substracted during training to each and everyone of our training examples
 
+#Designing and implementing the Convolutional Neural Net
+For quick prototiping I'm going to use the Caffe DeepLearning framework, but you can use other cool frameworks like TensorFlow or Keras.
+
+Convnets are really good at image processing because they can learn features automatically just by providing input and ouput data, they are also very good at transformation invariances this is to small changes in rotation and full changes in position.
+In Machine Learning there are a set of well known architectures for image procesing like AlexNet, VGGNet, Inception etc. If you follow that kind of architectures is almost guaranteed you will obtain the best results possible, for this case and for the sake of simplicity and training time I'm going to use a simplified version of AlexNet with much less convolutional layers, remember that here we are just trying to extract Teeth features from the face and not entire concepts of the world like AlexNet does, so a net with much less capacity will do fine.
+
 
 
 

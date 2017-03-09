@@ -85,11 +85,24 @@ Now that we have our data ready, we need to split it into two subsets, we are go
 
 With the data inplace we are going to generate two text files, each contianing the path of the image plus the label (1 or 0),  this text files are required by the Caffe deep learning framework
 
-#code for generating those text files
+//code for generating those text files
 
 //image of the plaint text showing the format
 
+Now that we have the two text files, we are ready to generate the LMDB file, this file is very common in macihne learning and is a database file that will store all our training data along with their respective labels.
+To generate both training and validation lmdb files do the following:
 
+convert_imageset --gray --shuffle /devuser/Teeth/img/training_data/ training_data.txt train_lmdb
+convert_imageset --gray --shuffle /devuser/Teeth/img/validation_data/ training_val_data.txt val_lmdb
+
+here we are using a caffe tool to generate the lmdb files
+
+#Extracting the mean data for the entire dataset
+A common step in computer vission and image processing is to extract the mean data of the entire training data to ease the training process, to do this:
+
+compute_image_mean -backend=lmdb train_lmdb mean.binaryproto
+
+This will generate a file called mean.binaryproto, this file will have matrix data related to the overal mean of our training set, this will be substracted during training to each and everyone of our training examples
 
 
 

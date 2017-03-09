@@ -4,7 +4,7 @@ title: Teeth Classifier using Convolutional Neural Networks
 published: false
 ---
 
-In this blog post, I'm going to explain how you can create a complete machine learning system for teeth detection over a face, I will show the main challenges that I faced implementing this task.
+In this blog post, I'm going to explain how you can create a complete machine learning that solves the problem of telling weather or not a person is showing is teeth, I will show the main challenges that I faced implementing this task.
 
 Main challenges:
 1. Finding datasets where people are showing their teeth or not
@@ -26,7 +26,7 @@ There are a lot of datasets with faces on the web, I choose an open dataset call
 
 This dataset has a lot of variation in lighting, people face types and expressions. For the purpose of this post I only used one part of this dataset called muct-a-jpg-v1.tar.gz, this file contains 700+ faces. Although this is a small number for training a ML model, it is possible to obtain good results using data augmentation, the reason I choose only this subset of data is because at some point in the process is necessary to do manual labeling of the data.
 
-#Transforming the dataset for our problem
+#Transforming the dataset towards our problem
 
 Gathering the right data for the training set
 Now there is some manual process involved here but is necessary only for the model training, we are going to label each of the 700 faces with the label (1 for showing teeth, 0 not showing teeth), the label will be stored on the filename of the image. Because this can be a tedious process I created a simple tool for labeling images if you push the button yes it will add to the existing filename the label _true or _false otherwise, if you want to use this tool for your purposes feel free to pull it from git hub and modify it to your needs here //link to GitHub 
@@ -108,9 +108,9 @@ compute_image_mean -backend=lmdb train_lmdb mean.binaryproto
 This will generate a file called mean.binaryproto, this file will have matrix data related to the overall mean of our training set, this will be substracted during training to each and everyone of our training examples
 
 #Designing and implementing the Convolutional Neural Net
-For quick prototyping, I'm going to use the Caffe DeepLearning framework, but you can use other cool frameworks like TensorFlow or Keras.
+For quick prototyping, I'm going to use the Caffe Deeplearning framework, but you can use other cool frameworks like TensorFlow or Keras.
 
-Convnets are really good at image processing because they can learn features automatically just by providing input and output data, they are also very good at transformation invariances this is to small changes in rotation and full changes in position.
+Convnets are really good at image processing because they can learn features automatically just by providing input and output data, they are also very good at transformation invariances this is to small changes in rotation and full changes in translation.
 In Machine Learning there are a set of well-known architectures for image processing like AlexNet, VGGNet, Inception etc. If you follow that kind of architectures is almost guaranteed you will obtain the best results possible, for this case and for the sake of simplicity and training time I'm going to use a simplified version of AlexNet with much less convolutional layers, remember that here we are just trying to extract Teeth features from the face and not entire concepts of the world like AlexNet does, so a net with much less capacity will do fine.
 
 //code of 3 prototxt
@@ -136,6 +136,10 @@ Now we have metrics to benchmark our trained model, with this in place we can qu
 
 predict_feature_scaled.py
 
+
+Testing the image by moving them to the coorect folder
+
+Testing an individual image 
 
 
 Testing our net with real video!

@@ -110,10 +110,35 @@ For quick prototiping I'm going to use the Caffe DeepLearning framework, but you
 Convnets are really good at image processing because they can learn features automatically just by providing input and ouput data, they are also very good at transformation invariances this is to small changes in rotation and full changes in position.
 In Machine Learning there are a set of well known architectures for image procesing like AlexNet, VGGNet, Inception etc. If you follow that kind of architectures is almost guaranteed you will obtain the best results possible, for this case and for the sake of simplicity and training time I'm going to use a simplified version of AlexNet with much less convolutional layers, remember that here we are just trying to extract Teeth features from the face and not entire concepts of the world like AlexNet does, so a net with much less capacity will do fine.
 
+//code of 3 prototxt
+//image of architecture
+
+To train the neural network
+caffe train --solver=model/solver_feature_scaled.prototxt 2>&1 | tee logteeth_ult_fe_2.log
+
+
+//image of loss vs iterations with 10000 iterations
+
+#Testing the trained model with unseen data
+
+//false positive false negative chart
+
+Accuracy precision and recall
+//code
+F1score
+//code
+
+Now we have metrics to benchmark our trained model, with this in place we can quickly start tweaking things in our model or experimenting with different aproaches and at the end see the final improvement with a number.
+
+
+predict_feature_scaled.py
 
 
 
+Testing our net with real video!
+alghouth training a convnet is a very slow process, testing it is not!, in fact it takes milliseconds to test the trained model, to prove you that I'm going to call the trianed net in each frame of a video to show the predictions on realtime.
 
+//gif of a video runnning with the net showing if the person is showing the teeth or not
 
 
 

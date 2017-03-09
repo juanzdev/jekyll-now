@@ -35,19 +35,19 @@ Also note that this labeled data is not our training set yet, because we have su
 
 There are a number of very good methods to substract the face region from an image, in this case I'm going to use a method called Histogram of Gradients or HOG to transform the image to another representation of values for easy interpretation then I will extract the landmark features of the face and finally I will transform the face using the landmark to have a frontal face, lucky for us those three steps can be simplified a lot by using the dlib library.
 
-#code fragment for HOG
-#code fragment for landmark detection
-#code fragment for face afine
+//code fragment for HOG
+//code fragment for landmark detection
+//code fragment for face afine
 
 Now that we have frontal faces we can focus on the mouth region, a simple region is to divide this image in two and take the bottom region, for sake of simplicity I'm going to use this approach.
 
-#picture of muct sample facing side
-#picture of HOG face
-#picture of landmark detection for face
-#picture of face afined (facing frontal)
-#picture of mouth region 
+//picture of muct sample facing side
+//picture of HOG face
+//picture of landmark detection for face
+//picture of face afined (facing frontal)
+//picture of mouth region 
 
-#picture of a bunch of mouths
+//picture of a bunch of mouths
 
 #Highlithing the teeth 
 Now a quick tecnique to highlight the teeth on the mouth region is inverting the image pixels, this is converting the image to the negative image

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Teeth Classifier using Convolutional Neural Networks
+title: Teeth classifier using convolutional neural networks
 published: false
 ---
 

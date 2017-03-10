@@ -4,7 +4,7 @@ title: Teeth classifier using convolutional neural networks
 published: false
 ---
 
-In this blog post, I'm going to explain how you can create a complete machine learning pipeline that solves the problem of telling weather or not a person is showing is teeth, I will show the main challenges that I faced implementing this task.
+In this blog post, I'm going to explain how you can create a complete machine learning pipeline that solves the problem of telling weather or not a person is showing is teeth, I will show the main challenges that I faced implementing this task. Specifically I'm going to use a convination of OpenCV computer-vision models for face detection with a convolutional neural network for teeth recognition.
 
 Main challenges:
 1. Finding datasets where people are showing their teeth or not and tailoring them to the problem
@@ -14,7 +14,7 @@ Main challenges:
     5. Transform the face with the detected landmarks to have a "frontal face"
     6. Highlight the teeth on the face
 7. Augment data for posterior training
-8. Setup a good architecture for a Convolutional Neural Network for teeth recognition
+8. Seting up the Convolutional neural network in Caffe
 9. Training and debugging the system
 10.Testing the model
 
@@ -70,24 +70,24 @@ Now that we have frontal faces we can focus on the mouth region, a simple region
 //picture of a bunch of mouths
 
 #Highlithing the teeth 
-Now a quick technique to highlight the teeth on the mouth region is inverting the image pixels, this is converting the image to the negative image
+Now a quick technique to highlight the teeth on the mouth region is inverting the image pixels, this is converting the image to the negative image, there may be other methods but this particulary one worked well for me.
 
 //code for extracting the negative image
-
 //picture of mouth enhanced with negative pattern
+//picture of a bunch of negative mouths
 
-This pre-processing will help a lot our convolutional neural network, but also note that we are doing this because in this particular case we are working with small sets of data, we had millions of images we could easily pass the entire image to the net and it will surely learn teeth features.
+This pre-processing step will help a lot our convolutional neural network to learn features easier, but also note that we are doing this because in this particular case we are working with small sets of data, if we had millions of images we could easily feed the entire image to the net and it will learn teeth features for sure.
 
 #Data Augmentation
-Because we are working with small sets of data we need to augment our data, this creates artificial data using a bunch of common techniques, for this particular case we are going to do the following transformations for each image in our dataset.
+Because we are working with small sets of data we need to create syntetic data aka data augmentation, for this particular case we are going to do the following transformations for each image in our dataset to get almost 10x times more data.
 
-* Mirroring
+* Mirroring of mouths
 Foreach image we are going to create a mirrored clone, this will give us 2x the data.
 //example of mirroring with a muct image
-* Shearing
+* Shearing of mouths
 Foreach image we are going to make small rotations, specifically -30,-20,-10,+10,+20,+30 degrees of rotation this will give us 8x the data.
 //example of shearing with a muct image
-* Scaling
+* Scaling of mouths
 Foreach image we are going scale it by small factors, this will give us 2x the data
 //example of scaling with a muct image
 
@@ -97,22 +97,27 @@ Foreach image we are going scale it by small factors, this will give us 2x the d
 
 //code for scaling
 
-#Preparing the data for the ConvNet
-Now that we have our data ready, we need to split it into two subsets, we are going to use an 80/20 rule, 80 percent of our transformed data is going to the training set and the rest of the 20 percent is going to the validation set, in this case, I move the data accordingly to their respective folders training_data and validation_data
+#Seting up the Convolutional neural network in Caffe
 
-With the data in place, we are going to generate two text files, each containing the path of the image plus the label (1 or 0),  these text files are required by the Caffe deep learning framework
+#Preparing the training set and validation set
+Now that we have our data ready, we need to split it into two subsets, we are going to use an 80/20 rule, 80 percent of our transformed data is going to be the training set and the rest of the 20 percent is going to be the  validation set. The training data will be used during the training phase for learning and the validation set will be used to test the performance of the net during training, in this case, I move the data accordingly to their respective folders training_data and validation_data
+
+//picture of data in corresponding folder
+
+#Creating the LMDB file
+
+With the data in place, we are going to generate two text files, each containing the path of the image plus the label (1 or 0), these text files are needed because Caffe has a tool to generate LMDB files for you just with these plain text files.
 
 //code for generating those text files
 
 //image of the plain text showing the format
 
-Now that we have the two text files, we are ready to generate the LMDB file, this file is very common in machine learning and is a database file that will store all our training data along with their respective labels.
-To generate both training and validation lmdb files do the following:
+Now that we have the two text files, we are ready to generate the LMDB file, the LMDB file is a database file that stores all our training data along with their respective labels.
+
+To generate both training and validation LMDB files do the following:
 
 convert_imageset --gray --shuffle /devuser/Teeth/img/training_data/ training_data.txt train_lmdb
 convert_imageset --gray --shuffle /devuser/Teeth/img/validation_data/ training_val_data.txt val_lmdb
-
-here we are using a caffe tool to generate the lmdb files
 
 #Extracting the mean data for the entire dataset
 A common step in computer vision and image processing is to extract the mean data of the entire training data to ease the training process, to do this:

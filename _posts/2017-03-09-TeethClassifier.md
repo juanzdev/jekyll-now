@@ -40,6 +40,7 @@ Also note that this labeled data is not our training set yet, because we have su
 #Detect the face region
 
 There are different models for face detection, the most well known are Haar cascade and HOG, OpenCV offers a nice and fast implementation of Haar cascades and Dlib offers a more precise face detection algorithm with HOG. After doing some testing with both libraries I found that DLib face-detection is much more precise, the Haar approach gives me a lot of false positives, the problem with Dlib face-detection is that it is slow, I think that you can speed-up the process a little by doing some compilation configuration on the library. Because I wanted to test my Teeth detector on real video HOG face detetion was too slow to be practical so I ended up using OpenCV for this task. I'm going to use a method called Histogram of Gradients or HOG to transform the image to another representation of values for easy interpretation then I will extract the landmark features of the face and finally I will transform the face using the landmark to have a frontal face, lucky for us those three steps can be simplified a lot by using the dlib library.
+Note that you can also use a convolutional neural network for face detection, in fact you will get much better results if you do, but for simplicity I will stick with OpenCV for simplicity.
 
 //code fragment for HOG
 //code fragment for landmark detection

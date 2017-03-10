@@ -22,6 +22,7 @@ Main challenges:
 There are a lot of datasets with faces on the web, I choose an open dataset called MUCT database http://www.milbo.org/muct/ , this dataset contains 3755 faces with landmarks, for the purpose of this post I'm not going to use the landmark data.
 
 //picture of the girl picture (3 pictures)
+![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
 This dataset has a lot of variation in lighting, people face types and expressions. I only used one part of this dataset called muct-a-jpg-v1.tar.gz, this file contains 700+ faces, although this is a small number for training the machine learning model, it is possible to obtain good results using data augmentation, the reason I choose only this limited subset of data is because at some point in the process is necessary to do manual labeling of the data but you can label more and more data to obtain better results.
 
@@ -32,6 +33,7 @@ Now there is some manual process involved here but is necessary to do it only on
 //link to GitHub 
 
 //picture of the manual labeling tool in action
+![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
 Note that I could spend much time labeling the rest of the data (up to 3755 faces) and also search on the web more data but for time constraints I did only this process for the 700 first images, but the bigger the data set the better.
 
@@ -53,12 +55,14 @@ Now a tipicall problem in computer vision is the different transformations our i
 //code fragment for landmark detector
 
 //image of landmarks with sample face
+![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
 this function receives the face region and will detect 68 landmark points using a previuslly trained model this will help us have relevant information about the orientation of the face.
 Now we can make a warp transformation to the face using the landmarks as guide to have the face image facing front.
 
 //code fragment for affine transformation
 //image of face affined
+![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
 Now that we have a standard way to see images our face detection process will be much precise.
 The next step is to slice the image horizontally and take only the botton region this is the mouth region.
@@ -67,14 +71,18 @@ Now that we have frontal faces we can focus on the mouth region, a simple region
 
 //code fragment for image slicing
 //image of mouths parts
+![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 //picture of a bunch of mouths
+![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
 #Highlithing the teeth 
 Now a quick technique to highlight the teeth on the mouth region is inverting the image pixels, this is converting the image to the negative image, there may be other methods but this particulary one worked well for me.
 
 //code for extracting the negative image
 //picture of mouth enhanced with negative pattern
+![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 //picture of a bunch of negative mouths
+![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
 This pre-processing step will help a lot our convolutional neural network to learn features easier, but also note that we are doing this because in this particular case we are working with small sets of data, if we had millions of images we could easily feed the entire image to the net and it will learn teeth features for sure.
 
@@ -103,6 +111,7 @@ Foreach image we are going scale it by small factors, this will give us 2x the d
 Now that we have our data ready, we need to split it into two subsets, we are going to use an 80/20 rule, 80 percent of our transformed data is going to be the training set and the rest of the 20 percent is going to be the  validation set. The training data will be used during the training phase for learning and the validation set will be used to test the performance of the net during training, in this case, I move the data accordingly to their respective folders training_data and validation_data
 
 //picture of data in corresponding folder
+![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
 #Creating the LMDB file
 
@@ -111,6 +120,7 @@ With the data in place, we are going to generate two text files, each containing
 //code for generating those text files
 
 //image of the plain text showing the format
+![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
 Now that we have the two text files, we are ready to generate the LMDB file, the LMDB file is a database file that stores all our training data along with their respective labels.
 
@@ -134,12 +144,14 @@ In Machine Learning there are a set of well-known architectures for image proces
 //code of 3 prototxt
 
 //image of architecture
+![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
 To train the neural network
 caffe train --solver=model/solver_feature_scaled.prototxt 2>&1 | tee logteeth_ult_fe_2.log
 
 
 //image of loss vs iterations with 10000 iterations
+![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
 #Testing the trained model with unseen data
 # Testing for a single image
@@ -229,3 +241,4 @@ while rval:
 ```
 
 //gif of a video running with the net showing if the person is showing the teeth or not
+![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)

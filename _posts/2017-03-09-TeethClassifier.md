@@ -180,6 +180,7 @@ if mouth_pre is not None:
 //image of samples images and probabilitites
 
 #Bulk testing
+Testing the image by moving them to the coorect folder
 Now I'm going to test over an entire folder of unseen images, in this case the folder called b have images taken on different angles so we can see is unseen data. Because I'm testing with a bunch of new data we need a way to measure the net performance
 
 ```python
@@ -201,15 +202,30 @@ The model looks good.
 Now we have metrics to benchmark our trained model, with this in place we can quickly start tweaking things in our model or experimenting with different approaches and at the end see the final improvement with a number.
 
 
-predict_feature_scaled.py
 
+# Testing our net with real video!
+Although training a convnet is a very slow process, testing it is not!, in fact, it takes milliseconds to test the trained model, to prove you that I'm going to call the trained net in each frame of a video to show the predictions on realtime. 
 
-Testing the image by moving them to the coorect folder
+```python
+cv2.namedWindow("preview")
+vc = cv2.VideoCapture(0)
 
+if vc.isOpened(): # try to get the first frame
+    rval, frame = vc.read()
+else:
+    rval = False
 
-
-
-Testing our net with real video!
-although training a convnet is a very slow process, testing it is not!, in fact, it takes milliseconds to test the trained model, to prove you that I'm going to call the trained net in each frame of a video to show the predictions on realtime. 
+while rval:
+    cv2.imshow("preview", frame)
+    rval, frame = vc.read()
+    result = predict(frame)
+    if(result == 1):
+    	size = cv2.getTextSize("Showing teeth", cv2.FONT_HERSHEY_PLAIN, 2, 1)[0]
+    	x,y = (50,250)
+    	label_top_left = (x - size[0]/2, y - size[1]/2)
+    	print(frame)
+    	cv2.rectangle(frame, (x,y),(x+size[0],y-size[1]),(0,255,0),-2);
+    	cv2.putText(frame, "Showing teeth",(x,y),cv2.FONT_HERSHEY_PLAIN,2,(0,0,0))
+```
 
 //gif of a video running with the net showing if the person is showing the teeth or not

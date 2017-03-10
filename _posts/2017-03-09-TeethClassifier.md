@@ -154,6 +154,12 @@ Now we have metrics to benchmark our trained model, with this in place we can qu
 
 
 predict_feature_scaled.py
+
+
+Testing the image by moving them to the coorect folder
+
+
+Testing an individual image 
 ```python
 mean_blob = caffe_pb2.BlobProto()
 with open('../mean.binaryproto') as f:
@@ -185,11 +191,6 @@ if mouth_pre is not None:
 	print("Prediction probabilities")
 	print(out['pred'])
 ```
-
-Testing the image by moving them to the coorect folder
-
-Testing an individual image 
-
 
 Testing our net with real video!
 although training a convnet is a very slow process, testing it is not!, in fact, it takes milliseconds to test the trained model, to prove you that I'm going to call the trained net in each frame of a video to show the predictions on realtime. 

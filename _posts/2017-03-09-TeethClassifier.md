@@ -4,42 +4,42 @@ title: Teeth classifier using convolutional neural networks
 published: false
 ---
 
-In this blog post, I'm going to explain how you can create a complete machine learning that solves the problem of telling weather or not a person is showing is teeth, I will show the main challenges that I faced implementing this task.
+In this blog post, I'm going to explain how you can create a complete machine learning pipeline that solves the problem of telling weather or not a person is showing is teeth, I will show the main challenges that I faced implementing this task.
 
 Main challenges:
-1. Finding datasets where people are showing their teeth or not
-3. Transforming the dataset for our problem
+1. Finding datasets where people are showing their teeth or not and tailoring them to the problem
     2. Label the data accordingly ( 1 for showing teeth, 0 not showing teeth)
     3. Detect the face region in an image
     4. Detect the principal landmarks on the face
     5. Transform the face with the detected landmarks to have a "frontal face"
     6. Highlight the teeth on the face
 7. Augment data for posterior training
-8. Setup a good architecture for a Convolutional Neural Network
-9. Training the data and debugging the system
-10. Test the final model
+8. Setup a good architecture for a Convolutional Neural Network for teeth recognition
+9. Training and debugging the system
+10.Testing the model
 
 #Finding a dataset
 There are a lot of datasets with faces on the web, I choose an open dataset called MUCT database http://www.milbo.org/muct/ , this dataset contains 3755 faces with landmarks, for the purpose of this post I'm not going to use the landmark data.
 
 //picture of the girl picture (3 pictures)
 
-This dataset has a lot of variation in lighting, people face types and expressions. For the purpose of this post I only used one part of this dataset called muct-a-jpg-v1.tar.gz, this file contains 700+ faces. Although this is a small number for training a ML model, it is possible to obtain good results using data augmentation, the reason I choose only this subset of data is because at some point in the process is necessary to do manual labeling of the data.
+This dataset has a lot of variation in lighting, people face types and expressions. I only used one part of this dataset called muct-a-jpg-v1.tar.gz, this file contains 700+ faces, although this is a small number for training the machine learning model, it is possible to obtain good results using data augmentation, the reason I choose only this limited subset of data is because at some point in the process is necessary to do manual labeling of the data but you can label more and more data to obtain better results.
 
-#Transforming the dataset towards our problem
+#Labeling the data
 
-Gathering the right data for the training set
-Now there is some manual process involved here but is necessary only for the model training, we are going to label each of the 700 faces with the label (1 for showing teeth, 0 not showing teeth), the label will be stored on the filename of the image. Because this can be a tedious process I created a simple tool for labeling images if you push the button yes it will add to the existing filename the label _true or _false otherwise, if you want to use this tool for your purposes feel free to pull it from git hub and modify it to your needs here //link to GitHub 
+Now there is some manual process involved here but is necessary to do it only once, we are going to label each of the 700 faces with the label (1 for showing teeth, 0 not showing teeth), the label will be stored on the filename of the image. Because this can be a tedious process I created a simple tool for labeling images, if you push the button yes it will add to the existing filename the label _true or _false otherwise, if you want to use this tool for your purposes feel free to pull it from git hub and modify it to your needs here 
+
+//link to GitHub 
 
 //picture of the manual labeling tool in action
 
-Note that I could spend much time labeling the rest of the data (up to 3755 faces) and also start manual labeling more and more faces (you got the idea) but for time constraints I did only this process for the 700 first images.
+Note that I could spend much time labeling the rest of the data (up to 3755 faces) and also search on the web more data but for time constraints I did only this process for the 700 first images, but the bigger the data set the better.
 
-Also note that this labeled data is not our training set yet, because we have such small data set we have to help the model little bit, in this case, we are going to get rid of unnecessary data and noise, that means that we are going to detect the face region and discard the rest of the image.
+Also note that this labeled data is not our training set yet, because we have such small data set we have to help the model little bit, in this case, we are going to get rid of unnecessary data and noise in the images, that means that we are going to use other already trained models to detect the face region and discard the rest of the image, this will help us to reduce overfiting the data quite a bit.
 
 #Detect the face region
 
-There are a number of very good methods to subtract the face region from an image, in this case, I'm going to use a method called Histogram of Gradients or HOG to transform the image to another representation of values for easy interpretation then I will extract the landmark features of the face and finally I will transform the face using the landmark to have a frontal face, lucky for us those three steps can be simplified a lot by using the dlib library.
+There are different models for face detection, the most well known are Haar cascade and HOG, OpenCV offers a nice and fast implementation of Haar cascades and Dlib offers a more precise face detection algorithm with HOG. After doing some testing with both libraries I found that DLib face-detection is much more precise, the Haar approach gives me a lot of false positives, the problem with Dlib face-detection is that it is slow, I think that you can speed-up the process a little by doing some compilation configuration on the library. Because I wanted to test my Teeth detector on real video HOG face detetion was too slow to be practical so I ended up using OpenCV for this task. I'm going to use a method called Histogram of Gradients or HOG to transform the image to another representation of values for easy interpretation then I will extract the landmark features of the face and finally I will transform the face using the landmark to have a frontal face, lucky for us those three steps can be simplified a lot by using the dlib library.
 
 //code fragment for HOG
 //code fragment for landmark detection

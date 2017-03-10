@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Neural Language Model with Caffe
-published: true
+published: false
 ---
 
 In this blog post, I will explain how you can implement a neural language model in Caffe using Bengio's Neural Model architecture and Hinton's Coursera Octave code. This is just a practical exercise I made to see if it was possible to model this problem in Caffe.

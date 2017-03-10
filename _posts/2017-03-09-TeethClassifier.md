@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Teeth classifier using convolutional neural networks
-published: false
+published: true
 ---
 
 In this blog post, I'm going to explain how you can create a complete machine learning pipeline that solves the problem of telling weather or not a person is showing is teeth, I will show the main challenges that I faced implementing this task. Specifically I'm going to use a convination of OpenCV computer-vision models for face detection with a convolutional neural network for teeth recognition. For quick prototyping, I'm going to use the Caffe Deeplearning framework, but you can use other cool frameworks like TensorFlow or Keras.

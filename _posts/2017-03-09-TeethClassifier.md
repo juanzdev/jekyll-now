@@ -142,13 +142,23 @@ caffe train --solver=model/solver_feature_scaled.prototxt 2>&1 | tee logteeth_ul
 //image of loss vs iterations with 10000 iterations
 
 #Testing the trained model with unseen data
+Now we need a way to measure the perofmrance of our net, we are going to calculate the precision, recall and fscore for the test data results:
 
-//false positive false negative chart
+```python
+accuracy = (true_negative + true_positive)/total_samples
+recall = true_positive / (true_positive + false_negative)
+precision = true_positive / (true_positive + false_positive)
+f1score = 2*((precision*recall)/(precision+recall))
+```
 
-Accuracy precision and recall
-//code
-F1score
-//code
+|                | Predicted Negative | Predicted Positive |
+|----------------|--------------------|--------------------|
+| Negative Cases | TN: 259            | FP: 26             |
+| Positive Cases | FN: 80             | TP: 346            |
+
+Total samples 751
+
+The model looks good.
 
 Now we have metrics to benchmark our trained model, with this in place we can quickly start tweaking things in our model or experimenting with different approaches and at the end see the final improvement with a number.
 

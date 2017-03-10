@@ -52,21 +52,21 @@ Now a tipicall problem in computer vision is the different transformations our i
 
 //code fragment for landmark detector
 
+//image of landmarks with sample face
+
 this function receives the face region and will detect 68 landmark points using a previuslly trained model this will help us have relevant information about the orientation of the face.
 Now we can make a warp transformation to the face using the landmarks as guide to have the face image facing front.
 
 //code fragment for affine transformation
+//image of face affined
 
-
+Now that we have a standard way to see images our face detection process will be much precise.
+The next step is to slice the image horizontally and take only the botton region this is the mouth region.
 
 Now that we have frontal faces we can focus on the mouth region, a simple region is to divide this image in two and take the bottom region, for sake of simplicity I'm going to use this approach.
 
-//picture of muct sample facing side
-//picture of HOG face
-//picture of landmark detection for face
-//picture of face afined (facing frontal)
-//picture of mouth region 
-
+//code fragment for image slicing
+//image of mouths parts
 //picture of a bunch of mouths
 
 #Highlithing the teeth 

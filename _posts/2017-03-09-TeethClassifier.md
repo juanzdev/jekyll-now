@@ -37,7 +37,7 @@ Note that I could spend much time labeling the rest of the data (up to 3755 face
 
 Also note that this labeled data is not our training set yet, because we have such small data set we have to help the model little bit, in this case, we are going to get rid of unnecessary data and noise in the images, that means that we are going to use other already trained models to detect the face region and discard the rest of the image, this will help us to reduce overfiting the data quite a bit.
 
-#Detect the face region
+# Detect the face region
 
 There are different models for face detection, the most well known are Haar cascade and HOG, OpenCV offers a nice and fast implementation of Haar cascades and Dlib offers a more precise face detection algorithm with HOG. After doing some testing with both libraries I found that DLib face-detection is much more precise, the Haar approach gives me a lot of false positives, the problem with Dlib face-detection is that it is slow, I think that you can speed-up the process a little by doing some compilation configuration on the library. Because I wanted to test my Teeth detector on real video HOG face detetion was too slow to be practical so I ended up using OpenCV for this task. I'm going to use a method called Histogram of Gradients or HOG to transform the image to another representation of values for easy interpretation then I will extract the landmark features of the face and finally I will transform the face using the landmark to have a frontal face, lucky for us those three steps can be simplified a lot by using the dlib library.
 Note that you can also use a convolutional neural network for face detection, in fact you will get much better results if you do, but for simplicity I will stick with OpenCV for simplicity.
@@ -154,7 +154,37 @@ Now we have metrics to benchmark our trained model, with this in place we can qu
 
 
 predict_feature_scaled.py
+```python
+mean_blob = caffe_pb2.BlobProto()
+with open('../mean.binaryproto') as f:
+    mean_blob.ParseFromString(f.read())
 
+mean_array = np.asarray(mean_blob.data, dtype=np.float32).reshape(
+    (mean_blob.channels, mean_blob.height, mean_blob.width))
+
+mean_array = mean_array*0.003921568627
+
+net = caffe.Net('../model/deploy.prototxt',1,weights='../model_snapshot/snap_fe_iter_2700.caffemodel')
+net.blobs['data'].reshape(1,1, IMAGE_WIDTH, IMAGE_HEIGHT)  # image size is 227x227
+transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
+transformer.set_mean('data', mean_array)
+transformer.set_transpose('data', (2,0,1))
+transformer.set_raw_scale('data', 0.00392156862745) 
+
+img = cv2.imread(individual_test_image, cv2.IMREAD_UNCHANGED)
+mouth_pre = mouth_detect_single(individual_test_image) #mouth is grayscale 1..255 50x50 BGR
+if mouth_pre is not None:
+	mouth_pre = mouth_pre[:,:,np.newaxis]
+	mouth = transformer.preprocess('data', mouth_pre)
+	net.blobs['data'].data[...] = mouth
+	out = net.forward()
+	pred = out['pred'].argmax()
+	print(individual_test_image)
+	print("Prediction:")
+	print(pred)
+	print("Prediction probabilities")
+	print(out['pred'])
+```
 
 Testing the image by moving them to the coorect folder
 

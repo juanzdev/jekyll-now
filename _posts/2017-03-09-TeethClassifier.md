@@ -26,7 +26,7 @@ There are a lot of datasets with faces on the web, I choose an open dataset call
  <div style="text-align:center"><img src="../images/i000qa-fn.jpg" alt="Drawing" width="300" height="400"/></div>
  
  {:refdef: style="text-align: center;"}
-![My Image]({{ site.baseimg }}../images/i000qa-fn.jpg)
+![My Image]({{ site.baseimg }}/images/i000qa-fn.jpg)
 {: refdef}
 
 This dataset has a lot of variation in lighting, people face types and expressions. I only used one part of this dataset called muct-a-jpg-v1.tar.gz, this file contains 700+ faces, although this is a small number for training the machine learning model, it is possible to obtain good results using data augmentation, the reason I choose only this limited subset of data is because at some point in the process is necessary to do manual labeling of the data but you can label more and more data to obtain better results.

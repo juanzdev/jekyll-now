@@ -133,7 +133,7 @@ def detect_face(image,isPath):
 		return face_region
 ```
 
-Now a typical problem in computer vision is the different transformations our images can have, they can be rotated at certain degree, and that will make difficult for our machine learning model to predict the correct answer, although it is proven that in a Convolutional neural network you can have certain degree of flexibility with rotation and translations, this is a nice property of CNNs called invariance to transformations. We are going to have that nice property only for our teeth detector ConvNet but for face detection, we have to make an additional process called landmark detection to overcome this problem.
+Now a typical problem in computer vision is the different transformations our images can have, they can be rotated at certain degree, and that will make difficult for our machine learning model to predict the correct answer, although it is proven that in a convolutional neural network you can have certain degree of flexibility with rotation and translations, this is a nice property of CNNs called invariance to transformations. We are going to have that nice property only for our teeth detector ConvNet but for face detection, we have to make an additional process called landmark detection to overcome this problem.
 
 //code fragment for landmark detector
 
@@ -175,18 +175,56 @@ Because we are working with small sets of data we need to create synthetic data 
 * Mirroring of mouths
 For each image we are going to create a mirrored clone, this will give us 2x the data.
 //example of mirroring with a muct image
+
 * Shearing of mouths
 For each image we are going to make small rotations, specifically -30,-20,-10,+10,+20,+30 degrees of rotation this will give us 8x the data.
 //example of shearing with a muct image
+
 * Scaling of mouths
 For each image we are going scale it by small factors, this will give us 2x the data
 //example of scaling with a muct image
 
-//code for mirroring
 
-//code for shearing
+//rotating the image to create more data
+```pyt
+input_folder = "../img/mouth_data"
+input_data_set = [img for img in glob.glob(input_folder+"/*jpg")]
+output_folder ="../img/all_data"
+generate_random_filename = 1
 
-//code for scaling
+for in_idx, img_path in enumerate(input_data_set):
+    file_name = os.path.splitext(os.path.basename(img_path))[0]
+    print(file_name)
+    augmentation_number = 8
+    initial_rot = -20
+    path = output_folder+"/"+file_name+".jpg"
+    copyfile(img_path, path)
+    for x in range(1, augmentation_number):
+        rotation_coeficient = x
+        rotation_step=5
+        total_rotation=initial_rot+rotation_step*rotation_coeficient
+        mouth_rotated = image_rotated_cropped(img_path,total_rotation)
+        #resize to 50 by 50
+        mouth_rotated = cv2.resize(mouth_rotated, (IMAGE_WIDTH, IMAGE_HEIGHT), interpolation = cv2.INTER_CUBIC)
+        if generate_random_filename == 1:
+            guid = uuid.uuid4()
+            uid_str = guid.urn
+            str_guid = uid_str[9:]
+            path = ""
+            if 'showingteeth' in img_path:
+                path = output_folder+"/"+str_guid+"_showingteeth.jpg"
+            else:
+                path = output_folder+"/"+str_guid+".jpg"
+            cv2.imwrite(path,mouth_rotated)
+        else:
+            path = ""
+            if 'showingteeth' in img_path:
+                path = output_folder+"/"+file_name+"_rotated"+str(x)+"_showingteeth.jpg"
+            else:
+                path = output_folder+"/"+file_name+"_rotated"+str(x)+".jpg"
+            cv2.imwrite(path,mouth_rotated)
+
+```
 
 #Seting up the Convolutional neural network in Caffe
 

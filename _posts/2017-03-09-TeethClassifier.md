@@ -237,12 +237,54 @@ our training set folder
 our validation set folder
 ![pic](../images/validationdatafolder.jpg)
 
-#Creating the LMDB file
+# Creating the LMDB file
 
 With the data in place, we are going to generate two text files, each containing the path of the image plus the label (1 or 0), these text files are needed because Caffe has a tool to generate LMDB files for you just with these plain text files.
 
 //code for generating those text files
+```python
+import caffe
+import lmdb
+import glob
+import cv2
+import uuid
+from caffe.proto import caffe_pb2
+import numpy as np
+import os
 
+
+train_lmdb = "../train_lmdb"
+train_data = [img for img in glob.glob("../img/training_data/*jpg")]
+val_data = [img for img in glob.glob("../img/validation_data/*jpg")]
+
+myFile = open('../training_data.txt', 'w')
+
+for in_idx, img_path in enumerate(train_data):
+    head, tail = os.path.split(img_path)
+    label = -1
+    if 'showingteeth' in tail:
+        label = 1
+    else:
+        label =0
+    myFile.write(tail+" "+str(label)+"\n")
+
+myFile.close()
+
+
+f = open('../training_val_data.txt', 'w')
+
+for in_idx, img_path in enumerate(val_data):
+    head, tail = os.path.split(img_path)
+    label = -1
+    if 'showingteeth' in tail:
+        label = 1
+    else:
+        label =0
+    f.write(tail+" "+str(label)+"\n")
+
+f.close()
+
+```
 //image of the plain text showing the format
 ![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 

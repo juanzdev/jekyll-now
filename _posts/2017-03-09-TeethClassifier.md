@@ -285,8 +285,8 @@ for in_idx, img_path in enumerate(val_data):
 f.close()
 
 ```
-//image of the plain text showing the format
-![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
+//example of the file
+![pic](../images/trainingdataplain.jpg)
 
 Now that we have the two text files, we are ready to generate the LMDB file, the LMDB file is a database file that stores all our training data along with their respective labels.
 

@@ -21,7 +21,7 @@ Main challenges:
 #Finding a dataset
 There are a lot of datasets with faces on the web, I choose an open dataset called MUCT database http://www.milbo.org/muct/, this dataset contains 3755 faces with landmarks, for the purpose of this post I'm not going to use the landmark data.
 
-![Pic1](../images/i000qa-fn.jpg=250x)
+![Pic1](../images/i000qa-fn.jpg =250x)
   
 This dataset has a lot of variation in lighting, people face types and expressions. I only used one part of this dataset called muct-a-jpg-v1.tar.gz, this file contains 700+ faces, although this is a small number for training the machine learning model, it is possible to obtain good results using data augmentation, the reason I choose only this limited subset of data is because at some point in the process is necessary to do manual labeling of the data but you can label more and more data to obtain better results.
 

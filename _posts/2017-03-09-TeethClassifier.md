@@ -85,9 +85,8 @@ def mouth_detect_single(image,isPath):
     else:
         print "NOFACE"
 ```
-DLIB Implementation using histogram of gradients
-//code fragment for HOG
 
+DLIB Implementation using histogram of gradients
 ```python
 def mouth_detect_single(image,isPath):
     

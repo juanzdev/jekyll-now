@@ -231,8 +231,10 @@ for in_idx, img_path in enumerate(input_data_set):
 #Preparing the training set and validation set
 Now that we have our data ready, we need to split it into two subsets, we are going to use an 80/20 rule, 80 percent of our transformed data is going to be the training set and the rest of the 20 percent is going to be the validation set. The training data will be used during the training phase for learning and the validation set will be used to test the performance of the net during training, in this case, I move the data accordingly to their respective folders training_data and validation_data
 
-//picture of data in corresponding folder
+our training set folder
 ![pic](../images/trainingdata.jpg)
+
+our validation set folder
 ![pic](../images/validationdatafolder.jpg)
 
 #Creating the LMDB file

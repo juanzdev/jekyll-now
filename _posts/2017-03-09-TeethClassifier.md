@@ -44,7 +44,7 @@ Note that you can also use a convolutional neural network for face detection, in
 
 In Python, I will create two classes, one for OpenCV face detection and one for DLib face detection. These classes will receive an input image and will return the area of the face.
 
-//code fragment for OpenCV
+OpenCV implementation
 ```python
 def mouth_detect_single(image,isPath):
 
@@ -85,8 +85,54 @@ def mouth_detect_single(image,isPath):
     else:
         print "NOFACE"
 ```
-
+DLIB Implementation using histogram of gradients
 //code fragment for HOG
+
+```python
+def mouth_detect_single(image,isPath):
+    
+    if isPath == True:
+        img = cv2.imread(image, cv2.IMREAD_UNCHANGED) 
+    else:
+        img = image
+
+    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) 
+    face_hog_mouth = detect_face(gray_img,False)
+    if(face_hog_mouth is not None):
+        negative_mouth_region = negative_image(face_hog_mouth)
+        crop_img_resized = cv2.resize(negative_mouth_region, (IMAGE_WIDTH, IMAGE_HEIGHT), interpolation = cv2.INTER_CUBIC)
+        #cv2.imwrite("../img/output_test_img/mouthdetectsingle_crop_rezized.jpg",crop_img_resized)
+        return crop_img_resized
+
+def detect_face(image,isPath):
+
+	if isPath == True:
+		img = io.imread(image)
+	else:
+		img = image
+		print(image.shape)
+
+	face_detector = dlib.get_frontal_face_detector()
+	detected_faces = face_detector(img, 1)
+
+	if(len(detected_faces)>0):
+		face_rect = detected_faces[0]
+		i = 1
+		bottom = face_rect.bottom()
+		top = face_rect.top()
+		right = face_rect.right()
+		left = face_rect.left()
+		print("- Face #{} found at Left: {} Top: {} Right: {} Bottom: {}".format(i, left, top, right, bottom))
+		#cv2.rectangle(gray_img,(p,q),(p+r,q+s),(255,0,0),2)
+		height_region = (bottom - top)
+		width_region = (right - left)
+		p = left+ (width_region/4)
+		q = top + (height_region/2)
+		r = right - (width_region/4)
+		s = bottom
+		face_region = img[q:s, p:r]
+		return face_region
+```
 
 Now a typical problem in computer vision is the different transformations our images can have, they can be rotated at certain degree, and that will make difficult for our machine learning model to predict the correct answer, although it is proven that in a Convolutional neural network you can have certain degree of flexibility with rotation and translations, this is a nice property of CNNs called invariance to transformations. We are going to have that nice property only for our teeth detector ConvNet but for face detection, we have to make an additional process called landmark detection to overcome this problem.
 

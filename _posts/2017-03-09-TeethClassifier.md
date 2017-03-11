@@ -186,7 +186,7 @@ For each image we are going scale it by small factors, this will give us 2x the 
 
 
 //rotating the image to create more data
-```pyt
+```python
 input_folder = "../img/mouth_data"
 input_data_set = [img for img in glob.glob(input_folder+"/*jpg")]
 output_folder ="../img/all_data"

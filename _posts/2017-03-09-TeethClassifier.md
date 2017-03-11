@@ -292,8 +292,10 @@ Now that we have the two text files, we are ready to generate the LMDB file, the
 
 To generate both training and validation LMDB files do the following:
 
+```bash
 convert_imageset --gray --shuffle /devuser/Teeth/img/training_data/ training_data.txt train_lmdb
 convert_imageset --gray --shuffle /devuser/Teeth/img/validation_data/ training_val_data.txt val_lmdb
+```
 
 #Extracting the mean data for the entire dataset
 A common step in computer vision is to extract the mean data of the entire training dataset to facilitate the learning process during backpropagation, caffe already has a library to calculate the mean data for us:

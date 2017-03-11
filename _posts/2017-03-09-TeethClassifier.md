@@ -31,7 +31,6 @@ Now there is some manual process involved here but is necessary to do it only on
 
 https://github.com/juanzdev/ImageBinaryLabellingTool
 
-//picture of the manual labeling tool in action
  ![pic](../images/labeltool.jpg)
 
 Note that I could spend much time labeling the rest of the data (up to 3755 faces) and also search on the web more data but for time constraints I did only this process for the 700 first images, but the bigger the data set the better.
@@ -46,6 +45,46 @@ Note that you can also use a convolutional neural network for face detection, in
 In Python, I will create two classes, one for OpenCV face detection and one for DLib face detection. These classes will receive an input image and will return the area of the face.
 
 //code fragment for OpenCV
+```python
+def mouth_detect_single(image,isPath):
+
+    if isPath == True:
+        img = cv2.imread(image, cv2.IMREAD_UNCHANGED) 
+    else:
+        img = image
+    
+    face_cascade = cv2.CascadeClassifier('../lib/haarcascade/haarcascade_frontalface_default.xml')
+    eye_cascade = cv2.CascadeClassifier('../lib/haarcascade/haarcascade_eye.xml')
+    mouth_cascade = cv2.CascadeClassifier('../lib/haarcascade/mouth.xml')
+    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) 
+    cv2.imwrite("../img/output_test_img/hmouthdetectsingle.jpg",gray_img)
+    faces = face_cascade.detectMultiScale(gray_img, 1.3, 5)
+
+    for (x,y,w,h) in faces:
+        #cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
+        roi_gray = gray_img[y:y+h, x:x+w]
+        eyes = eye_cascade.detectMultiScale(roi_gray)
+
+        if(len(eyes)>0):
+            #valid face
+            height_region = (h + y)-y
+            width_region = (w + x) - x 
+            p = x + (width_region/4)
+            q = y + (height_region/2)
+            r = w - (width_region/2)
+            s = h - (height_region/2)
+            mouth_region = gray_img[q:q+s, p:p+r]
+            ##tt=cv2.rectangle(face_gray,(mp,mq),(mp+mr,mq+ms), (255,255,255),2)
+            #cv2.imwrite("../img/output_test_img/mouthdetectsingle_crop_region.jpg",gray_img)
+            negative_mouth_region = negative_image(mouth_region)
+            crop_img = negative_mouth_region
+            crop_img_resized = cv2.resize(crop_img, (IMAGE_WIDTH, IMAGE_HEIGHT), interpolation = cv2.INTER_CUBIC)
+            cv2.imwrite("../img/output_test_img/mouthdetectsingle_crop_rezized.jpg",crop_img_resized)
+            cv2.imwrite("../img/output_test_img/mouthdetectsingle_crop_negative.jpg",negative_mouth_region)
+            return crop_img_resized
+    else:
+        print "NOFACE"
+```
 
 //code fragment for HOG
 

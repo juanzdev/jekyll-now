@@ -671,18 +671,23 @@ snapshot_prefix: "model_snapshot/snap_fe"
 solver_mode: GPU
 ```
 
-//image of architecture
-![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
+CNN Architecture
+![pic](../images/architectureTeethCNN.png)
 
 To train the neural network
+
+```bash
 caffe train --solver=model/solver_feature_scaled.prototxt 2>&1 | tee logteeth_ult_fe_2.log
+```
 
 
 //image of loss vs iterations with 10000 iterations
 ![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
-#Testing the trained model with unseen data
+# Testing the trained model with unseen data
+
 # Testing for a single image
+
 First I'm going to test the net with some individual unseen images
 Testing an individual image 
 ```python
@@ -740,8 +745,6 @@ Total samples 751
 The model looks good.
 
 Now we have metrics to benchmark our trained model, with this in place we can quickly start tweaking things in our model or experimenting with different approaches and at the end see the final improvement with a number.
-
-
 
 # Testing our net with real video!
 Although training a convnet is a very slow process, testing it is not!, in fact, it takes milliseconds to test the trained model, to prove you that I'm going to call the trained net in each frame of a video to show the predictions on realtime. 

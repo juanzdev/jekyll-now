@@ -23,7 +23,7 @@ There are a lot of datasets with faces on the web, I choose an open dataset call
 
 //picture of the girl picture (3 pictures)
 ![i000qa-fn.jpg]({{site.baseurl}}/assets/i000qa-fn.jpg)
-
+![Jekyll Now Theme Screenshot](../images/jekyll-now-theme-screenshot.jpg "Jekyll Now Theme Screenshot")
 This dataset has a lot of variation in lighting, people face types and expressions. I only used one part of this dataset called muct-a-jpg-v1.tar.gz, this file contains 700+ faces, although this is a small number for training the machine learning model, it is possible to obtain good results using data augmentation, the reason I choose only this limited subset of data is because at some point in the process is necessary to do manual labeling of the data but you can label more and more data to obtain better results.
 
 #Labeling the data

@@ -314,7 +314,7 @@ In Machine Learning there are a set of well-known architectures for image proces
 //code of 3 prototxt
 
 train_val_feature_scaled.prototxt
-```JSON
+```json
 name: "LeNet"
 layer {
   name: "data"
@@ -504,7 +504,7 @@ layer {
 
 deploy.prototxt
 
-```JSON
+```json
 name: "LeNet"
 layer {
   name: "input"
@@ -654,7 +654,7 @@ layer {
 ```
 
 solver.prototxt
-```JSON
+```json
 net: "model/train_val_feature_scaled.prototxt"
 test_iter: 5
 test_interval: 100

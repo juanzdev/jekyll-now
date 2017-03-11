@@ -29,10 +29,10 @@ This dataset has a lot of variation in lighting, people face types and expressio
 
 Now there is some manual process involved here but is necessary to do it only once, we are going to label each of the 700 faces with the label (1 for showing teeth, 0 not showing teeth), the label will be stored on the filename of the image. Because this can be a tedious process I created a simple tool for labeling images, if you push the button yes it will add to the existing filename the label _true or _false otherwise, if you want to use this tool for your purposes feel free to pull it from git hub and modify it to your needs here 
 
-//link to GitHub 
+https://github.com/juanzdev/ImageBinaryLabellingTool
 
 //picture of the manual labeling tool in action
-![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
+ ![pic](../images/labeltool.jpg)
 
 Note that I could spend much time labeling the rest of the data (up to 3755 faces) and also search on the web more data but for time constraints I did only this process for the 700 first images, but the bigger the data set the better.
 

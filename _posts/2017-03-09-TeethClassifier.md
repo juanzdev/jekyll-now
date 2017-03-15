@@ -177,7 +177,7 @@ Now that we have frontal faces we can focus on the mouth region
 With those transformations in place we can assure that our net will recive inputs of the same part of the face everytime, this will improve our accuracy.
 
 
-#Histogram Equalization
+# Histogram Equalization
 A usefull technique to highlight the details on the image is to apply histogram equalization:
 
 //code for extracting the negative image
@@ -186,23 +186,16 @@ A usefull technique to highlight the details on the image is to apply histogram 
 //picture of a bunch of negative mouths
 ![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
-This pre-processing step will help a lot our convolutional neural network to learn features easier, but also note that we are doing this because in this particular case we are working with small sets of data, if we had millions of images we could easily feed the entire image to the net and it will learn teeth features for sure.
 
-#Data Augmentation
-Because we are working with small sets of data we need to create synthetic data aka data augmentation, for this particular case we are going to do the following transformations for each image in our dataset to get almost 10x times more data.
+# Data Augmentation
+Because we are working with small sets of data we need to create synthetic data, we are going to do the following transformations for each image in our dataset to get almost 10x times more data.
 
 * Mirroring of mouths
 For each image we are going to create a mirrored clone, this will give us 2x the data.
 //example of mirroring with a muct image
 
-* Shearing of mouths
+* Rotating of mouths
 For each image we are going to make small rotations, specifically -30,-20,-10,+10,+20,+30 degrees of rotation this will give us 8x the data.
-//example of shearing with a muct image
-
-* Scaling of mouths
-For each image we are going scale it by small factors, this will give us 2x the data
-//example of scaling with a muct image
-
 
 //rotating the image to create more data
 ```python

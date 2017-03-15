@@ -252,7 +252,7 @@ our validation set folder
 
 # Creating the LMDB file
 
-With the data in place, we are going to generate two text files, each containing the path of the image plus the label (1 or 0), these text files are needed because Caffe has a tool to generate LMDB files for you just with these plain text files.
+With the mouth images located in the training and validation folders, we are going to generate two text files, each containing the path of the corresponding mouth images plus the label (1 or 0), these text files are needed because Caffe has a tool to generate LMDB files based on these plain text files.
 
 //code for generating those text files
 ```python
@@ -301,9 +301,7 @@ f.close()
 //example of the file
 ![pic](../images/trainingdataplain.jpg)
 
-Now that we have the two text files, we are ready to generate the LMDB file, the LMDB file is a database file that stores all our training data along with their respective labels.
-
-To generate both training and validation LMDB files do the following:
+To generate both training and validation LMDB files we run the following commands:
 
 ```bash
 convert_imageset --gray --shuffle /devuser/Teeth/img/training_data/ training_data.txt train_lmdb
@@ -311,18 +309,18 @@ convert_imageset --gray --shuffle /devuser/Teeth/img/validation_data/ training_v
 ```
 
 # Extracting the mean data for the entire dataset
-A common step in computer vision is to extract the mean data of the entire training dataset to facilitate the learning process during backpropagation, caffe already has a library to calculate the mean data for us:
+A common step in computer vision is to extract the mean data of the entire training dataset to facilitate the learning process during backpropagation, Caffe already has a library to calculate the mean data for us:
 
 ```bash
 compute_image_mean -backend=lmdb train_lmdb mean.binaryproto
 ```
 
-This will generate a file called mean.binaryproto, this file will have matrix data related to the overall mean of our training set, this will be subtracted during training to each and every one of our training examples to have a more reasonable scale in our inputs.
+This will generate a file called mean.binaryproto, this file will have matrix data related to the overall mean of our training set, this will be subtracted during training to each and every one of our training examples to have a more reasonable scale for the inputs.
 
-# Designing and implementing the Convolutional Neural Net
+# Designing and implementing the convolutional neural network
 
 Convnets are really good at image recognition because they can learn features automatically just by providing input and output data, they are also very good at transformation invariances this is small changes in rotation and full changes in translation.
-In Machine Learning there are a set of well-known architectures for image processing like AlexNet, VGGNet, Google Inception etc. If you follow that kind of architectures is almost guaranteed you will obtain the best results possible, for this case and for the sake of, simplicity and training time I'm going to use a simplified version of these nets with much less convolutional layers, remember that here we are just trying to extract Teeth features from the face and not entire concepts of the real world like AlexNet does, so a net with much less capacity will do fine for our task.
+In Machine Learning there are a set of well-known architectures for image processing like AlexNet, VGGNet, Google Inception etc. If you follow that kind of architectures is almost guaranteed you will obtain the best results possible, for this case and for the sake of simplicity we are going to use a simplified version of these nets with much less convolutional layers, remember that here we are just trying to extract Teeth features from the face and not entire concepts of the real world like AlexNet does, so a net with much less capacity will do fine for the task.
 
 //code of 3 prototxt
 
@@ -687,12 +685,16 @@ solver_mode: GPU
 CNN Architecture
 ![pic](../images/architectureTeethCNN.png)
 
-To train the neural network
+# Train the neural network
 
 ```bash
 caffe train --solver=model/solver_feature_scaled.prototxt 2>&1 | tee logteeth_ult_fe_2.log
 ```
 
+# Plotting loss vs iterations 
+A good way to measure the performance of the learning in our convolutional neural network is to plot the loss on the training and validation set vs the number of iterations
+
+//command to plot
 
 //image of loss vs iterations with 10000 iterations
 ![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)

@@ -7,7 +7,7 @@ published: false
 In this blog post, I'm going to explain how you can create a complete machine learning pipeline that solves the problem of telling whether or not a person is showing is teeth, I will show the main challenges that I faced implementing this task. Specifically, I'm going to use a combination of OpenCV computer vision models for face detection with a convolutional neural network for teeth recognition. For quick prototyping, I'm going to use the Caffe Deep learning framework, but you can use other cool frameworks like TensorFlow or Keras.
 
 Main challenges:
-1. Finding datasets where people are showing their teeth or not and tailoring them to the problem
+1. Finding datasets where people are showing their teeth or not, and adpating those datasets to the problem
     2. Label the data accordingly ( 1 for showing teeth, 0 not showing teeth)
     3. Detect the face region in an image
     4. Detect the principal landmarks on the face
@@ -19,15 +19,27 @@ Main challenges:
 10.Testing the model
 
 #Finding a dataset
+# Muct database
 There are a lot of datasets with faces on the web, I choose an open dataset called MUCT database http://www.milbo.org/muct/, this dataset contains 3755 faces with landmarks, for the purpose of this post I'm not going to use the landmark data.
 
  ![pic](../images/i000qa-fn.jpg)
 
-This dataset has a lot of variation in lighting, people face types and expressions. I only used one part of this dataset called muct-a-jpg-v1.tar.gz, this file contains 700+ faces, although this is a small number for training the machine learning model, it is possible to obtain good results using data augmentation, the reason I choose only this limited subset of data is because at some point in the process is necessary to do manual labeling of the data but you can label more and more data to obtain better results.
+This dataset has a lot of variation in lighting, people face types and expressions. I only used one part of this dataset called muct-a-jpg-v1.tar.gz, this file contains 700+ faces, although this is a small number for training the machine learning model, it is possible to obtain good results using data augmentation combined with a good convolutional net model, the reason I choose only this limited subset of data is because at some point in the process is necessary to do manual labeling of the data and this tasks takes time, but you can label more and more data to obtain better results.
+
+# LFW database
+I also use the Labeled Faces in the Wild database for faces data http://vis-www.cs.umass.edu/lfw/, this data set contains 13.000 images of faces, this face database has more variety because it is taken directly from the web, so this information will be very valuable in our training.
+
+
+//picture of face of LFW database
 
 #Labeling the data
 
-Now there is some manual process involved here but is necessary to do it only once, we are going to label each of the 700 faces with the label (1 for showing teeth, 0 not showing teeth), the label will be stored on the filename of the image. Because this can be a tedious process I created a simple tool for labeling images, if you push the button yes it will add to the existing filename the label _true or _false otherwise, if you want to use this tool for your purposes feel free to pull it from git hub and modify it to your needs here 
+Labeling the data is a manual process and it can be cumbersome to do although is necessary to do it only once, in this problem we have to label images from the two face databases, for this particular case we need to label all the faces with the value 1 if the face is showing the teeth or 0 otherwise, the label will be stored on the filename of the image for practical pourpuses. 
+For the MUCT database we are going to label 700 faces.
+For the LFW database we are going to label 1500 faces.
+
+
+.Because this can be a tedious process I created a simple tool for labeling images, if you push the button yes it will add to the existing filename the label _true or _false otherwise, if you want to use this tool for your purposes feel free to pull it from git hub and modify it to your needs here 
 
 https://github.com/juanzdev/ImageBinaryLabellingTool
 

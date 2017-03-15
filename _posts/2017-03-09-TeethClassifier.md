@@ -12,6 +12,7 @@ Main challenges:
     3. Detect the face region in an image
     4. Detect the principal landmarks on the face
     5. Transform the face with the detected landmarks to have a "frontal face"
+    6. Image slicing
     6. Highlight the teeth on the face
 7. Augment data for posterior training
 8. Setting up the Convolutional neural network in Caffe
@@ -54,11 +55,6 @@ Also note that this labeled data is not our training set yet, because we have su
 There are different techniques for face detection, the most well known and accesibles are Haar cascade and Histogram of Gradients (HOG), OpenCV offers a nice and fast implementation of Haar cascades and Dlib offers a more precise but slower face detection algorithm with HOG. After doing some testing with both libraries I found that DLib face-detection is much more precise and accurate, the Haar approach gives me a lot of false positives, the problem with Dlib face-detection is that it is slow and using it in real video data can be a pain. At the end of the exercise we ended up using both for different kind of situations.
 
 //face detection in action
-
-# Landmark detection and frontalization
-The next step after face detection is to extract valuable context data of the face using landmark extraction, landmarks are special points in the face that relate to specific parts of the face like the jaw, nose, mouth and eyes, with the detected face and the landmark points it is possible to warp the face image to have a frontal version of it, luckily for us landmark extraction and frontalization can be  simplified a lot by using the some dlib classes.
-
-//landmark detection in action
 
 Note that you can also use a convolutional neural network for face detection, in fact, you will get much better results if you do, but for simplicity, I will stick with OpenCV for simplicity.
 
@@ -152,25 +148,25 @@ def detect_face(image,isPath):
 		face_region = img[q:s, p:r]
 		return face_region
 ```
+# Landmark detection and frontalization
+Now a typical problem in computer vision is the different transformations our images can have, they can be rotated at certain degree, and that will make difficult for our machine learning model to predict the correct answer.
 
-Now a typical problem in computer vision is the different transformations our images can have, they can be rotated at certain degree, and that will make difficult for our machine learning model to predict the correct answer, although it is proven that in a convolutional neural network you can have certain degree of flexibility with rotation and translations, this is a nice property of CNNs called invariance to transformations. We are going to have that nice property only for our teeth detector ConvNet but for face detection, we have to make an additional process called landmark detection to overcome this problem.
+The next step after face detection is to extract valuable context data of the face using landmark extraction, landmarks are special points in the face that relate to parts of the face like the jaw, nose, mouth and eyes, with the detected face and the landmark points it is possible to warp the face image to have a frontal version of it, luckily for us landmark extraction and frontalization can be  simplified a lot by using the some dlib classes.
 
 //code fragment for landmark detector
 
-//image of landmarks with sample face
-![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
-
 this function receives the face region and will detect 68 landmark points using a previously trained model this will help us have relevant information about the orientation of the face.
 Now we can make a warp transformation to the face using the landmarks as a guide to have the face image facing front.
+
+//image of landmarks with sample face
+![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
 //code fragment for affine transformation
 //image of face affined
 ![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
-Now that we have a standard way to see images our face detection process will be much precise.
-The next step is to slice the image horizontally and take only the bottom region this is the mouth region.
-
-Now that we have frontal faces we can focus on the mouth region, a simple region is to divide this image in two and take the bottom region, for sake of simplicity I'm going to use this approach.
+# Image slicing
+Now that we have frontal faces we can focus on the mouth region
 
 //code fragment for image slicing
 //image of mouths parts
@@ -178,8 +174,11 @@ Now that we have frontal faces we can focus on the mouth region, a simple region
 //picture of a bunch of mouths
 ![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
-#Highlithing the teeth 
-Now a quick technique to highlight the teeth on the mouth region is inverting the image pixels, this is converting the image to the negative image, there may be other methods but this particular one worked well for me.
+With those transformations in place we can assure that our net will recive inputs of the same part of the face everytime, this will improve our accuracy.
+
+
+#Histogram Equalization
+A usefull technique to highlight the details on the image is to apply histogram equalization:
 
 //code for extracting the negative image
 //picture of mouth enhanced with negative pattern

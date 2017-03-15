@@ -174,7 +174,7 @@ Now that we have frontal faces we can focus on the mouth region
 //picture of a bunch of mouths
 ![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
-With those transformations in place we can assure that our net will recive inputs of the same part of the face everytime, this will improve our accuracy.
+With those transformations in place we can assure that our net will recive inputs of the same part of the face everytime, this will improve our accuracy, the output of this step will be our true training data.
 
 
 # Histogram Equalization
@@ -188,7 +188,7 @@ A usefull technique to highlight the details on the image is to apply histogram 
 
 
 # Data Augmentation
-Because we are working with small sets of data we need to create synthetic data, we are going to do the following transformations for each image in our dataset to get almost 10x times more data.
+Because we are working with small sets of data we need to create synthetic data, we are going to do the following transformations for each mouth image in our dataset to get almost 10x times more data.
 
 * Mirroring of mouths
 For each image we are going to create a mirrored clone, this will give us 2x the data.
@@ -239,9 +239,10 @@ for in_idx, img_path in enumerate(input_data_set):
 ```
 
 # Seting up the Convolutional neural network in Caffe
+The folling steps are requried to correctly configure a convolutional neural network in caffe:
 
 # Preparing the training set and validation set
-Now that we have our data ready, we need to split it into two subsets, we are going to use an 80/20 rule, 80 percent of our transformed data is going to be the training set and the rest of the 20 percent is going to be the validation set. The training data will be used during the training phase for learning and the validation set will be used to test the performance of the net during training, in this case, I move the data accordingly to their respective folders training_data and validation_data
+Now that we have mouth data ready, we need to split it into two subsets, we are going to use an 80/20 rule, 80 percent (15000 mouth images) of our transformed data is going to be the training set and the rest of the 20 percent (4500 mouth images) is going to be the validation set. The training data will be used during the training phase for learning and the validation set will be used to test the performance of the net during training, in this case, we have to move the mouth images to their respective folders located in training_data and validation_data
 
 our training set folder
 ![pic](../images/trainingdata.jpg)

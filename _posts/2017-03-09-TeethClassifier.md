@@ -35,23 +35,31 @@ I also use the Labeled Faces in the Wild database for faces data http://vis-www.
 #Labeling the data
 
 Labeling the data is a manual process and it can be cumbersome to do although is necessary to do it only once, in this problem we have to label images from the two face databases, for this particular case we need to label all the faces with the value 1 if the face is showing the teeth or 0 otherwise, the label will be stored on the filename of the image for practical pourpuses. 
+
 For the MUCT database we are going to label 700 faces.
 For the LFW database we are going to label 1500 faces.
 
 
-.Because this can be a tedious process I created a simple tool for labeling images, if you push the button yes it will add to the existing filename the label _true or _false otherwise, if you want to use this tool for your purposes feel free to pull it from git hub and modify it to your needs here 
+Manual labeling can be a tedious process so I created a simple tool for labeling images, if you push the button yes it will add to the existing filename the label _true or _false otherwise, if you want to use this tool for your purposes feel free to pull it from git hub and modify it to your needs here 
 
 https://github.com/juanzdev/ImageBinaryLabellingTool
 
  ![pic](../images/labeltool.jpg)
 
-Note that I could spend much time labeling the rest of the data (up to 3755 faces) and also search on the web more data but for time constraints I did only this process for the 700 first images, but the bigger the data set the better.
+Also note that this labeled data is not our training set yet, because we have such small data set we have to help the model a little bit, we are going to get rid of unnecessary noise in the images by detecting the face region using a techique called Histogram of Gradients, this will help us to reduce overfitting the data quite a bit.
 
-Also note that this labeled data is not our training set yet, because we have such small data set we have to help the model little bit, in this case, we are going to get rid of unnecessary data and noise in the images, that means that we are going to use other already trained models to detect the face region and discard the rest of the image, this will help us to reduce overfitting the data quite a bit.
+# Detecting the face region
 
-# Detect the face region
+# Face detection
+There are different techniques for face detection, the most well known and accesibles are Haar cascade and Histogram of Gradients (HOG), OpenCV offers a nice and fast implementation of Haar cascades and Dlib offers a more precise but slower face detection algorithm with HOG. After doing some testing with both libraries I found that DLib face-detection is much more precise and accurate, the Haar approach gives me a lot of false positives, the problem with Dlib face-detection is that it is slow and using it in real video data can be a pain. At the end of the exercise we ended up using both for different kind of situations.
 
-There are different models for face detection, the most well known are Haar cascade and HOG, OpenCV offers a nice and fast implementation of Haar cascades and Dlib offers a more precise face detection algorithm with HOG. After doing some testing with both libraries I found that DLib face-detection is much more precise, the Haar approach gives me a lot of false positives, the problem with Dlib face-detection is that it is slow, I think that you can speed up the process a little by doing some compilation configuration on the library. Because I wanted to test my Teeth detector on real video HOG face detection was too slow to be practical so I ended up using OpenCV for this task. I'm going to use a method called Histogram of Gradients or HOG to transform the image to another representation of values for easy interpretation then I will extract the landmark features of the face and finally I will transform the face using the landmark to have a frontal face, lucky for us those three steps can be simplified a lot by using the dlib library.
+//face detection in action
+
+# Landmark detection and frontalization
+The next step after face detection is to extract valuable context data of the face using landmark extraction, landmarks are special points in the face that relate to specific parts of the face like the jaw, nose, mouth and eyes, with the detected face and the landmark points it is possible to warp the face image to have a frontal version of it, luckily for us landmark extraction and frontalization can be  simplified a lot by using the some dlib classes.
+
+//landmark detection in action
+
 Note that you can also use a convolutional neural network for face detection, in fact, you will get much better results if you do, but for simplicity, I will stick with OpenCV for simplicity.
 
 In Python, I will create two classes, one for OpenCV face detection and one for DLib face detection. These classes will receive an input image and will return the area of the face.

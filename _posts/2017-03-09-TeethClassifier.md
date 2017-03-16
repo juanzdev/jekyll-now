@@ -26,10 +26,10 @@ We are going to choose an open dataset called MUCT database http://www.milbo.org
 
  ![pic](../images/i000qa-fn.jpg)
 
-Because of manual labeling constrains only a subset of this dataset called muct-a-jpg-v1.tar.gz will be used, this file contains 700+ faces and although this is a small number for training the machine learning model, it is possible to obtain good results using data augmentation combined with a powerfull convolutional network, the reason of choosing this limited subset of data is because at some point in the process is necessary to do manual labeling of each picture, but it is always encouraged to label more data to obtain better results.
+Because of manual labeling constrains only a subset of this dataset called muct-a-jpg-v1.tar.gz will be used, this file contains 751 faces and although this is a small number for training the machine learning model, it is possible to obtain good results using data augmentation combined with a powerfull convolutional network, the reason of choosing this limited subset of data is because at some point in the process is necessary to do manual labeling of each picture, but it is always encouraged to label more data to obtain better results.
 
 ## LFW database
-To have more variety on the data we are going to use the Labeled Faces in the Wild database too http://vis-www.cs.umass.edu/lfw/, this dataset contains 13.000 images of faces total all unlabeled, this database has a lot more variety because it contains faces of people from the web. As same as before we are not going to use the entire dataset but for this case only 1500 faces.
+To have more variety on the data we are going to use the Labeled Faces in the Wild database too http://vis-www.cs.umass.edu/lfw/, this dataset contains 13.233 images of faces total all unlabeled, this database has a lot more variety because it contains faces of people from the web. As same as before we are not going to use the entire dataset but for this case only 1505 faces.
 
 //picture of face of LFW database
 
@@ -39,8 +39,9 @@ To have more variety on the data we are going to use the Labeled Faces in the Wi
 Labeling the data is a manual and cumbersome process but necessary, in this problem we have to label images from the two face databases, for this particular case we need to label all the faces with the value: 1 if the face is showing the teeth or 0 otherwise, the label will be stored on the filename of the image for practical pourpuses. 
 
 To recap:
-For the MUCT database we are going to label 700 faces.
-For the LFW database we are going to label 1500 faces.
+For the MUCT database we are going to label 751 faces.
+For the LFW database we are going to label 1505 faces.
+So we have a total of 2256 unique faces with different expressions.
 
 Manual labeling can be a tedious process so you can use this simple tool for labeling images quickly using hotkeys, if you push the Y key on your keyboard it will add to the existing filename the label _showingteeth, if you want to use this tool for your purposes feel free to pull it from git hub and modify it to suite your needs. 
 
@@ -182,14 +183,15 @@ def histogram_equalization(img):
 ```
 
 # Data Augmentation
-As you recall, we have labeled only 700 images from the MUCT database and 1500 from the LFW database, this is just not enought data for learning to detect teeths, we need to gather more data somehow, the obvious solution is to manual label a couple of thousands images in addition and this is the PREFERED solution, having more data is always better, but it is expensive in time, so for simplicity we are going to augment the data, augmenting the data is a pretty common technique in machine learning and a pretty usefull one. Specifically we are going to make the following transformations to our current training data to get almost 10x times more data:
+As you recall, we have labeled only 751 images from the MUCT database and 1505 from the LFW database, this is just not enought data for learning to detect teeths, we need to gather more data somehow, the obvious solution is to manual label a couple of thousands images in addition and this is the PREFERED solution, having more data is always better, but it is expensive in time, so for simplicity we are going to augment the data, augmenting the data is a pretty common technique in machine learning and a pretty usefull one. Specifically we are going to make the following transformations to our current training data to get almost 10x times more data (23528 mouth images):
 
 ## Mirroring the mouths
 For each image we are going to create a mirrored clone, this will give us 2x the data.
 //example of mirroring with a muct image
 
 ## Rotating the mouths
-For each mouth in the training set we are going to make small rotations, specifically -30,-20,-10,+10,+20,+30 degrees, this will give us 8x the data aprox.
+For each mouth in the training set we are going to make small rotations, specifically -30,-20,-10,+10,+20,+30 degrees, this will give us 6x times the data aprox.
+
 
 ```python
 for in_idx, img_path in enumerate(input_data_set):
@@ -231,7 +233,7 @@ for in_idx, img_path in enumerate(input_data_set):
 # Seting up the Convolutional neural network in Caffe
 The folling steps are requried to correctly configure a convolutional neural network in caffe:
 
-# Preparing the training set and validation set
+## Preparing the training set and validation set
 Now that we have enough labeled mouths in place, we need to split it into two subsets, we are going to use the 80/20 rule, 80 percent (18828 mouth images) of our transformed data are going to be the in training set and the rest of the 20 percent (4700 mouth images) are going to be in the validation set. The training data will be used during the training phase for our network learning and the validation set will be used to test the performance of the net during training, in this case, we have to move the mouth images to their respective folders located in training_data and validation_data.
 
 our training set folder
@@ -240,7 +242,7 @@ our training set folder
 our validation set folder
 ![pic](../images/validationdatafolder.jpg)
 
-# Creating the LMDB file
+## Creating the LMDB file
 
 With the mouth images located in the training and validation folders, we are going to generate two text files, each containing the path of the corresponding mouth images plus the label (1 or 0), these text files are needed because Caffe has a tool to generate LMDB files based on these plain text files.
 
@@ -298,7 +300,7 @@ convert_imageset --gray --shuffle /devuser/Teeth/img/training_data/ training_dat
 convert_imageset --gray --shuffle /devuser/Teeth/img/validation_data/ training_val_data.txt val_lmdb
 ```
 
-# Extracting the mean data for the entire dataset
+## Extracting the mean data for the entire dataset
 A common step in computer vision is to extract the mean data of the entire training dataset to facilitate the learning process during backpropagation, Caffe already has a library to calculate the mean data for us:
 
 ```bash
@@ -307,16 +309,16 @@ compute_image_mean -backend=lmdb train_lmdb mean.binaryproto
 
 This will generate a file called mean.binaryproto, this file will have matrix data related to the overall mean of our training set, this will be subtracted during training to each and every one of our training examples to have a more reasonable scale for the inputs.
 
-# Designing and implementing the convolutional neural network
+## Designing and implementing the convolutional neural network
 
 Convnets are really good at image recognition because they can learn features automatically just by providing input and output data, they are also very good at transformation invariances this is small changes in rotation and full changes in translation.
-In Machine Learning there are a set of well-known architectures for image processing like AlexNet, VGGNet, Google Inception etc. If you follow that kind of architectures is almost guaranteed you will obtain the best results possible, for this case and for the sake of simplicity we are going to use a simplified version of these nets with much less convolutional layers, remember that here we are just trying to extract Teeth features from the face and not entire concepts of the real world like AlexNet does, so a net with much less capacity will do fine for the task.
+In machine learning there are a set of well-known state-of-the-art architectures for image processing like AlexNet, VGGNet, Google Inception etc. If you follow that kind of architectures is almost guaranteed you will obtain the best results possible, for this case and for the sake of simplicity we are going to use a simplified version of these nets with much less convolutional layers, remember that in this particular case we are just trying to extract teeth features from the mouths and not entire concepts of the real world like AlexNet does, so a net with much less capacity will do fine for the task.
 
 //code of 3 prototxt
 
 train_val_feature_scaled.prototxt
 ```json
-name: "LeNet"
+name: "TeethNet"
 layer {
   name: "data"
   type: "Data"
@@ -506,7 +508,7 @@ layer {
 deploy.prototxt
 
 ```json
-name: "LeNet"
+name: "TeethNet"
 layer {
   name: "input"
   type: "Input"
@@ -515,8 +517,8 @@ layer {
     shape {
       dim: 1
       dim: 1
-      dim: 100
-      dim: 100
+      dim: 32
+      dim: 32
     }
   }
 }
@@ -659,7 +661,7 @@ solver.prototxt
 net: "model/train_val_feature_scaled.prototxt"
 test_iter: 5
 test_interval: 100
-base_lr: 0.01
+base_lr: 0.1
 lr_policy: "step"
 gamma: 0.1
 stepsize: 500
@@ -669,20 +671,34 @@ momentum: 0.9
 weight_decay: 0.0005
 snapshot: 100
 snapshot_prefix: "model_snapshot/snap_fe"
-solver_mode: GPU
+solver_mode: CPU
 ```
 
 CNN Architecture
 ![pic](../images/architectureTeethCNN.png)
 
-# Train the neural network
+## Training the neural network
+With the architecture in place we are ready to start learning the model, we are going to execute the caffe train command to start the training process, note that all the data from the LMDB files will flow throuhg the data layer of the network along with the labels, also the backpropagation learning procedure will take place at the same time, and by using gradient descent optimization the error rate will decrease in each iteration.
 
 ```bash
 caffe train --solver=model/solver_feature_scaled.prototxt 2>&1 | tee logteeth_ult_fe_2.log
 ```
 
-# Plotting loss vs iterations 
-A good way to measure the performance of the learning in our convolutional neural network is to plot the loss on the training and validation set vs the number of iterations
+## Plotting loss vs iterations 
+A good way to measure the performance of the learning in our convolutional neural network is to plot the loss on the training and validation set vs the number of iterations.
+
+Note:
+To create the plot is necessary to pre-process the .log file generated on the training phase, to do this execute:
+
+```bash
+python /Users/juank/Dev/caffe/tools/extra/parse_log.py logteeth.log .
+```
+this command will generate two-plain text files containg all the metrics for the validation set vs iterations and the training set vs iterations.
+The next step is to plot the data using the provided Caffe tool for plotting:
+
+```bash
+python plot_diag.py 
+```
 
 //command to plot
 

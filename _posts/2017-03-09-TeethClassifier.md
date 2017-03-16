@@ -8,6 +8,7 @@ In this blog post, you will learn how to create a complete machine learning pipe
 By using a combination of OpenCV computer vision libraries for face detection along with our own convolutional neural network for teeth recognition we will create a very capable system that could handle unseen data withouth loosing significative performance. For quick prototyping we are going to use the Caffe Deep learning framework, but you can use other cool frameworks like TensorFlow or Keras.
 
 Our trained convolutional neural network detecting teeth on real video!
+
 ![pic](../images/giphyob.gif)
 
 The overall steps that will involve creating the detector pipeline are:

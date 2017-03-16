@@ -240,7 +240,7 @@ our training set folder
 ![pic](../images/trainingdata.jpg)
 
 our validation set folder
-![pic](../images/validationdatafolder.jpg)
+![pic](../images/validationdata.jpg)
 
 ## Creating the LMDB file
 

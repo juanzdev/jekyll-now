@@ -7,6 +7,8 @@ published: true
 In this blog post, you will learn how to create a complete machine learning pipeline that solves the problem of telling whether or not a person in a picture is showing the teeth, we will see the main challenges that this problem imposes and will tackle some common machine learning problems.
 By using a combination of OpenCV computer vision libraries for face detection along with our own convolutional neural network for teeth recognition we will create a very capable system that could handle unseen data withouth loosing significative performance. For quick prototyping we are going to use the Caffe Deep learning framework, but you can use other cool frameworks like TensorFlow or Keras.
 
+![pic](../images/giphyob.gif)
+
 The overall steps that will involve creating the detector pipeline are:
 1. Finding the correct datasets, and adpating those datasets to the problem
     2. Labeling the data accordingly ( 1 for showing teeth, 0 not showing teeth)

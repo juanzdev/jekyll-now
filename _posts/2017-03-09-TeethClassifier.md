@@ -173,12 +173,13 @@ With those transformations in place we can assure that our net will recive input
 # Histogram Equalization
 A usefull technique to highlight the details on the image is to apply histogram equalization:
 
-//code for extracting the negative image
-//picture of mouth enhanced with negative pattern
-![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
-//picture of a bunch of negative mouths
-![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
-
+```python
+def histogram_equalization(img):
+    img[:, :, 0] = cv2.equalizeHist(img[:, :, 0])
+    img[:, :, 1] = cv2.equalizeHist(img[:, :, 1])
+    img[:, :, 2] = cv2.equalizeHist(img[:, :, 2])
+    return img
+```
 
 # Data Augmentation
 Because we are working with small sets of data we need to create synthetic data, we are going to do the following transformations for each mouth image in our dataset to get almost 10x times more data.

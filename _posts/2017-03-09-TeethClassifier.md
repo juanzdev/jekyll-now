@@ -31,123 +31,100 @@ Because of manual labeling constrains only a subset of this dataset called muct-
 ## LFW database
 To have more variety on the data we are going to use the Labeled Faces in the Wild database too http://vis-www.cs.umass.edu/lfw/, this dataset contains 13.000 images of faces total all unlabeled, this database has a lot more variety because it contains faces of people from the web. As same as before we are not going to use the entire dataset but for this case only 1500 faces.
 
-
 //picture of face of LFW database
+
 
 # Labeling the data
 
-Labeling the data is a manual process and it can be cumbersome to do although is necessary to do it only once, in this problem we have to label images from the two face databases, for this particular case we need to label all the faces with the value 1 if the face is showing the teeth or 0 otherwise, the label will be stored on the filename of the image for practical pourpuses. 
+Labeling the data is a manual and cumbersome process but necessary, in this problem we have to label images from the two face databases, for this particular case we need to label all the faces with the value: 1 if the face is showing the teeth or 0 otherwise, the label will be stored on the filename of the image for practical pourpuses. 
 
+To recap:
 For the MUCT database we are going to label 700 faces.
 For the LFW database we are going to label 1500 faces.
 
-
-Manual labeling can be a tedious process so I created a simple tool for labeling images, if you push the button yes it will add to the existing filename the label _true or _false otherwise, if you want to use this tool for your purposes feel free to pull it from git hub and modify it to your needs here 
+Manual labeling can be a tedious process so you can use this simple tool for labeling images quickly using hotkeys, if you push the Y key on your keyboard it will add to the existing filename the label _showingteeth, if you want to use this tool for your purposes feel free to pull it from git hub and modify it to suite your needs. 
 
 https://github.com/juanzdev/ImageBinaryLabellingTool
 
  ![pic](../images/labeltool.jpg)
 
-Also note that this labeled data is not our training set yet, because we have such small data set we have to help the model a little bit, we are going to get rid of unnecessary noise in the images by detecting the face region using a techique called Histogram of Gradients, this will help us to reduce overfitting the data quite a bit.
+Note:
+Note that this labeled data is not our training set yet, because we have such small data set we need to get rid of unnecessary noise in the images by detecting the face region using some face detection techniques.
 
 # Detecting the face region
 
-# Face detection
-There are different techniques for face detection, the most well known and accesibles are Haar cascade and Histogram of Gradients (HOG), OpenCV offers a nice and fast implementation of Haar cascades and Dlib offers a more precise but slower face detection algorithm with HOG. After doing some testing with both libraries I found that DLib face-detection is much more precise and accurate, the Haar approach gives me a lot of false positives, the problem with Dlib face-detection is that it is slow and using it in real video data can be a pain. At the end of the exercise we ended up using both for different kind of situations.
+## Face detection
+There are different techniques for doing face detection, the most well known and accesibles are Haar Cascades and Histogram of Gradients (HOG), OpenCV offers a nice and fast implementation of Haar cascades and Dlib offers a more precise but slower face detection algorithm with HOG. After doing some testing with both libraries I found that DLib face-detection is much more precise and accurate, the Haar approach gives me a lot of false positives, the problem with Dlib face-detection is that it is slow and using it in real video data can be a pain. At the end of the exercise we ended up using both for different kind of situations.
 
 //face detection in action
 
-Note that you can also use a convolutional neural network for face detection, in fact, you will get much better results if you do, but for simplicity, I will stick with OpenCV for simplicity.
+Note:
+You can also use a convolutional neural network for face detection, in fact, you will get much better results if you do, but for simplicity we are going to stick with these out of the box libraries.
 
-In Python, I will create two classes, one for OpenCV face detection and one for DLib face detection. These classes will receive an input image and will return the area of the face.
+In Python, we are going to create two files, one for OpenCV face detection and one for DLib face detection. These files will receive an input image and will return the area of the face.
 
 OpenCV implementation
 ```python
-def mouth_detect_single(image,isPath):
+    def mouth_detect_single(self,image,isPath):
 
-    if isPath == True:
-        img = cv2.imread(image, cv2.IMREAD_UNCHANGED) 
-    else:
-        img = image
-    
-    face_cascade = cv2.CascadeClassifier('../lib/haarcascade/haarcascade_frontalface_default.xml')
-    eye_cascade = cv2.CascadeClassifier('../lib/haarcascade/haarcascade_eye.xml')
-    mouth_cascade = cv2.CascadeClassifier('../lib/haarcascade/mouth.xml')
-    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) 
-    cv2.imwrite("../img/output_test_img/hmouthdetectsingle.jpg",gray_img)
-    faces = face_cascade.detectMultiScale(gray_img, 1.3, 5)
+        if isPath == True:
+            img = cv2.imread(image, cv2.IMREAD_UNCHANGED) 
+        else:
+            img = image
+        
+        img = histogram_equalization(img)
+        gray_img1 = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) 
+        faces = self.face_cascade.detectMultiScale(gray_img1, 1.3, 5)
 
-    for (x,y,w,h) in faces:
-        #cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
-        roi_gray = gray_img[y:y+h, x:x+w]
-        eyes = eye_cascade.detectMultiScale(roi_gray)
-
-        if(len(eyes)>0):
-            #valid face
-            height_region = (h + y)-y
-            width_region = (w + x) - x 
-            p = x + (width_region/4)
-            q = y + (height_region/2)
-            r = w - (width_region/2)
-            s = h - (height_region/2)
-            mouth_region = gray_img[q:q+s, p:p+r]
-            ##tt=cv2.rectangle(face_gray,(mp,mq),(mp+mr,mq+ms), (255,255,255),2)
-            #cv2.imwrite("../img/output_test_img/mouthdetectsingle_crop_region.jpg",gray_img)
-            negative_mouth_region = negative_image(mouth_region)
-            crop_img = negative_mouth_region
-            crop_img_resized = cv2.resize(crop_img, (IMAGE_WIDTH, IMAGE_HEIGHT), interpolation = cv2.INTER_CUBIC)
-            cv2.imwrite("../img/output_test_img/mouthdetectsingle_crop_rezized.jpg",crop_img_resized)
-            cv2.imwrite("../img/output_test_img/mouthdetectsingle_crop_negative.jpg",negative_mouth_region)
-            return crop_img_resized
-    else:
-        print "NOFACE"
+        for (x,y,w,h) in faces:
+            roi_gray = gray_img1[y:y+h, x:x+w]
+            eyes = self.eye_cascade.detectMultiScale(roi_gray)
+            if(len(eyes)>0):
+                p = x 
+                q = y
+                r = w
+                s = h
+                face_region = gray_img1[q:q+s, p:p+r]
+                face_region_rect = dlib.rectangle(long(q),long(p),long(q+s),long(p+r))
+                rectan = dlib.rectangle(long(x),long(y),long(x+w),long(y+h))
+                shape = self.md_face(img,rectan)
+                p2d = np.asarray([(shape.part(n).x, shape.part(n).y,) for n in range(shape.num_parts)], np.float32)
+                rawfront, symfront = self.fronter.frontalization(img,face_region_rect,p2d)
+                face_hog_mouth = symfront[165:220, 130:190]
+                gray_img = cv2.cvtColor(face_hog_mouth, cv2.COLOR_BGR2GRAY) 
+                crop_img_resized = cv2.resize(gray_img, (IMAGE_WIDTH, IMAGE_HEIGHT), interpolation = cv2.INTER_CUBIC)
+                #cv2.imwrite("../img/output_test_img/mouthdetectsingle_crop_rezized.jpg",gray_img)
+                return crop_img_resized,rectan.left(),rectan.top(),rectan.right(),rectan.bottom()
+        else:
+            return None,-1,-1,-1,-1
 ```
 
 DLIB Implementation using histogram of gradients
 ```python
-def mouth_detect_single(image,isPath):
+    def mouth_detect_single(self,image,isPath):
+
+        if isPath == True:
+            img = cv2.imread(image, cv2.IMREAD_UNCHANGED) 
+        else:
+            img = image
     
-    if isPath == True:
-        img = cv2.imread(image, cv2.IMREAD_UNCHANGED) 
-    else:
-        img = image
-
-    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) 
-    face_hog_mouth = detect_face(gray_img,False)
-    if(face_hog_mouth is not None):
-        negative_mouth_region = negative_image(face_hog_mouth)
-        crop_img_resized = cv2.resize(negative_mouth_region, (IMAGE_WIDTH, IMAGE_HEIGHT), interpolation = cv2.INTER_CUBIC)
-        #cv2.imwrite("../img/output_test_img/mouthdetectsingle_crop_rezized.jpg",crop_img_resized)
-        return crop_img_resized
-
-def detect_face(image,isPath):
-
-	if isPath == True:
-		img = io.imread(image)
-	else:
-		img = image
-		print(image.shape)
-
-	face_detector = dlib.get_frontal_face_detector()
-	detected_faces = face_detector(img, 1)
-
-	if(len(detected_faces)>0):
-		face_rect = detected_faces[0]
-		i = 1
-		bottom = face_rect.bottom()
-		top = face_rect.top()
-		right = face_rect.right()
-		left = face_rect.left()
-		print("- Face #{} found at Left: {} Top: {} Right: {} Bottom: {}".format(i, left, top, right, bottom))
-		#cv2.rectangle(gray_img,(p,q),(p+r,q+s),(255,0,0),2)
-		height_region = (bottom - top)
-		width_region = (right - left)
-		p = left+ (width_region/4)
-		q = top + (height_region/2)
-		r = right - (width_region/4)
-		s = bottom
-		face_region = img[q:s, p:r]
-		return face_region
+        img = histogram_equalization(img)
+        facedets = self.face_det(img,1) #Histogram of gradients
+        if len(facedets) > 0:
+            facedet_obj= facedets[0]
+            shape = self.md_face(img,facedet_obj)
+            p2d = np.asarray([(shape.part(n).x, shape.part(n).y,) for n in range(shape.num_parts)], np.float32)
+            rawfront, symfront = self.fronter.frontalization(img,facedet_obj,p2d)
+            face_hog_mouth = symfront[165:220, 130:190] #get half-bottom part
+            if(face_hog_mouth is not None):
+                gray_img = cv2.cvtColor(face_hog_mouth, cv2.COLOR_BGR2GRAY) 
+                crop_img_resized = cv2.resize(gray_img, (IMAGE_WIDTH, IMAGE_HEIGHT), interpolation = cv2.INTER_CUBIC)
+                #cv2.imwrite("../img/output_test_img/mouthdetectsingle_crop_rezized.jpg",crop_img_resized)
+                return crop_img_resized,facedet_obj.left(),facedet_obj.top(),facedet_obj.right(),facedet_obj.bottom()
+            else:
+                return None,-1,-1,-1,-1
+        else:
+            return None,-1,-1,-1,-1
 ```
 # Landmark detection and frontalization
 Now a typical problem in computer vision is the different transformations our images can have, they can be rotated at certain degree, and that will make difficult for our machine learning model to predict the correct answer.

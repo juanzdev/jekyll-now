@@ -182,33 +182,29 @@ def histogram_equalization(img):
 ```
 
 # Data Augmentation
-As you recall, we have labeled only 700 images from the MUCT database and 1500 from the LFW database, this is just not enought data for learning to detect teeths, we need to gather more data somehow, the obvious solution is to manual label a couple of thousands images in addition and this is the PREFERED solution, having more data is always better, but it is expensive in time, so for simplicity we are going to augment the data a pretty common technique in machine learning, specifically we are going to make the following transformations get almost 10x times more data:
+As you recall, we have labeled only 700 images from the MUCT database and 1500 from the LFW database, this is just not enought data for learning to detect teeths, we need to gather more data somehow, the obvious solution is to manual label a couple of thousands images in addition and this is the PREFERED solution, having more data is always better, but it is expensive in time, so for simplicity we are going to augment the data, augmenting the data is a pretty common technique in machine learning and a pretty usefull one. Specifically we are going to make the following transformations to our current training data to get almost 10x times more data:
 
-* Mirroring of mouths
+## Mirroring of mouths
 For each image we are going to create a mirrored clone, this will give us 2x the data.
 //example of mirroring with a muct image
 
-* Rotating of mouths
-For each image we are going to make small rotations, specifically -30,-20,-10,+10,+20,+30 degrees of rotation this will give us 8x the data.
+## Rotating of mouths
+For each mouth in the training set we are going to make small rotations, specifically -30,-20,-10,+10,+20,+30 degrees, this will give us 8x the data aprox.
 
-//rotating the image to create more data
 ```python
-input_folder = "../img/mouth_data"
-input_data_set = [img for img in glob.glob(input_folder+"/*jpg")]
-output_folder ="../img/all_data"
-generate_random_filename = 1
-
 for in_idx, img_path in enumerate(input_data_set):
     file_name = os.path.splitext(os.path.basename(img_path))[0]
     print(file_name)
     augmentation_number = 8
     initial_rot = -20
+    #save original too
     path = output_folder+"/"+file_name+".jpg"
     copyfile(img_path, path)
     for x in range(1, augmentation_number):
         rotation_coeficient = x
         rotation_step=5
         total_rotation=initial_rot+rotation_step*rotation_coeficient
+        #print(total_rotation)
         mouth_rotated = image_rotated_cropped(img_path,total_rotation)
         #resize to 50 by 50
         mouth_rotated = cv2.resize(mouth_rotated, (IMAGE_WIDTH, IMAGE_HEIGHT), interpolation = cv2.INTER_CUBIC)

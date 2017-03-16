@@ -4,21 +4,21 @@ title: Teeth classifier using convolutional neural networks
 published: true
 ---
 
-In this blog post, you will learn how to create a complete machine learning pipeline that solves the problem of telling whether or not a person is showing the teeth, we will the see main challenges that this problem imposes and will tackle some common machine learning problems.
-By using a combination of OpenCV computer vision libraries for face detection along with our own convolutional neural network for teeth recognition we will create a pretty capable system that could handle any kind of input and keep the performance at good levels. For quick prototyping we are going to use the Caffe Deep learning framework, but you can use other cool frameworks like TensorFlow or Keras.
+In this blog post, you will learn how to create a complete machine learning pipeline that solves the problem of telling whether or not a person in a picture is showing the teeth, we will see the main challenges that this problem imposes and will tackle some common machine learning problems.
+By using a combination of OpenCV computer vision libraries for face detection along with our own convolutional neural network for teeth recognition we will create a very capable system that could handle unseen data withouth loosing significative performance. For quick prototyping we are going to use the Caffe Deep learning framework, but you can use other cool frameworks like TensorFlow or Keras.
 
 The overall steps that will involve creating the detector pipeline are:
 1. Finding the correct datasets, and adpating those datasets to the problem
-    2. Label the data accordingly ( 1 for showing teeth, 0 not showing teeth)
-    3. Detect the face region in an image
-    4. Detect the principal landmarks on the face
-    5. Transform the face with the detected landmarks to have a "frontal face"
-    6. Image slicing
-    6. Highlight the teeth on the face
-7. Augment data for posterior training
-8. Setting up the Convolutional neural network in Caffe
-9. Training and debugging the system
-10.Testing the model
+    2. Labeling the data accordingly ( 1 for showing teeth, 0 not showing teeth)
+    3. Detecting the face region in an image
+    4. Detecting the principal landmarks on the face
+    5. Transforming the face with the detected landmarks to have a "frontal face" transformation
+    6. Slicing the relevant parts of the image
+    6. Easing the data for training
+7. Augmenting the data
+8. Setting up the convolutional neural network in Caffe
+9. Training and debugging the overall system
+10. Testing the model with unseen data
 
 #Finding a dataset
 # Muct database

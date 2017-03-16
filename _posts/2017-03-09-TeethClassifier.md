@@ -883,29 +883,120 @@ The model looks good.
 
 By looking at the performance metrics we can start experimenting with different hyper-parameters or different modifications to our pipeline and always have a point of comparission to see if we are doing better or not.
 
-# Testing our net with real video!
-Although training a convnet is a very slow process, testing it is not!, in fact, it takes milliseconds to test the trained model, to prove you that I'm going to call the trained net in each frame of a video to show the predictions on realtime. 
+## Testing our net with real video!
+Now lets have some fun by passing a fragment of the Obama presidential speech to the trained net to see if Obama is showing his teeth to the camera or not, note that  in each frame of a video the net needs to make a prediction, this prediction will be rendered resulting video along with the HOG face detection boundary.
 
 ```python
-cv2.namedWindow("preview")
-vc = cv2.VideoCapture(0)
+import numpy as np
+import sys
+import caffe
+import glob
+import uuid
+import cv2
+from util import transform_img
+from mouth_detector_dlib import mouth_detector
+from caffe.proto import caffe_pb2
+import os
+import shutil
+from util import histogram_equalization
 
-if vc.isOpened(): # try to get the first frame
-    rval, frame = vc.read()
-else:
-    rval = False
 
-while rval:
-    cv2.imshow("preview", frame)
-    rval, frame = vc.read()
-    result = predict(frame)
-    if(result == 1):
-        size = cv2.getTextSize("Showing teeth", cv2.FONT_HERSHEY_PLAIN, 2, 1)[0]
-        x,y = (50,250)
-        label_top_left = (x - size[0]/2, y - size[1]/2)
-        print(frame)
-        cv2.rectangle(frame, (x,y),(x+size[0],y-size[1]),(0,255,0),-2);
-        cv2.putText(frame, "Showing teeth",(x,y),cv2.FONT_HERSHEY_PLAIN,2,(0,0,0))
+IMAGE_WIDTH = 32
+IMAGE_HEIGHT = 32
+
+def predict(image,mouth_detector):
+	img = image
+	mouth_pre,x,y,w,h = mouth_detector.mouth_detect_single(img,False)
+
+	if mouth_pre is not None:
+		mouth_pre = mouth_pre[:,:,np.newaxis]
+		mouth = transformer.preprocess('data', mouth_pre)
+		net.blobs['data'].data[...] = mouth
+		out = net.forward()
+		print("Prediction probabilities")
+		print(out['pred'])
+		if(out['pred'][0][1]>0.70):
+			return 1,out['pred'],x,y,w,h
+		else:
+			return 0,out['pred'],x,y,w,h
+	else:
+		return -1,0,0,0,0,0
+
+#CNN Definition
+#extract mean data
+mean_blob = caffe_pb2.BlobProto()
+with open('../mean.binaryproto') as f:
+    mean_blob.ParseFromString(f.read())
+
+mean_array = np.asarray(mean_blob.data, dtype=np.float32).reshape(
+    (mean_blob.channels, mean_blob.height, mean_blob.width))
+
+mean_array = mean_array*0.003921568627
+
+net = caffe.Net('../model/deploy.prototxt',1,weights='../model_snapshot/snap_fe_iter_8700.caffemodel')
+net.blobs['data'].reshape(1,1, IMAGE_WIDTH, IMAGE_HEIGHT) 
+transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
+transformer.set_mean('data', mean_array)
+transformer.set_transpose('data', (2,0,1))
+transformer.set_raw_scale('data', 0.00392156862745) 
+
+
+size = cv2.getTextSize("Showing teeth", cv2.FONT_HERSHEY_PLAIN, 2, 1)[0]
+x,y = (50,250)
+label_top_left = (x - size[0]/2, y - size[1]/2)
+mouth_detector_instance = mouth_detector()
+
+
+
+# Define the codec and create VideoWriter object
+fourcc = cv2.cv.CV_FOURCC(*'mp4v')
+cap = cv2.VideoCapture('../obama-speech.mp4')
+cap.set(1,10000); # Where frame_no is the frame you want
+ret, frame = cap.read() # Read the frame
+#cv2.imshow('window_name', frame) # show frame on window
+w = cap.get(cv2.cv.CV_CAP_PROP_FRAME_WIDTH);
+h = cap.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT);
+out = cv2.VideoWriter('output.avi',fourcc, 24, (int(w),int(h)))
+#cap.set(3,500)
+#cap.set(4,500)
+#cap.set(5,30)
+
+ret, frame = cap.read()
+while(cap.isOpened()):
+	ret, frame = cap.read()
+	copy_frame = frame.copy()
+	
+	result,prob,xf,yf,wf,hf = predict(copy_frame,mouth_detector_instance)
+
+	if result is not None:
+	    if(result == 1):
+	    	cv2.rectangle(frame, (xf,yf),(wf,hf),(0,255,0),4,0)
+	    	prob_round = prob[0][1]*100
+	    	print prob_round
+	    	cv2.rectangle(frame, (xf-2,yf-25),(wf+2,yf),(0,255,0),-1,0)
+	    	cv2.rectangle(frame, (xf-2,hf),(xf+((wf-xf)/2),hf+25),(0,255,0),-1,0)
+	    	cv2.putText(frame, "Teeth!!",(xf,hf+14),cv2.FONT_HERSHEY_PLAIN,1.2,0,2)
+	    	cv2.putText(frame, str(prob_round)+"%",(xf,yf-10),cv2.FONT_HERSHEY_PLAIN,1.2,0,2)
+	    	print "SHOWING TEETH!!!"
+	    elif(result==0):
+	    	cv2.rectangle(frame, (xf,yf),(wf,hf),(64,64,64),4,0)
+	    	prob_round = prob[0][1]*100
+	    	print prob_round
+	    	cv2.rectangle(frame, (xf-2,yf-25),(wf+2,yf),(64,64,64),-1,0)
+	    	cv2.rectangle(frame, (xf-2,hf),(xf+((wf-xf)/2),hf+25),(64,64,64),-1,0)
+	    	cv2.putText(frame, "Teeth??",(xf,hf+14),cv2.FONT_HERSHEY_PLAIN,1.2,0,2)
+	    	cv2.putText(frame, str(prob_round)+"%",(xf,yf-10),cv2.FONT_HERSHEY_PLAIN,1.2,0,2)
+	
+	out.write(frame)
+	cv2.imshow('frame',frame)
+	
+	if cv2.waitKey(200) & 0xFF == ord('q'):
+		break
+
+cap.release()
+out.release()
+cv2.destroyAllWindows()
+
 ```
 
 //gif of a video running with the net showing if the person is showing the teeth or not

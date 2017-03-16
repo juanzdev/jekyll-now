@@ -132,8 +132,6 @@ A common problem in computer vision is the variety of transformations the images
 
 The next step after face detection is to extract the face landmarks, landmarks are special points in the face that relate to specific relevant parts like the jaw, nose, mouth and eyes, with the detected face and the landmark points it is possible to warp the face image to have a frontal version of it, luckily for us landmark extraction and frontalization can be simplified a lot by using the some dlib libraries.
 
-//code fragment for landmark detector
-
 ```python
 #landmark detector
 shape = self.md_face(img,facedet_obj)
@@ -246,7 +244,6 @@ our validation set folder
 
 With the mouth images located in the training and validation folders, we are going to generate two text files, each containing the path of the corresponding mouth images plus the label (1 or 0), these text files are needed because Caffe has a tool to generate LMDB files based on these plain text files.
 
-//code for generating those text files
 ```python
 import caffe
 import lmdb
@@ -313,8 +310,6 @@ This will generate a file called mean.binaryproto, this file will have matrix da
 
 Convnets are really good at image recognition because they can learn features automatically just by providing input and output data, they are also very good at transformation invariances this is small changes in rotation and full changes in translation.
 In machine learning there are a set of well-known state-of-the-art architectures for image processing like AlexNet, VGGNet, Google Inception etc. If you follow that kind of architectures is almost guaranteed you will obtain the best results possible, for this case and for the sake of simplicity we are going to use a simplified version of these nets with much less convolutional layers, remember that in this particular case we are just trying to extract teeth features from the mouths and not entire concepts of the real world like AlexNet does, so a net with much less capacity will do fine for the task.
-
-//code of 3 prototxt
 
 train_val_feature_scaled.prototxt
 ```json

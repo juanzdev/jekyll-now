@@ -866,8 +866,8 @@ At the end of the execution the accuracy,preccision,recall and f1score will be c
 
 |                | Predicted Negative | Predicted Positive |
 |----------------|--------------------|--------------------|
-| Negative Cases | TN: 259            | FP: 26             |
-| Positive Cases | FN: 80             | TP: 346            |
+| Negative Cases | TN: 283            | FP: 18             |
+| Positive Cases | FN: 54             | TP: 396            |
 
 Total samples 751
 True positives 396

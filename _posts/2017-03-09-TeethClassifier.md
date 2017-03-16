@@ -184,11 +184,11 @@ def histogram_equalization(img):
 # Data Augmentation
 As you recall, we have labeled only 700 images from the MUCT database and 1500 from the LFW database, this is just not enought data for learning to detect teeths, we need to gather more data somehow, the obvious solution is to manual label a couple of thousands images in addition and this is the PREFERED solution, having more data is always better, but it is expensive in time, so for simplicity we are going to augment the data, augmenting the data is a pretty common technique in machine learning and a pretty usefull one. Specifically we are going to make the following transformations to our current training data to get almost 10x times more data:
 
-## Mirroring of mouths
+## Mirroring the mouths
 For each image we are going to create a mirrored clone, this will give us 2x the data.
 //example of mirroring with a muct image
 
-## Rotating of mouths
+## Rotating the mouths
 For each mouth in the training set we are going to make small rotations, specifically -30,-20,-10,+10,+20,+30 degrees, this will give us 8x the data aprox.
 
 ```python
@@ -232,7 +232,7 @@ for in_idx, img_path in enumerate(input_data_set):
 The folling steps are requried to correctly configure a convolutional neural network in caffe:
 
 # Preparing the training set and validation set
-Now that we have mouth data ready, we need to split it into two subsets, we are going to use an 80/20 rule, 80 percent (15000 mouth images) of our transformed data is going to be the training set and the rest of the 20 percent (4500 mouth images) is going to be the validation set. The training data will be used during the training phase for learning and the validation set will be used to test the performance of the net during training, in this case, we have to move the mouth images to their respective folders located in training_data and validation_data
+Now that we have enough labeled mouths in place, we need to split it into two subsets, we are going to use the 80/20 rule, 80 percent (18828 mouth images) of our transformed data are going to be the in training set and the rest of the 20 percent (4700 mouth images) are going to be in the validation set. The training data will be used during the training phase for our network learning and the validation set will be used to test the performance of the net during training, in this case, we have to move the mouth images to their respective folders located in training_data and validation_data.
 
 our training set folder
 ![pic](../images/trainingdata.jpg)

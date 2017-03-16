@@ -54,7 +54,7 @@ Note that this labeled data is not our training set yet, because we have such sm
 # Detecting the face region
 
 ## Face detection
-There are different techniques for doing face detection, the most well known and accesibles are Haar Cascades and Histogram of Gradients (HOG), OpenCV offers a nice and fast implementation of Haar cascades and Dlib offers a more precise but slower face detection algorithm with HOG. After doing some testing with both libraries I found that DLib face-detection is much more precise and accurate, the Haar approach gives me a lot of false positives, the problem with Dlib face-detection is that it is slow and using it in real video data can be a pain. At the end of the exercise we ended up using both for different kind of situations.
+There are different techniques for doing face detection, the most well known and accesibles are Haar Cascades and Histogram of Gradients (HOG), OpenCV offers a nice and fast implementation of Haar Cascades and Dlib offers a more precise but slower face detection algorithm with HOG. After doing some testing with both libraries I found that DLib face detection is much more precise and accurate, the Haar approach gives me a lot of false positives, the problem with Dlib face-detection is that it is slow and using it in real video data can be a pain. At the end of the exercise we ended up using both for different kind of situations.
 
 //face detection in action
 
@@ -127,9 +127,9 @@ DLIB Implementation using histogram of gradients
             return None,-1,-1,-1,-1
 ```
 # Landmark detection and frontalization
-Now a typical problem in computer vision is the different transformations our images can have, they can be rotated at certain degree, and that will make difficult for our machine learning model to predict the correct answer.
+A common problem in computer vision is the variety of transformations the images can have, they can be rotated at certain degree or they can have different perspectives. 
 
-The next step after face detection is to extract valuable context data of the face using landmark extraction, landmarks are special points in the face that relate to parts of the face like the jaw, nose, mouth and eyes, with the detected face and the landmark points it is possible to warp the face image to have a frontal version of it, luckily for us landmark extraction and frontalization can be  simplified a lot by using the some dlib classes.
+The next step after face detection is to extract the face landmarks, landmarks are special points in the face that relate to specific relevant parts like the jaw, nose, mouth and eyes, with the detected face and the landmark points it is possible to warp the face image to have a frontal version of it, luckily for us landmark extraction and frontalization can be simplified a lot by using the some dlib libraries.
 
 //code fragment for landmark detector
 

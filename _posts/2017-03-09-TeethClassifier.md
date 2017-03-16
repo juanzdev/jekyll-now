@@ -677,6 +677,8 @@ solver_mode: CPU
 CNN Architecture
 ![pic](../images/architectureTeethCNN.png)
 
+# Training and debugging the overall system
+
 ## Training the neural network
 With the architecture in place we are ready to start learning the model, we are going to execute the caffe train command to start the training process, note that all the data from the LMDB files will flow throuhg the data layer of the network along with the labels, also the backpropagation learning procedure will take place at the same time, and by using gradient descent optimization the error rate will decrease in each iteration.
 
@@ -700,18 +702,15 @@ The next step is to plot the data using the provided Caffe tool for plotting:
 python plot_diag.py 
 ```
 
-//command to plot
-
 //image of loss vs iterations with 10000 iterations
 ![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
-# Testing the trained model with unseen data
+## Deploying the trained convnet
+Now that we have our network trained and it seems to have a good performance on the validation set it is time to start using it with unseen data.
+To do this we are going to use the caffe library for python, and we are going to create a simple python script that will load the deploy architecture of our convnet, and along with this architecture we are going to feed it with the trained weights located on the .caffemodel file.
 
-# Testing for a single image
-
-First I'm going to test the net with some individual unseen images
-Testing an individual image 
 ```python
+#extract mean data
 mean_blob = caffe_pb2.BlobProto()
 with open('../mean.binaryproto') as f:
     mean_blob.ParseFromString(f.read())
@@ -721,33 +720,133 @@ mean_array = np.asarray(mean_blob.data, dtype=np.float32).reshape(
 
 mean_array = mean_array*0.003921568627
 
-net = caffe.Net('../model/deploy.prototxt',1,weights='../model_snapshot/snap_fe_iter_2700.caffemodel')
-net.blobs['data'].reshape(1,1, IMAGE_WIDTH, IMAGE_HEIGHT)  # image size is 227x227
+net = caffe.Net('../model/deploy.prototxt',1,weights='../model_snapshot/snap_fe_iter_8700.caffemodel')
+net.blobs['data'].reshape(1,1, IMAGE_WIDTH, IMAGE_HEIGHT)
 transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
 transformer.set_mean('data', mean_array)
 transformer.set_transpose('data', (2,0,1))
 transformer.set_raw_scale('data', 0.00392156862745) 
 
-img = cv2.imread(individual_test_image, cv2.IMREAD_UNCHANGED)
-mouth_pre = mouth_detect_single(individual_test_image) #mouth is grayscale 1..255 50x50 BGR
-if mouth_pre is not None:
-    mouth_pre = mouth_pre[:,:,np.newaxis]
-    mouth = transformer.preprocess('data', mouth_pre)
-    net.blobs['data'].data[...] = mouth
-    out = net.forward()
-    pred = out['pred'].argmax()
-    print(individual_test_image)
-    print("Prediction:")
-    print(pred)
-    print("Prediction probabilities")
-    print(out['pred'])
+
+if BULK_PREDICTION==0:
+	img = cv2.imread(individual_test_image, cv2.IMREAD_UNCHANGED)
+	mouth_pre = mouth_detector_instance.mouth_detect_single(individual_test_image,True)
+	if mouth_pre is not None:
+		mouth_pre = mouth_pre[:,:,np.newaxis]
+		mouth = transformer.preprocess('data', mouth_pre)
+		net.blobs['data'].data[...] = mouth
+		out = net.forward()
+		pred = out['pred'].argmax()
+		print(individual_test_image)
+		print("Prediction:")
+		print(pred)
+		print("Prediction probabilities")
+		print(out['pred'])
+else:
+	files = glob.glob(test_output_result_folder_path+'/not_showing_teeth/*')
+	for f in files:
+		os.remove(f)
+
+	files = glob.glob(test_output_result_folder_path+'/showing_teeth/*')
+	for f in files:
+		os.remove(f)
+	
+	#performance variables
+	total_samples = 0
+	total_positives_training = 0
+	total_negatives_training = 0
+	true_positive = 0
+	true_negative = 0
+	false_positive = 0
+	false_negative = 0
+	
+	for in_idx, img_path in enumerate(original_data_set):
+		total_samples = total_samples + 1
+		head, tail = os.path.split(img_path)
+		img = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)
+		img = transform_img(img, img_width=IMAGE_WIDTH_MAIN, img_height=IMAGE_HEIGHT_MAIN)
+		mouth_pre = mouth_detector_instance.mouth_detect_single(img_path,True)
+		if mouth_pre is not None:
+			mouth_pre = mouth_pre[:,:,np.newaxis]
+			mouth = transformer.preprocess('data', mouth_pre)
+			net.blobs['data'].data[...] = mouth
+			out = net.forward()
+			pred = out['pred'].argmax()
+			print("Prediction:")
+			print(pred)
+			print("Prediction probabilities")
+			print(out['pred'])
+			if(pred==1):
+				if 'showingteeth' in tail:
+					total_positives_training = total_positives_training + 1
+					true_positive = true_positive + 1
+				else:
+					total_negatives_training = total_negatives_training + 1
+					false_positive = false_positive + 1
+
+				path = test_output_result_folder_path+"/showing_teeth/"+tail
+				shutil.copy2(img_path, path)
+			else:
+				if 'showingteeth' in tail:
+					total_positives_training = total_positives_training + 1
+					false_negative = false_negative + 1
+				else:
+					total_negatives_training = total_negatives_training + 1
+					true_negative = true_negative + 1
+
+				path = test_output_result_folder_path+"/not_showing_teeth/"+tail
+				shutil.copy2(img_path, path)
+
+	print "Total samples %d" %total_samples
+ 	print "True positives %d" %true_positive
+ 	print "False positives %d" %false_positive
+	print "True negative %d" %true_negative
+	print "False negative %d" %false_negative
+	
+	accuracy = (true_negative + true_positive)/total_samples
+	recall = true_positive / (true_positive + false_negative)
+	precision = true_positive / (true_positive + false_positive)
+	f1score = 2*((precision*recall)/(precision+recall))
+
+	print "Accuracy  %.2f" %accuracy
+	print "Recall  %.2f" %recall
+	print "Precision  %.2f" %precision
+	print "F1Score  %.2f" %f1score
+```
+Note:
+Note that this script will test our trained net passing it a new single image if the parameter BULK_PREDICTION is set to zero, otherwise it will make a bulk prediction over an entire folder of images and will move the ones he thinks are showing the teeth to the corresponding folder.
+
+## Testing the trained model with unseen data
+
+## Testing for a single image
+
+First I'm going to test the net with some individual unseen images to see individual results, to do this please modify the parameters shown below:
+
+```python
+BULK_PREDICTION = 0 #Set this to 0 to classify individual files
+#if BULK_PREDICTION = 0 the net will classify only the file specified on individual_test_image
+individual_test_image = "../test_image.jpg"
+```
+Testing an individual images results:
+
+
+//image of samples images and probabilities also show some errors
+
+## Testing for a bunch of images (Bulk testing)
+
+Now I'm going to test over an entire folder of unseen images, in this case, we have to modify the parameters shown below:
+
+```python
+BULK_PREDICTION = 1 #Set this to 0 to classify individual files
+#if bulk prediction is set to 1 the net will predict all images on the configured path
+test_set_folder_path = "../img/original_data/b_labeled"
+#all the files will be moved to a showing teeth or not showing teeth folder on the test_output_result_folder_path path
+test_output_result_folder_path = "../result"
 ```
 
-//image of samples images and probabilities
+the folder called b_labeled have images taken on different angles of the sampled MUCT dataset so, also note that I previously label this images manually just to know how good or how bad the net is behaving by calculating a bunch of important metrics.
 
-#Bulk testing
-Testing the image by moving them to the correct folder
-Now I'm going to test over an entire folder of unseen images, in this case, the folder called b have images taken on different angles so we can see is unseen data. Because I'm testing with a bunch of new data we need a way to measure the net performance
+You can look back at the entire script to know how the following code segment relate to the code, basically we are calculating the F1score to know how good or bad our model is doing.
 
 ```python
 accuracy = (true_negative + true_positive)/total_samples
@@ -756,16 +855,33 @@ precision = true_positive / (true_positive + false_positive)
 f1score = 2*((precision*recall)/(precision+recall))
 ```
 
+So to run the script to start testing the net by classifying the b_labeled folder, execute:
+
+```bash
+python predict_feature_scaled.py
+```
+
+Note that this script will read all the images specified on the input folder and will pass one by one each image to our convolutional neural network and depending on the prediction probabilities it will copy the image to the showing_teeth or not_showing_teeth folder.
+At the end of the execution the accuracy,preccision,recall and f1score will be calculated:
+
 |                | Predicted Negative | Predicted Positive |
 |----------------|--------------------|--------------------|
 | Negative Cases | TN: 259            | FP: 26             |
 | Positive Cases | FN: 80             | TP: 346            |
 
 Total samples 751
+True positives 396
+False positives 18
+True negative 283
+False negative 54
+Accuracy  0.90
+Recall  0.88
+Precision  0.96
+F1Score  0.92
 
 The model looks good.
 
-Now we have metrics to benchmark our trained model, with this in place we can quickly start tweaking things in our model or experimenting with different approaches and at the end see the final improvement with a number.
+By looking at the performance metrics we can start experimenting with different hyper-parameters or different modifications to our pipeline and always have a point of comparission to see if we are doing better or not.
 
 # Testing our net with real video!
 Although training a convnet is a very slow process, testing it is not!, in fact, it takes milliseconds to test the trained model, to prove you that I'm going to call the trained net in each frame of a video to show the predictions on realtime. 

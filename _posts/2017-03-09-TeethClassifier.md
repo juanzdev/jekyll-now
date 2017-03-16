@@ -133,13 +133,23 @@ The next step after face detection is to extract the face landmarks, landmarks a
 
 //code fragment for landmark detector
 
-this function receives the face region and will detect 68 landmark points using a previously trained model this will help us have relevant information about the orientation of the face.
-Now we can make a warp transformation to the face using the landmarks as a guide to have the face image facing front.
+```python
+#landmark detector
+shape = self.md_face(img,facedet_obj)
+```
+
+md_face receives the face region and will detect 68 landmark points using a previously trained model, with the landmark data we can make a warp transformation to the face using the landmarks as a guide to have the face image facing front.
 
 //image of landmarks with sample face
 ![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
-//code fragment for affine transformation
+to warp the face using the landmark data we use a python ported code that use the frontalization techinque by http://www.openu.ac.il/home/hassner/projects/frontalize/ ported by Heng Yang, the complete code can be found at the end of this post:
+
+```python
+p2d = np.asarray([(shape.part(n).x, shape.part(n).y,) for n in range(shape.num_parts)], np.float32)
+rawfront, symfront = self.fronter.frontalization(img,facedet_obj,p2d)
+```
+
 //image of face affined
 ![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 

@@ -236,10 +236,10 @@ The folling steps are requried to correctly configure a convolutional neural net
 ## Preparing the training set and validation set
 Now that we have enough labeled mouths in place, we need to split it into two subsets, we are going to use the 80/20 rule, 80 percent (18828 mouth images) of our transformed data are going to be the in training set and the rest of the 20 percent (4700 mouth images) are going to be in the validation set. The training data will be used during the training phase for our network learning and the validation set will be used to test the performance of the net during training, in this case, we have to move the mouth images to their respective folders located in training_data and validation_data.
 
-our training set folder
+training set folder
 ![pic](../images/trainingdata.jpg)
 
-our validation set folder
+validation set folder
 ![pic](../images/validationdata.jpg)
 
 ## Creating the LMDB file
@@ -289,7 +289,7 @@ for in_idx, img_path in enumerate(val_data):
 f.close()
 
 ```
-//example of the file
+
 ![pic](../images/trainingdataplain.jpg)
 
 To generate both training and validation LMDB files we run the following commands:

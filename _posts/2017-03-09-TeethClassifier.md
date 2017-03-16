@@ -171,7 +171,7 @@ With those transformations in place we can assure that our net will recive input
 
 
 # Histogram Equalization
-A usefull technique to highlight the details on the image is to apply histogram equalization:
+A usefull technique for highlighting the details on the image is to apply histogram equalization:
 
 ```python
 def histogram_equalization(img):
@@ -182,7 +182,7 @@ def histogram_equalization(img):
 ```
 
 # Data Augmentation
-Because we are working with small sets of data we need to create synthetic data, we are going to do the following transformations for each mouth image in our dataset to get almost 10x times more data.
+As you recall, we have labeled only 700 images from the MUCT database and 1500 from the LFW database, this is just not enought data for learning to detect teeths, we need to gather more data somehow, the obvious solution is to manual label a couple of thousands images in addition and this is the PREFERED solution, having more data is always better, but it is expensive in time, so for simplicity we are going to augment the data a pretty common technique in machine learning, specifically we are going to make the following transformations get almost 10x times more data:
 
 * Mirroring of mouths
 For each image we are going to create a mirrored clone, this will give us 2x the data.

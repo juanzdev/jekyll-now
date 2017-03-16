@@ -20,21 +20,21 @@ The overall steps that will involve creating the detector pipeline are:
 9. Training and debugging the overall system
 10. Testing the model with unseen data
 
-#Finding a dataset
-# Muct database
-There are a lot of datasets with faces on the web, I choose an open dataset called MUCT database http://www.milbo.org/muct/, this dataset contains 3755 faces with landmarks, for the purpose of this post I'm not going to use the landmark data.
+# Finding a dataset
+## Muct database
+We are going to choose an open dataset called MUCT database http://www.milbo.org/muct/, this dataset contains 3755 faces total all unlabeled, all the images were taken on the same studio with same background but with different lighting also the people on the dataset have different expressions so we have some good variety here.
 
  ![pic](../images/i000qa-fn.jpg)
 
-This dataset has a lot of variation in lighting, people face types and expressions. I only used one part of this dataset called muct-a-jpg-v1.tar.gz, this file contains 700+ faces, although this is a small number for training the machine learning model, it is possible to obtain good results using data augmentation combined with a good convolutional net model, the reason I choose only this limited subset of data is because at some point in the process is necessary to do manual labeling of the data and this tasks takes time, but you can label more and more data to obtain better results.
+Because of manual labeling constrains only a subset of this dataset called muct-a-jpg-v1.tar.gz will be used, this file contains 700+ faces and although this is a small number for training the machine learning model, it is possible to obtain good results using data augmentation combined with a powerfull convolutional network, the reason of choosing this limited subset of data is because at some point in the process is necessary to do manual labeling of each picture, but it is always encouraged to label more data to obtain better results.
 
-# LFW database
-I also use the Labeled Faces in the Wild database for faces data http://vis-www.cs.umass.edu/lfw/, this data set contains 13.000 images of faces, this face database has more variety because it is taken directly from the web, so this information will be very valuable in our training.
+## LFW database
+To have more variety on the data we are going to use the Labeled Faces in the Wild database too http://vis-www.cs.umass.edu/lfw/, this dataset contains 13.000 images of faces total all unlabeled, this database has a lot more variety because it contains faces of people from the web. As same as before we are not going to use the entire dataset but for this case only 1500 faces.
 
 
 //picture of face of LFW database
 
-#Labeling the data
+# Labeling the data
 
 Labeling the data is a manual process and it can be cumbersome to do although is necessary to do it only once, in this problem we have to label images from the two face databases, for this particular case we need to label all the faces with the value 1 if the face is showing the teeth or 0 otherwise, the label will be stored on the filename of the image for practical pourpuses. 
 

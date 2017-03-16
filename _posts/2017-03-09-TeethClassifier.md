@@ -154,15 +154,20 @@ rawfront, symfront = self.fronter.frontalization(img,facedet_obj,p2d)
 ![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
 # Image slicing
-Now that we have frontal faces we can focus on the mouth region
+Now that we have complete frontal faces we can focus on the mouth region only:
 
-//code fragment for image slicing
+```python
+rawfront, symfront = self.fronter.frontalization(img,facedet_obj,p2d)
+face_hog_mouth = symfront[165:220, 130:190] #get half-bottom part
+```
+
 //image of mouths parts
 ![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
+
 //picture of a bunch of mouths
 ![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
-With those transformations in place we can assure that our net will recive inputs of the same part of the face everytime, this will improve our accuracy, the output of this step will be our true training data.
+With those transformations in place we can assure that our net will recive inputs of the same part of the face everytime without any additional noise improving our precision on the final model, the output of this step will be our true training data, finally!
 
 
 # Histogram Equalization

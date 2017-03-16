@@ -24,14 +24,14 @@ The overall steps that will involve creating the detector pipeline are:
 ## Muct database
 We are going to choose an open dataset called MUCT database http://www.milbo.org/muct/, this dataset contains 3755 faces total all unlabeled, all the images were taken on the same studio with same background but with different lighting also the people on the dataset have different expressions so we have some good variety here.
 
- ![pic](../images/i000qa-fn.jpg)
+ ![pic](../images/all-simone-images-lores.jpg)
 
 Because of manual labeling constrains only a subset of this dataset called muct-a-jpg-v1.tar.gz will be used, this file contains 751 faces and although this is a small number for training the machine learning model, it is possible to obtain good results using data augmentation combined with a powerfull convolutional network, the reason of choosing this limited subset of data is because at some point in the process is necessary to do manual labeling of each picture, but it is always encouraged to label more data to obtain better results.
 
 ## LFW database
 To have more variety on the data we are going to use the Labeled Faces in the Wild database too http://vis-www.cs.umass.edu/lfw/, this dataset contains 13.233 images of faces total all unlabeled, this database has a lot more variety because it contains faces of people from the web. As same as before we are not going to use the entire dataset but for this case only 1505 faces.
 
-//picture of face of LFW database
+![pic](../images/lwf.jpg)
 
 
 # Labeling the data
@@ -47,7 +47,9 @@ Manual labeling can be a tedious process so you can use this simple tool for lab
 
 https://github.com/juanzdev/ImageBinaryLabellingTool
 
- ![pic](../images/labeltool.jpg)
+ ![pic](../images/label1.jpg)
+ 
+ ![pic](../images/label2.jpg)
 
 Note:
 Note that this labeled data is not our training set yet, because we have such small data set we need to get rid of unnecessary noise in the images by detecting the face region using some face detection techniques.

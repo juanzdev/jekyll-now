@@ -11,7 +11,7 @@ Our trained convolutional neural network detecting teeth on real video!
 
 {: .center}
 ![pic](../images/giphyob.gif)
-*Obama teeth being detected by our conv net! *
+*Obama teeth being detected by our conv net!*
 
 The overall steps that will involve creating the detector pipeline are:
 1. Finding the correct datasets, and adpating those datasets to the problem

@@ -9,6 +9,7 @@ By using a combination of OpenCV computer vision libraries for face detection al
 
 Our trained convolutional neural network detecting teeth on real video!
 
+{: .center}
 ![pic](../images/giphyob.gif)
 
 The overall steps that will involve creating the detector pipeline are:

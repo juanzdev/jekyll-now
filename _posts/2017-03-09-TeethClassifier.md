@@ -707,15 +707,16 @@ The next step is to plot the data using the provided Caffe tool for plotting:
 ```bash
 python plot_diag.py 
 ```
-
+{: .center}
 ![pic](../images/train_test_image_lr_0.01.png)
-Training with learning rate 0.01
+*Loss vs Iterations, training with learning rate 0.01*
 
 Note:
 It looks like we are stuck in a local minima!, you can tell this just by looking at this usefull graph, note that the validation error wont go down it looks like the best it can do is 30% error on the validation set!, now a usefull technique is to start with a bigger learning rate and then start decreasing it after a few iterations, lets try with learning rate 0.1
 
+{: .center}
 ![pic](../images/train_test_image_lr_0.1.png)
-Training with learning rate 0.1
+*Loss vs Iterations, training with learning rate 0.1*
 
 Training with learning rate 0.1 (much better!)
 Look how we overcome the local minima at the beginning then we found a much deeper region on the loss space just by incrementing the initial learning rate at the begining, be carefull because this doesnt always works and is problem dependant.

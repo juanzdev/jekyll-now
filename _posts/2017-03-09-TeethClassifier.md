@@ -11,7 +11,7 @@ Our trained convolutional neural network detecting teeth on real video!
 
 {: .center}
 ![pic](../images/giphyob.gif)
-*Obama teeth being detected by our conv net!*
+*Obama's teeth being detected by our conv net!*
 
 The overall steps that will involve creating the detector pipeline are:
 1. Finding the correct datasets, and adpating those datasets to the problem
@@ -1016,4 +1016,6 @@ cv2.destroyAllWindows()
 ```
 By running the script above you can test the net with the video you desire, in this particular case I'm testing it with the Obama speech.
 
+{: .center}
 ![pic](../images/giphyob.gif)
+*Obama's teeth being detected by our conv net!*

@@ -896,15 +896,15 @@ At the end of the execution of the process the accuracy, precision, recall and f
 | Negative Cases | TN: 283            | FP: 18             |
 | Positive Cases | FN: 54             | TP: 396            |
 
-Total samples 751
-True positives 396
-False positives 18
-True negative 283
-False negative 54
-Accuracy  0.90
-Recall  0.88
-Precision  0.96
-F1Score  0.92
+* Total samples 751
+* True positives 396
+* False positives 18
+* True negative 283
+* False negative 54
+* Accuracy  0.90
+* Recall  0.88
+* Precision  0.96
+* F1Score  0.92
 
 The overall performance of the model is pretty good but not perfect, note that we have a couple of false positives and false negatives but is a reasonably ratio for the problem at the end.
 

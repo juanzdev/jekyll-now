@@ -680,7 +680,7 @@ snapshot_prefix: "model_snapshot/snap_fe"
 solver_mode: CPU
 ```
 
-CNN Architecture
+## CNN Architecture
 <img src="../images/architectureTeethCNN.png" alt="Drawing" style="width: 400px;"/>
 
 # Training and debugging the overall system

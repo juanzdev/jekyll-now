@@ -29,8 +29,9 @@ The overall steps that will involve creating the detector pipeline are:
 # Finding a dataset
 ## Muct database
 We are going to choose an open dataset called MUCT database http://www.milbo.org/muct/, this dataset contains 3755 faces total all unlabeled, all the images were taken on the same studio with same background but with different lighting also the people on the dataset have different expressions so we have some good variety here.
-
- ![pic](../images/all-simone-images-lores.jpg)
+{: .center}
+![pic](../images/all-simone-images-lores.jpg)
+*Muct database image variations, source http://www.milbo.org/muct/*
 
 Because of manual labeling constrains only a subset of this dataset called muct-a-jpg-v1.tar.gz will be used, this file contains 751 faces and although this is a small number for training the machine learning model, it is possible to obtain good results using data augmentation combined with a powerfull convolutional network, the reason of choosing this limited subset of data is because at some point in the process is necessary to do manual labeling of each picture, but it is always encouraged to label more data to obtain better results.
 

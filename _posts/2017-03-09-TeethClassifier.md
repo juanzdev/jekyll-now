@@ -39,8 +39,9 @@ Because of manual labeling constrains only a subset of this dataset called muct-
 ## LFW database
 To have more variety on the data we are going to use the Labeled Faces in the Wild database too http://vis-www.cs.umass.edu/lfw/, this dataset contains 13.233 images of faces total all unlabeled, this database has a lot more variety because it contains faces of people from the web. As same as before we are not going to use the entire dataset but for this case only 1505 faces.
 
+{: .center}
 ![pic](../images/lwf.jpg)
-
+*LFW database image samples, source http://vis-www.cs.umass.edu/lfw/*
 
 # Labeling the data
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Convolutional neural net for Teeth detection
+title: Convolutional neural net for teeth detection
 published: true
 ---
 
@@ -1011,4 +1011,3 @@ cv2.destroyAllWindows()
 By running the script above you can test the net with the video you desire, in this particular case I'm testing it with the Obama speech.
 
 ![pic](../images/giphyob.gif)
-

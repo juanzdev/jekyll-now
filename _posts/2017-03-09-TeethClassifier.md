@@ -911,7 +911,7 @@ The overall performance of the model is pretty good but not perfect, note that w
 By looking at the performance metrics we can start experimenting with different hyper-parameters or different modifications of our pipeline and always have a point of comparison to see if we are doing better or not.
 
 ## Testing our net with real video!
-Now lets have some fun by passing a fragment of the Obama presidential speech to the trained net to see if Obama is showing his teeth to the camera or not, note that  in each frame of a video the net needs to make a prediction, this prediction will be rendered resulting video along with the HOG face detection boundary.
+Now lets have some fun by passing a fragment of the Obama's presidential speech to the trained net to see if Barack Obama is showing his teeth to the camera or not, note that in each frame of the video the trained convolutional neural network needs to make a prediction, the output of the the prediction will be rendered on a new video along with the face detection boundary.
 
 ```python
 import numpy as np
@@ -1025,7 +1025,9 @@ out.release()
 cv2.destroyAllWindows()
 
 ```
-By running the script above you can test the net with the video you desire, in this particular case, I'm testing it with the Obama speech.
+
+# Having fun
+By running the script above you can test the trained network with any video you want:
 
 {: .center}
 ![pic](../images/giphyob.gif)

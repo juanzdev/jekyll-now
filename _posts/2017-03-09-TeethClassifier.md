@@ -683,7 +683,7 @@ solver_mode: CPU
 ## CNN Architecture
 
 {: .center}
-<img src="../images/architectureTeethCNN.png" alt="Drawing" style="width: 400px;"/>
+<img src="../images/architectureTeethCNN.png" alt="Drawing" style="width: 500px;"/>
 
 # Training and debugging the overall system
 

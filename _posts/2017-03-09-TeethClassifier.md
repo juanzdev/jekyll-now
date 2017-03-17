@@ -681,7 +681,7 @@ solver_mode: CPU
 ```
 
 CNN Architecture
-<img src="../images/architectureTeethCNN.png" alt="Drawing" style="width: 200px;"/>
+<img src="../images/architectureTeethCNN.png" alt="Drawing" style="width: 600px;"/>
 
 # Training and debugging the overall system
 

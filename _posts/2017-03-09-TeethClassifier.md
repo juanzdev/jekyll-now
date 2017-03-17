@@ -29,6 +29,7 @@ The overall steps that will involve creating the detector pipeline are:
 # Finding a dataset
 ## Muct database
 We are going to choose an open dataset called MUCT database http://www.milbo.org/muct/, this dataset contains 3755 faces total all unlabeled, all the images were taken on the same studio with same background but with different lighting also the people on the dataset have different expressions so we have some good variety here.
+
 {: .center}
 ![pic](../images/all-simone-images-lores.jpg)
 *Muct database image variations, source http://www.milbo.org/muct/*

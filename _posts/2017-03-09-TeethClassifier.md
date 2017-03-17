@@ -5,7 +5,7 @@ published: true
 ---
 
 In this blog post, you will learn how to create a complete machine learning pipeline that solves the problem of telling whether or not a person in a picture is showing the teeth, we will see the main challenges that this problem imposes and will tackle some common machine learning problems.
-By using a combination of OpenCV computer vision libraries for face detection along with our own convolutional neural network for teeth recognition we will create a very capable system that could handle unseen data withouth loosing significative performance. For quick prototyping we are going to use the Caffe Deep learning framework, but you can use other cool frameworks like TensorFlow or Keras.
+By using a combination of OpenCV computer vision libraries for face detection along with our own convolutional neural network for teeth recognition we will create a very capable system that could handle unseen data without losing significative performance. For quick prototyping, we are going to use the Caffe Deep learning framework, but you can use other cool frameworks like TensorFlow or Keras.
 
 Our trained convolutional neural network detecting teeth on real video!
 
@@ -14,7 +14,7 @@ Our trained convolutional neural network detecting teeth on real video!
 *Obama's teeth being detected by our conv net!*
 
 The overall steps that will involve creating the detector pipeline are:
-1. Finding the correct datasets, and adpating those datasets to the problem
+1. Finding the correct datasets, and adapting those datasets to the problem
     2. Labeling the data accordingly ( 1 for showing teeth, 0 not showing teeth)
     3. Detecting the face region in an image
     4. Detecting the principal landmarks on the face
@@ -28,13 +28,13 @@ The overall steps that will involve creating the detector pipeline are:
 
 # Finding a dataset
 ## Muct database
-We are going to choose an open dataset called MUCT database http://www.milbo.org/muct/, this dataset contains 3755 faces total all unlabeled, all the images were taken on the same studio with same background but with different lighting also the people on the dataset have different expressions so we have some good variety here.
+We are going to choose an open dataset called MUCT database http://www.milbo.org/muct/, this dataset contains 3755 faces total all unlabeled, all the images were taken on the same studio with the same background but with different lighting also the people on the dataset have different expressions so we have some good variety here.
 
 {: .center}
 ![pic](../images/all-simone-images-lores.jpg)
 *Muct database image variations, source http://www.milbo.org/muct/*
 
-Because of manual labeling constrains only a subset of this dataset called muct-a-jpg-v1.tar.gz will be used, this file contains 751 faces and although this is a small number for training the machine learning model, it is possible to obtain good results using data augmentation combined with a powerfull convolutional network, the reason of choosing this limited subset of data is because at some point in the process is necessary to do manual labeling of each picture, but it is always encouraged to label more data to obtain better results.
+Because of manual labeling constraints only a subset of this dataset called muct-a-jpg-v1.tar.gz will be used, this file contains 751 faces and although this is a small number for training the machine learning model, it is possible to obtain good results using data augmentation combined with a powerful convolutional network, the reason for choosing this limited subset of data is because at some point in the process is necessary to do manual labeling of each picture, but it is always encouraged to label more data to obtain better results.
 
 ## LFW database
 To have more variety on the data we are going to use the Labeled Faces in the Wild database too http://vis-www.cs.umass.edu/lfw/, this dataset contains 13.233 images of faces total all unlabeled, this database has a lot more variety because it contains faces of people from the web. As same as before we are not going to use the entire dataset but for this case only 1505 faces.
@@ -45,11 +45,11 @@ To have more variety on the data we are going to use the Labeled Faces in the Wi
 
 # Labeling the data
 
-Labeling the data is a manual and cumbersome process but necessary, in this problem we have to label images from the two face databases, for this particular case we need to label all the faces with the value: 1 if the face is showing the teeth or 0 otherwise, the label will be stored on the filename of the image for practical pourpuses. 
+Labeling the data is a manual and cumbersome process but necessary, in this problem we have to label images from the two face databases, for this particular case we need to label all the faces with the value: 1 if the face is showing the teeth or 0 otherwise, the label will be stored on the filename of the image for practical purposes. 
 
 To recap:
-For the MUCT database we are going to label 751 faces.
-For the LFW database we are going to label 1505 faces.
+For the MUCT database, we are going to label 751 faces.
+For the LFW database, we are going to label 1505 faces.
 So we have a total of 2256 unique faces with different expressions.
 
 Manual labeling can be a tedious process so you can use this simple tool for labeling images quickly using hotkeys, if you push the Y key on your keyboard it will add to the existing filename the label _showingteeth, if you want to use this tool for your purposes feel free to pull it from git hub and modify it to suite your needs. 
@@ -61,17 +61,17 @@ https://github.com/juanzdev/ImageBinaryLabellingTool
 *Labelling images using a binary labelling tool*
 
 Note:
-Note that this labeled data is not our training set yet, because we have such small data set we need to get rid of unnecessary noise in the images by detecting the face region using some face detection techniques.
+Note that this labeled data is not our training set yet because we have such small data set we need to get rid of unnecessary noise in the images by detecting the face region using some face detection techniques.
 
 # Detecting the face region
 
 ## Face detection
-There are different techniques for doing face detection, the most well known and accesibles are Haar Cascades and Histogram of Gradients (HOG), OpenCV offers a nice and fast implementation of Haar Cascades and Dlib offers a more precise but slower face detection algorithm with HOG. After doing some testing with both libraries I found that DLib face detection is much more precise and accurate, the Haar approach gives me a lot of false positives, the problem with Dlib face-detection is that it is slow and using it in real video data can be a pain. At the end of the exercise we ended up using both for different kind of situations.
+There are different techniques for doing face detection, the most well known and accessible are Haar Cascades and Histogram of Gradients (HOG), OpenCV offers a nice and fast implementation of Haar Cascades and Dlib offers a more precise but slower face detection algorithm with HOG. After doing some testing with both libraries I found that DLib face detection is much more precise and accurate, the Haar approach gives me a lot of false positives, the problem with Dlib face-detection is that it is slow and using it in real video data can be a pain. At the end of the exercise, we ended up using both for different kind of situations.
 
 //face detection in action
 
 Note:
-You can also use a convolutional neural network for face detection, in fact, you will get much better results if you do, but for simplicity we are going to stick with these out of the box libraries.
+You can also use a convolutional neural network for face detection, in fact, you will get much better results if you do, but for simplicity, we are going to stick with these out of the box libraries.
 
 In Python, we are going to create two files, one for OpenCV face detection and one for DLib face detection. These files will receive an input image and will return the area of the face.
 
@@ -177,7 +177,7 @@ face_hog_mouth = symfront[165:220, 130:190] #get half-bottom part
 //picture of a bunch of mouths
 ![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
-With those transformations in place we can assure that our net will recive inputs of the same part of the face everytime without any additional noise improving our precision on the final model, the output of this step will be our true training data, finally!
+With those transformations in place, we can assure that our net will receive inputs of the same part of the face every time without any additional noise improving our precision on the final model, the output of this step will be our true training data, finally!
 
 
 # Histogram Equalization
@@ -192,14 +192,14 @@ def histogram_equalization(img):
 ```
 
 # Data Augmentation
-As you recall, we have labeled only 751 images from the MUCT database and 1505 from the LFW database, this is just not enought data for learning to detect teeths, we need to gather more data somehow, the obvious solution is to manual label a couple of thousands images in addition and this is the PREFERED solution, having more data is always better, but it is expensive in time, so for simplicity we are going to augment the data, augmenting the data is a pretty common technique in machine learning and a pretty usefull one. Specifically we are going to make the following transformations to our current training data to get almost 10x times more data (23528 mouth images):
+As you recall, we have labeled only 751 images from the MUCT database and 1505 from the LFW database, this is just not enough data for learning to detect teeth, we need to gather more data somehow, the obvious solution is to manual label a couple of thousands of images in addition and this is the PREFERRED solution, having more data is always better, but it is expensive in time, so for simplicity we are going to augment the data, augmenting the data is a pretty common technique in machine learning and a pretty useful one. Specifically, we are going to make the following transformations to our current training data to get almost 10x times more data (23528 month images):
 
 ## Mirroring the mouths
 For each image we are going to create a mirrored clone, this will give us 2x the data.
 //example of mirroring with a muct image
 
 ## Rotating the mouths
-For each mouth in the training set we are going to make small rotations, specifically -30,-20,-10,+10,+20,+30 degrees, this will give us 6x times the data aprox.
+For each mouth in the training set we are going to make small rotations, specifically -30,-20,-10,+10,+20,+30 degrees, this will give us 6x times the data approx.
 
 
 ```python
@@ -239,8 +239,8 @@ for in_idx, img_path in enumerate(input_data_set):
 
 ```
 
-# Seting up the Convolutional neural network in Caffe
-The folling steps are requried to correctly configure a convolutional neural network in caffe:
+# Setting up the Convolutional neural network in Caffe
+The following steps are required to correctly configure a convolutional neural network in caffe:
 
 ## Preparing the training set and validation set
 Now that we have enough labeled mouths in place, we need to split it into two subsets, we are going to use the 80/20 rule, 80 percent (18828 mouth images) of our transformed data are going to be the in training set and the rest of the 20 percent (4700 mouth images) are going to be in the validation set. The training data will be used during the training phase for our network learning and the validation set will be used to test the performance of the net during training, in this case, we have to move the mouth images to their respective folders located in training_data and validation_data.
@@ -320,7 +320,7 @@ This will generate a file called mean.binaryproto, this file will have matrix da
 ## Designing and implementing the convolutional neural network
 
 Convnets are really good at image recognition because they can learn features automatically just by providing input and output data, they are also very good at transformation invariances this is small changes in rotation and full changes in translation.
-In machine learning there are a set of well-known state-of-the-art architectures for image processing like AlexNet, VGGNet, Google Inception etc. If you follow that kind of architectures is almost guaranteed you will obtain the best results possible, for this case and for the sake of simplicity we are going to use a simplified version of these nets with much less convolutional layers, remember that in this particular case we are just trying to extract teeth features from the mouths and not entire concepts of the real world like AlexNet does, so a net with much less capacity will do fine for the task.
+In machine learning, there are a set of well-known state-of-the-art architectures for image processing like AlexNet, VGGNet, Google Inception etc. If you follow that kind of architectures is almost guaranteed you will obtain the best results possible, for this case and for the sake of simplicity we are going to use a simplified version of these nets with much less convolutional layers, remember that in this particular case we are just trying to extract teeth features from the mouths and not entire concepts of the real world like AlexNet does, so a net with much less capacity will do fine for the task.
 
 train_val_feature_scaled.prototxt
 ```json
@@ -686,22 +686,22 @@ CNN Architecture
 # Training and debugging the overall system
 
 ## Training the neural network
-With the architecture in place we are ready to start learning the model, we are going to execute the caffe train command to start the training process, note that all the data from the LMDB files will flow throuhg the data layer of the network along with the labels, also the backpropagation learning procedure will take place at the same time, and by using gradient descent optimization the error rate will decrease in each iteration.
+With the architecture in place we are ready to start learning the model, we are going to execute the caffe train command to start the training process, note that all the data from the LMDB files will flow through the data layer of the network along with the labels, also the backpropagation learning procedure will take place at the same time, and by using gradient descent optimization the error rate will decrease in each iteration.
 
 ```bash
 caffe train --solver=model/solver_feature_scaled.prototxt 2>&1 | tee logteeth_ult_fe_2.log
 ```
 
 ## Plotting loss vs iterations 
-A good way to measure the performance of the learning in our convolutional neural network is to plot the loss on the training and validation set vs the number of iterations.
+A good way to measure the performance of the learning in our convolutional neural network is to plot the loss of the training and validation set vs the number of iterations.
 
 Note:
-To create the plot is necessary to pre-process the .log file generated on the training phase, to do this execute:
+To create the plot is necessary to pre-process the .log file generated during the training phase, to do this execute:
 
 ```bash
 python /Users/juank/Dev/caffe/tools/extra/parse_log.py logteeth.log .
 ```
-this command will generate two-plain text files containg all the metrics for the validation set vs iterations and the training set vs iterations.
+this command will generate two plain text files containing all the metrics for the validation set vs iterations and the training set vs iterations.
 The next step is to plot the data using the provided Caffe tool for plotting:
 
 ```bash
@@ -712,18 +712,18 @@ python plot_diag.py 
 *Loss vs Iterations, training with learning rate 0.01*
 
 Note:
-It looks like we are stuck in a local minima!, you can tell this just by looking at this usefull graph, note that the validation error wont go down it looks like the best it can do is 30% error on the validation set!, now a usefull technique is to start with a bigger learning rate and then start decreasing it after a few iterations, lets try with learning rate 0.1
+It looks like we are stuck in a local minima!, you can tell this just by looking at this useful graph, note that the validation error won't go down it looks like the best it can do is 30% error on the validation set! now a useful technique is to start with a bigger learning rate and then start decreasing it after a few iterations, let's try with learning rate 0.1
 
 {: .center}
 ![pic](../images/train_test_image_lr_0.1.png)
 *Loss vs Iterations, training with learning rate 0.1*
 
 Training with learning rate 0.1 (much better!)
-Look how we overcome the local minima at the beginning then we found a much deeper region on the loss space just by incrementing the initial learning rate at the begining, be carefull because this doesnt always works and is problem dependant.
+Look how we overcome the local minima at the beginning then we found a much deeper region on the loss space just by incrementing the initial learning rate at the beginning, be careful because this doesn't always works and is problem dependant.
 
 ## Deploying the trained convnet
 Now that we have our network trained and it seems to have a good performance on the validation set it is time to start using it with unseen data.
-To do this we are going to use the caffe library for python, and we are going to create a simple python script that will load the deploy architecture of our convnet, and along with this architecture we are going to feed it with the trained weights located on the .caffemodel file.
+To do this we are going to use the caffe library for python, and we are going to create a simple python script that will load the deploy architecture of our convnet, and along with this architecture, we are going to feed it with the trained weights located on the .caffemodel file.
 
 ```python
 #extract mean data
@@ -745,89 +745,89 @@ transformer.set_raw_scale('data', 0.00392156862745)
 
 
 if BULK_PREDICTION==0:
-	img = cv2.imread(individual_test_image, cv2.IMREAD_UNCHANGED)
-	mouth_pre = mouth_detector_instance.mouth_detect_single(individual_test_image,True)
-	if mouth_pre is not None:
-		mouth_pre = mouth_pre[:,:,np.newaxis]
-		mouth = transformer.preprocess('data', mouth_pre)
-		net.blobs['data'].data[...] = mouth
-		out = net.forward()
-		pred = out['pred'].argmax()
-		print(individual_test_image)
-		print("Prediction:")
-		print(pred)
-		print("Prediction probabilities")
-		print(out['pred'])
+    img = cv2.imread(individual_test_image, cv2.IMREAD_UNCHANGED)
+    mouth_pre = mouth_detector_instance.mouth_detect_single(individual_test_image,True)
+    if mouth_pre is not None:
+        mouth_pre = mouth_pre[:,:,np.newaxis]
+        mouth = transformer.preprocess('data', mouth_pre)
+        net.blobs['data'].data[...] = mouth
+        out = net.forward()
+        pred = out['pred'].argmax()
+        print(individual_test_image)
+        print("Prediction:")
+        print(pred)
+        print("Prediction probabilities")
+        print(out['pred'])
 else:
-	files = glob.glob(test_output_result_folder_path+'/not_showing_teeth/*')
-	for f in files:
-		os.remove(f)
+    files = glob.glob(test_output_result_folder_path+'/not_showing_teeth/*')
+    for f in files:
+        os.remove(f)
 
-	files = glob.glob(test_output_result_folder_path+'/showing_teeth/*')
-	for f in files:
-		os.remove(f)
-	
-	#performance variables
-	total_samples = 0
-	total_positives_training = 0
-	total_negatives_training = 0
-	true_positive = 0
-	true_negative = 0
-	false_positive = 0
-	false_negative = 0
-	
-	for in_idx, img_path in enumerate(original_data_set):
-		total_samples = total_samples + 1
-		head, tail = os.path.split(img_path)
-		img = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)
-		img = transform_img(img, img_width=IMAGE_WIDTH_MAIN, img_height=IMAGE_HEIGHT_MAIN)
-		mouth_pre = mouth_detector_instance.mouth_detect_single(img_path,True)
-		if mouth_pre is not None:
-			mouth_pre = mouth_pre[:,:,np.newaxis]
-			mouth = transformer.preprocess('data', mouth_pre)
-			net.blobs['data'].data[...] = mouth
-			out = net.forward()
-			pred = out['pred'].argmax()
-			print("Prediction:")
-			print(pred)
-			print("Prediction probabilities")
-			print(out['pred'])
-			if(pred==1):
-				if 'showingteeth' in tail:
-					total_positives_training = total_positives_training + 1
-					true_positive = true_positive + 1
-				else:
-					total_negatives_training = total_negatives_training + 1
-					false_positive = false_positive + 1
+    files = glob.glob(test_output_result_folder_path+'/showing_teeth/*')
+    for f in files:
+        os.remove(f)
+    
+    #performance variables
+    total_samples = 0
+    total_positives_training = 0
+    total_negatives_training = 0
+    true_positive = 0
+    true_negative = 0
+    false_positive = 0
+    false_negative = 0
+    
+    for in_idx, img_path in enumerate(original_data_set):
+        total_samples = total_samples + 1
+        head, tail = os.path.split(img_path)
+        img = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)
+        img = transform_img(img, img_width=IMAGE_WIDTH_MAIN, img_height=IMAGE_HEIGHT_MAIN)
+        mouth_pre = mouth_detector_instance.mouth_detect_single(img_path,True)
+        if mouth_pre is not None:
+            mouth_pre = mouth_pre[:,:,np.newaxis]
+            mouth = transformer.preprocess('data', mouth_pre)
+            net.blobs['data'].data[...] = mouth
+            out = net.forward()
+            pred = out['pred'].argmax()
+            print("Prediction:")
+            print(pred)
+            print("Prediction probabilities")
+            print(out['pred'])
+            if(pred==1):
+                if 'showingteeth' in tail:
+                    total_positives_training = total_positives_training + 1
+                    true_positive = true_positive + 1
+                else:
+                    total_negatives_training = total_negatives_training + 1
+                    false_positive = false_positive + 1
 
-				path = test_output_result_folder_path+"/showing_teeth/"+tail
-				shutil.copy2(img_path, path)
-			else:
-				if 'showingteeth' in tail:
-					total_positives_training = total_positives_training + 1
-					false_negative = false_negative + 1
-				else:
-					total_negatives_training = total_negatives_training + 1
-					true_negative = true_negative + 1
+                path = test_output_result_folder_path+"/showing_teeth/"+tail
+                shutil.copy2(img_path, path)
+            else:
+                if 'showingteeth' in tail:
+                    total_positives_training = total_positives_training + 1
+                    false_negative = false_negative + 1
+                else:
+                    total_negatives_training = total_negatives_training + 1
+                    true_negative = true_negative + 1
 
-				path = test_output_result_folder_path+"/not_showing_teeth/"+tail
-				shutil.copy2(img_path, path)
+                path = test_output_result_folder_path+"/not_showing_teeth/"+tail
+                shutil.copy2(img_path, path)
 
-	print "Total samples %d" %total_samples
- 	print "True positives %d" %true_positive
- 	print "False positives %d" %false_positive
-	print "True negative %d" %true_negative
-	print "False negative %d" %false_negative
-	
-	accuracy = (true_negative + true_positive)/total_samples
-	recall = true_positive / (true_positive + false_negative)
-	precision = true_positive / (true_positive + false_positive)
-	f1score = 2*((precision*recall)/(precision+recall))
+    print "Total samples %d" %total_samples
+     print "True positives %d" %true_positive
+     print "False positives %d" %false_positive
+    print "True negative %d" %true_negative
+    print "False negative %d" %false_negative
+    
+    accuracy = (true_negative + true_positive)/total_samples
+    recall = true_positive / (true_positive + false_negative)
+    precision = true_positive / (true_positive + false_positive)
+    f1score = 2*((precision*recall)/(precision+recall))
 
-	print "Accuracy  %.2f" %accuracy
-	print "Recall  %.2f" %recall
-	print "Precision  %.2f" %precision
-	print "F1Score  %.2f" %f1score
+    print "Accuracy  %.2f" %accuracy
+    print "Recall  %.2f" %recall
+    print "Precision  %.2f" %precision
+    print "F1Score  %.2f" %f1score
 ```
 Note:
 Note that this script will test our trained net passing it a new single image if the parameter BULK_PREDICTION is set to zero, otherwise it will make a bulk prediction over an entire folder of images and will move the ones he thinks are showing the teeth to the corresponding folder.
@@ -862,7 +862,7 @@ test_output_result_folder_path = "../result"
 
 the folder called b_labeled have images taken on different angles of the sampled MUCT dataset so, also note that I previously label this images manually just to know how good or how bad the net is behaving by calculating a bunch of important metrics.
 
-You can look back at the entire script to know how the following code segment relate to the code, basically we are calculating the F1score to know how good or bad our model is doing.
+You can look back at the entire script to know how the following code segment relates to the code, basically, we are calculating the F1score to know how good or bad our model is doing.
 
 ```python
 accuracy = (true_negative + true_positive)/total_samples
@@ -877,8 +877,8 @@ So to run the script to start testing the net by classifying the b_labeled folde
 python predict_feature_scaled.py
 ```
 
-Note that this script will read all the images specified on the input folder and will pass one by one each image to our convolutional neural network and depending on the prediction probabilities it will copy the image to the showing_teeth or not_showing_teeth folder.
-At the end of the execution the accuracy,preccision,recall and f1score will be calculated:
+Note that this script will read all the images specified on the input folder and will pass one by one each image to our convolutional neural network and depend on the prediction probabilities it will copy the image to the showing_teeth or not_showing_teeth folder.
+At the end of the execution the accuracy, precision, recall and f1score will be calculated:
 
 |                | Predicted Negative | Predicted Positive |
 |----------------|--------------------|--------------------|
@@ -897,7 +897,7 @@ F1Score  0.92
 
 The model looks good.
 
-By looking at the performance metrics we can start experimenting with different hyper-parameters or different modifications to our pipeline and always have a point of comparission to see if we are doing better or not.
+By looking at the performance metrics we can start experimenting with different hyper-parameters or different modifications to our pipeline and always have a point of comparison to see if we are doing better or not.
 
 ## Testing our net with real video!
 Now lets have some fun by passing a fragment of the Obama presidential speech to the trained net to see if Obama is showing his teeth to the camera or not, note that  in each frame of a video the net needs to make a prediction, this prediction will be rendered resulting video along with the HOG face detection boundary.
@@ -921,22 +921,22 @@ IMAGE_WIDTH = 32
 IMAGE_HEIGHT = 32
 
 def predict(image,mouth_detector):
-	img = image
-	mouth_pre,x,y,w,h = mouth_detector.mouth_detect_single(img,False)
+    img = image
+    mouth_pre,x,y,w,h = mouth_detector.mouth_detect_single(img,False)
 
-	if mouth_pre is not None:
-		mouth_pre = mouth_pre[:,:,np.newaxis]
-		mouth = transformer.preprocess('data', mouth_pre)
-		net.blobs['data'].data[...] = mouth
-		out = net.forward()
-		print("Prediction probabilities")
-		print(out['pred'])
-		if(out['pred'][0][1]>0.70):
-			return 1,out['pred'],x,y,w,h
-		else:
-			return 0,out['pred'],x,y,w,h
-	else:
-		return -1,0,0,0,0,0
+    if mouth_pre is not None:
+        mouth_pre = mouth_pre[:,:,np.newaxis]
+        mouth = transformer.preprocess('data', mouth_pre)
+        net.blobs['data'].data[...] = mouth
+        out = net.forward()
+        print("Prediction probabilities")
+        print(out['pred'])
+        if(out['pred'][0][1]>0.70):
+            return 1,out['pred'],x,y,w,h
+        else:
+            return 0,out['pred'],x,y,w,h
+    else:
+        return -1,0,0,0,0,0
 
 #CNN Definition
 #extract mean data
@@ -979,42 +979,42 @@ out = cv2.VideoWriter('output.avi',fourcc, 24, (int(w),int(h)))
 
 ret, frame = cap.read()
 while(cap.isOpened()):
-	ret, frame = cap.read()
-	copy_frame = frame.copy()
-	
-	result,prob,xf,yf,wf,hf = predict(copy_frame,mouth_detector_instance)
+    ret, frame = cap.read()
+    copy_frame = frame.copy()
+    
+    result,prob,xf,yf,wf,hf = predict(copy_frame,mouth_detector_instance)
 
-	if result is not None:
-	    if(result == 1):
-	    	cv2.rectangle(frame, (xf,yf),(wf,hf),(0,255,0),4,0)
-	    	prob_round = prob[0][1]*100
-	    	print prob_round
-	    	cv2.rectangle(frame, (xf-2,yf-25),(wf+2,yf),(0,255,0),-1,0)
-	    	cv2.rectangle(frame, (xf-2,hf),(xf+((wf-xf)/2),hf+25),(0,255,0),-1,0)
-	    	cv2.putText(frame, "Teeth!!",(xf,hf+14),cv2.FONT_HERSHEY_PLAIN,1.2,0,2)
-	    	cv2.putText(frame, str(prob_round)+"%",(xf,yf-10),cv2.FONT_HERSHEY_PLAIN,1.2,0,2)
-	    	print "SHOWING TEETH!!!"
-	    elif(result==0):
-	    	cv2.rectangle(frame, (xf,yf),(wf,hf),(64,64,64),4,0)
-	    	prob_round = prob[0][1]*100
-	    	print prob_round
-	    	cv2.rectangle(frame, (xf-2,yf-25),(wf+2,yf),(64,64,64),-1,0)
-	    	cv2.rectangle(frame, (xf-2,hf),(xf+((wf-xf)/2),hf+25),(64,64,64),-1,0)
-	    	cv2.putText(frame, "Teeth??",(xf,hf+14),cv2.FONT_HERSHEY_PLAIN,1.2,0,2)
-	    	cv2.putText(frame, str(prob_round)+"%",(xf,yf-10),cv2.FONT_HERSHEY_PLAIN,1.2,0,2)
-	
-	out.write(frame)
-	cv2.imshow('frame',frame)
-	
-	if cv2.waitKey(200) & 0xFF == ord('q'):
-		break
+    if result is not None:
+        if(result == 1):
+            cv2.rectangle(frame, (xf,yf),(wf,hf),(0,255,0),4,0)
+            prob_round = prob[0][1]*100
+            print prob_round
+            cv2.rectangle(frame, (xf-2,yf-25),(wf+2,yf),(0,255,0),-1,0)
+            cv2.rectangle(frame, (xf-2,hf),(xf+((wf-xf)/2),hf+25),(0,255,0),-1,0)
+            cv2.putText(frame, "Teeth!!",(xf,hf+14),cv2.FONT_HERSHEY_PLAIN,1.2,0,2)
+            cv2.putText(frame, str(prob_round)+"%",(xf,yf-10),cv2.FONT_HERSHEY_PLAIN,1.2,0,2)
+            print "SHOWING TEETH!!!"
+        elif(result==0):
+            cv2.rectangle(frame, (xf,yf),(wf,hf),(64,64,64),4,0)
+            prob_round = prob[0][1]*100
+            print prob_round
+            cv2.rectangle(frame, (xf-2,yf-25),(wf+2,yf),(64,64,64),-1,0)
+            cv2.rectangle(frame, (xf-2,hf),(xf+((wf-xf)/2),hf+25),(64,64,64),-1,0)
+            cv2.putText(frame, "Teeth??",(xf,hf+14),cv2.FONT_HERSHEY_PLAIN,1.2,0,2)
+            cv2.putText(frame, str(prob_round)+"%",(xf,yf-10),cv2.FONT_HERSHEY_PLAIN,1.2,0,2)
+    
+    out.write(frame)
+    cv2.imshow('frame',frame)
+    
+    if cv2.waitKey(200) & 0xFF == ord('q'):
+        break
 
 cap.release()
 out.release()
 cv2.destroyAllWindows()
 
 ```
-By running the script above you can test the net with the video you desire, in this particular case I'm testing it with the Obama speech.
+By running the script above you can test the net with the video you desire, in this particular case, I'm testing it with the Obama speech.
 
 {: .center}
 ![pic](../images/giphyob.gif)

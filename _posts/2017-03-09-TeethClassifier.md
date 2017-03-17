@@ -56,9 +56,9 @@ Manual labeling can be a tedious process so you can use this simple tool for lab
 
 https://github.com/juanzdev/ImageBinaryLabellingTool
 
- ![pic](../images/label1.jpg)
- 
- ![pic](../images/label2.jpg)
+{: .center}
+![pic](../images/label1.jpg)
+*Labelling images using a binary labelling tool*
 
 Note:
 Note that this labeled data is not our training set yet, because we have such small data set we need to get rid of unnecessary noise in the images by detecting the face region using some face detection techniques.

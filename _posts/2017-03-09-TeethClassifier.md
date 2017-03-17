@@ -260,8 +260,7 @@ Now that we have enough labeled mouths in place, we need to split it into two su
 *validation set folder*
 
 ## Creating the LMDB file
-
-With the mouth images located in the training and validation folders, we are going to generate two text files, each containing the path of the corresponding mouth images plus the label (1 or 0), these text files are needed because Caffe has a tool to generate LMDB files based on these plain text files.
+With the mouth images located in the training and validation folders, we are going to generate two text files, each containing the path of the corresponding mouth images plus the label (1 or 0), these text files are needed because Caffe has a tool to generate LMDB files based on these.
 
 ```python
 import caffe
@@ -307,7 +306,9 @@ f.close()
 
 ```
 
+{: .center}
 ![pic](../images/trainingdataplain.jpg)
+*text file that has the path of the image plus the label, this will be required to generate the LMDB data*
 
 To generate both training and validation LMDB files we run the following commands:
 
@@ -317,17 +318,17 @@ convert_imageset --gray --shuffle /devuser/Teeth/img/validation_data/ training_v
 ```
 
 ## Extracting the mean data for the entire dataset
-A common step in computer vision is to extract the mean data of the entire training dataset to facilitate the learning process during backpropagation, Caffe already has a library to calculate the mean data for us:
+A common step in computer vision is to extract the mean data of the entire training dataset to ease the learning process during backpropagation, Caffe already has a library to calculate the mean data for us:
 
 ```bash
 compute_image_mean -backend=lmdb train_lmdb mean.binaryproto
 ```
 
-This will generate a file called mean.binaryproto, this file will have matrix data related to the overall mean of our training set, this will be subtracted during training to each and every one of our training examples to have a more reasonable scale for the inputs.
+This will generate a file called mean.binaryproto, this file will have matrix data related to the overall mean of all our training set, this matrix will be subtracted during training to each and every one of our training examples, this helps having a more reasonable scale for the inputs.
 
 ## Designing and implementing the convolutional neural network
 
-Convnets are really good at image recognition because they can learn features automatically just by providing input and output data, they are also very good at transformation invariances this is small changes in rotation and full changes in translation.
+Convnets are really good at image recognition because they can learn features automatically just by input-output asociations, they are also very good at transformation invariances this is small changes in rotation and full changes in translation.
 In machine learning, there are a set of well-known state-of-the-art architectures for image processing like AlexNet, VGGNet, Google Inception etc. If you follow that kind of architectures is almost guaranteed you will obtain the best results possible, for this case and for the sake of simplicity we are going to use a simplified version of these nets with much less convolutional layers, remember that in this particular case we are just trying to extract teeth features from the mouths and not entire concepts of the real world like AlexNet does, so a net with much less capacity will do fine for the task.
 
 train_val_feature_scaled.prototxt
@@ -696,7 +697,7 @@ solver_mode: CPU
 # Training and debugging the overall system
 
 ## Training the neural network
-With the architecture in place we are ready to start learning the model, we are going to execute the caffe train command to start the training process, note that all the data from the LMDB files will flow through the data layer of the network along with the labels, also the backpropagation learning procedure will take place at the same time, and by using gradient descent optimization the error rate will decrease in each iteration.
+With the architecture in place we are ready to start learning the model, we are going to execute the caffe train command to start the training process, note that all the data from the LMDB files will flow through the data layer of the network along with the labels, also the backpropagation learning procedure will take place at the same time, and by using gradient descent optimization, the error rate will decrease in each iteration.
 
 ```bash
 caffe train --solver=model/solver_feature_scaled.prototxt 2>&1 | tee logteeth_ult_fe_2.log
@@ -719,21 +720,21 @@ python plot_diag.py 
 ```
 {: .center}
 ![pic](../images/train_test_image_lr_0.01.png)
-*Loss vs Iterations, training with learning rate 0.01*
+*Loss vs Iterations, training with learning rate 0.01 after 10000 iterations*
 
 Note:
-It looks like we are stuck in a local minima!, you can tell this just by looking at this useful graph, note that the validation error won't go down it looks like the best it can do is 30% error on the validation set! now a useful technique is to start with a bigger learning rate and then start decreasing it after a few iterations, let's try with learning rate 0.1
+It looks like we are stuck in a local minima!, you can tell this just by looking at this useful graph, note that the validation error won't go down and it looks like the best it can do is 30% error on the validation set! this is not so good performance, a useful technique is to start with a bigger learning rate and then start decreasing it after a few iterations, let's try with learning rate 0.1
 
 {: .center}
 ![pic](../images/train_test_image_lr_0.1.png)
-*Loss vs Iterations, training with learning rate 0.1*
+*Loss vs Iterations, training with learning rate 0.1 after 10000 iterations*
 
 Training with learning rate 0.1 (much better!)
-Look how we overcome the local minima at the beginning then we found a much deeper region on the loss space just by incrementing the initial learning rate at the beginning, be careful because this doesn't always works and is problem dependant.
+Look how we overcome the local minima at the beginning then we found a much deeper region on the loss space just by incrementing the initial learning rate at the very start, be careful because this doesn't always works and is trully a problem dependant situation.
 
 ## Deploying the trained convnet
-Now that we have our network trained and it seems to have a good performance on the validation set it is time to start using it with unseen data.
-To do this we are going to use the caffe library for python, and we are going to create a simple python script that will load the deploy architecture of our convnet, and along with this architecture, we are going to feed it with the trained weights located on the .caffemodel file.
+Now that we have our network trained with a reasonably good performance on the validation set it is time to start testing it with new unseen data.
+To do this we are going to use the caffe library for python, and we are going to create a simple python script that will load the deploy.prototxt architecture of our convnet, along with this architecture we are going to feed it with the trained weights located on the .caffemodel file.
 
 ```python
 #extract mean data
@@ -840,13 +841,13 @@ else:
     print "F1Score  %.2f" %f1score
 ```
 Note:
-Note that this script will test our trained net passing it a new single image if the parameter BULK_PREDICTION is set to zero, otherwise it will make a bulk prediction over an entire folder of images and will move the ones he thinks are showing the teeth to the corresponding folder.
+Note that this script will test our trained net with new single image if the parameter BULK_PREDICTION is set to zero, otherwise it will make a bulk prediction over an entire folder of images and will move the ones he thinks are showing the teeth to the corresponding folder, you can play with this behaviour based o your needs.
 
 ## Testing the trained model with unseen data
 
 ## Testing for a single image
 
-First I'm going to test the net with some individual unseen images to see individual results, to do this please modify the parameters shown below:
+First I'm going to test the net with some individual unseen images to measure individual results, to do this please modify the parameters shown below:
 
 ```python
 BULK_PREDICTION = 0 #Set this to 0 to classify individual files
@@ -855,12 +856,11 @@ individual_test_image = "../test_image.jpg"
 ```
 Testing an individual images results:
 
-
 //image of samples images and probabilities also show some errors
 
 ## Testing for a bunch of images (Bulk testing)
 
-Now I'm going to test over an entire folder of unseen images, in this case, we have to modify the parameters shown below:
+Now I'm going to test over an entire folder of unseen images, we have to modify the parameters shown below:
 
 ```python
 BULK_PREDICTION = 1 #Set this to 0 to classify individual files
@@ -870,9 +870,9 @@ test_set_folder_path = "../img/original_data/b_labeled"
 test_output_result_folder_path = "../result"
 ```
 
-the folder called b_labeled have images taken on different angles of the sampled MUCT dataset so, also note that I previously label this images manually just to know how good or how bad the net is behaving by calculating a bunch of important metrics.
+the folder called b_labeled have images taken on different angles of the sampled MUCT dataset so, see this as the test set but with labels on it, I previously labeled these images using the manual labeling tool, this step is usefull because we can calculate how good or how bad the net is behaving after the prediction phase.
 
-You can look back at the entire script to know how the following code segment relates to the code, basically, we are calculating the F1score to know how good or bad our model is doing.
+You can look back at the entire script to know how the following code segment relates to the code, basically, we are calculating the F1score to know how good or bad our model is doing:
 
 ```python
 accuracy = (true_negative + true_positive)/total_samples
@@ -881,14 +881,14 @@ precision = true_positive / (true_positive + false_positive)
 f1score = 2*((precision*recall)/(precision+recall))
 ```
 
-So to run the script to start testing the net by classifying the b_labeled folder, execute:
+So to start testing the net by classifying the b_labeled folder or classifying a single image, execute:
 
 ```bash
 python predict_feature_scaled.py
 ```
 
-Note that this script will read all the images specified on the input folder and will pass one by one each image to our convolutional neural network and depend on the prediction probabilities it will copy the image to the showing_teeth or not_showing_teeth folder.
-At the end of the execution the accuracy, precision, recall and f1score will be calculated:
+Note that this script will read all the images specified on the input folder and will pass one by one each image to our trained convolutional neural network and based on the prediction probability the image will be copiedto the showing_teeth or not_showing_teeth folder.
+At the end of the execution of the process the accuracy, precision, recall and f1score are calculated:
 
 {: .center}
 |                | Predicted Negative | Predicted Positive |
@@ -906,9 +906,9 @@ Recall  0.88
 Precision  0.96
 F1Score  0.92
 
-The model looks good.
+The overall performance of the model is pretty good but not perfect, note that we have a couple of false positives and false negatives but is a reasonably ratio for the problem at the end.
 
-By looking at the performance metrics we can start experimenting with different hyper-parameters or different modifications to our pipeline and always have a point of comparison to see if we are doing better or not.
+By looking at the performance metrics we can start experimenting with different hyper-parameters or different modifications of our pipeline and always have a point of comparison to see if we are doing better or not.
 
 ## Testing our net with real video!
 Now lets have some fun by passing a fragment of the Obama presidential speech to the trained net to see if Obama is showing his teeth to the camera or not, note that  in each frame of a video the net needs to make a prediction, this prediction will be rendered resulting video along with the HOG face detection boundary.

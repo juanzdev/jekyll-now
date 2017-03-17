@@ -4,8 +4,8 @@ title: Convolutional neural net for teeth detection
 published: true
 ---
 
-In this blog post, you will learn how to create a complete machine learning pipeline that solves the problem of telling whether or not a person in a picture is showing the teeth, we will see the main challenges that this problem imposes and tackle some common problems that will arise on the process.
-By using a combination of Opencv libraries for face detection along with our own convolutional neural network for teeth recognition we will create a very capable system that could handle unseen data without losing significative performance. For quick prototyping, we are going to use the  the Caffe deep learning framework, but you can use other cool frameworks like TensorFlow or Keras.
+In this blog post, you will learn how to create a complete machine learning pipeline that solves the problem of telling whether or not a person in a picture is showing the teeth, we will see the main challenges that this problem imposes and tackle some common problems that will arise in the process.
+By using a combination of Opencv libraries for face detection along with our own convolutional neural network for teeth recognition we will create a very capable system that could handle unseen data without losing significative performance. For quick prototyping, we are going to use the the Caffe deep learning framework, but you can use other cool frameworks like TensorFlow or Keras.
 
 At the end of this post our trained convolutional neural network will be able to detect teeth on real video with a very good precision rate!
 
@@ -20,7 +20,7 @@ The overall steps that will involve creating the teeth detector pipeline are:
     * Detecting the principal landmarks on the face
     * Transforming the face with the detected landmarks to have a "frontal face" transformation
     * Slicing the relevant parts of the image
-    * Easing the data for training by appliying histogram equalization
+    * Easing the data for training by applying histogram equalization
 * Augmenting the data
 * Setting up the convolutional neural network in Caffe
 * Training and debugging the overall system
@@ -28,16 +28,16 @@ The overall steps that will involve creating the teeth detector pipeline are:
 
 # Finding a dataset
 ## Muct database
-We are going to choose an open dataset called **MUCT** database http://www.milbo.org/muct/, this dataset contains 3755 unlabeled faces in total, all the images were taken on the same studio with the same background but with different lighting and camera angles.
+We are going to choose an open dataset called **MUCT** database http://www.milbo.org/muct/, this dataset contains 3755 unlabeled faces in total, all the images were taken in the same studio with the same background but with different lighting and camera angles.
 
 {: .center}
 ![pic](../images/all-simone-images-lores.jpg)
 *Muct database image variations, source http://www.milbo.org/muct/*
 
-Because of manual labeling constraints only a subset of the dataset called muct-a-jpg-v1.tar.gz will be used, this file contains 751 faces in total, although this is a small number for training the machine learning model, it is possible to obtain good results using data augmentation techniques combined with a powerful convolutional neural network model, the reason for choosing this limited subset of data is because at some point in the process is necessary to do manual labeling for each picture, but note that it is always encouraged to label more data to obtain better results, in fact you could have much better results than the final model of this posts by taking some time to label much more data and re-train the model.
+Because of manual labeling constraints only a subset of the dataset called muct-a-jpg-v1.tar.gz will be used, this file contains 751 faces in total, although this is a small number for training the machine learning model, it is possible to obtain good results using data augmentation techniques combined with a powerful convolutional neural network model, the reason for choosing this limited subset of data is because at some point in the process is necessary to do manual labeling for each picture, but note that it is always encouraged to label more data to obtain better results, in fact, you could have much better results than the final model of this posts by taking some time to label much more data and re-train the model.
 
 ## LFW database
-To have more variety on the data we are going to use the **Labeled Faces in the Wild** database too http://vis-www.cs.umass.edu/lfw/, this dataset contains 13.233 images of unlabeled faces in total, this database has a lot more variety because it contains faces of people in different situations all the images are gathered directly from the web. Similarly for the LFW database we are not going to use only 1505 faces for training.
+To have more variety on the data we are going to use the **Labeled Faces in the Wild** database too http://vis-www.cs.umass.edu/lfw/, this dataset contains 13.233 images of unlabeled faces in total, this database has a lot more variety because it contains faces of people in different situations all the images are gathered directly from the web. Similarly, for the LFW database, we are not going to use only 1505 faces for training.
 
 {: .center}
 ![pic](../images/lwf.jpg)
@@ -58,14 +58,14 @@ To speed up manual labeling a bit, you can use this simple tool https://github.c
 *Labelling images using the binary labelling tool*
 
 Note:
-Note that this labeled images are not our training set, because we have such small data set (2256 images) we need to get rid of unnecessary noise in the images by detecting the face region by using some face detection technique.
+Note that these labeled images are not our training set because we have such small data set (2256 images) we need to get rid of unnecessary noise in the images by detecting the face region by using some face detection technique.
 
 # Detecting the face region
 
 ## Face detection
-There are different techniques for doing face detection, the most well known and accessible are Haar Cascades and Histogram of Gradients (HOG), OpenCV offers a nice and fast implementation of Haar Cascades and Dlib offers a more precise but slower face detection algorithm with HOG. After doing some testing with both libraries I found that DLib face detection is much more precise and accurate, the Haar approach gives me a lot of false positives, the problem with Dlib face-detection is that it is slow and using it in real video data can be a pain. At the end of the exercise, we ended up using both for different kind of situations. I recommend reading the excelent post https://medium.com/@ageitgey/machine-learning-is-fun-part-4-modern-face-recognition-with-deep-learning-c3cffc121d78#.f8kxypipx by Adam Geitgey, most of the code shown here for face detection was based on his ideas.
+There are different techniques for doing face detection, the most well known and accessible are Haar Cascades and Histogram of Gradients (HOG), OpenCV offers a nice and fast implementation of Haar Cascades and Dlib offers a more precise but slower face detection algorithm with HOG. After doing some testing with both libraries I found that DLib face detection is much more precise and accurate, the Haar approach gives me a lot of false positives, the problem with Dlib face-detection is that it is slow and using it in real video data can be a pain. At the end of the exercise, we ended up using both for different kind of situations. I recommend reading the excellent post https://medium.com/@ageitgey/machine-learning-is-fun-part-4-modern-face-recognition-with-deep-learning-c3cffc121d78#.f8kxypipx by Adam Geitgey, most of the code shown here for face detection was based on his ideas.
 
-By using the opencv libraries we can detect the region of the face, this is helpfull because we can discard unnessesary information and focus on our problem.
+By using the opencv libraries we can detect the region of the face, this is helpfull because we can discard unnecessary information and focus on our problem.
 
 //face detection in action
 
@@ -140,7 +140,7 @@ DLIB Implementation using histogram of gradients
 # Landmark detection and frontalization
 Faces on images can have a lot of variation, they can be rotated at certain degree or they can have different perspectives because the picture was taken at different angles and positions. 
 
-Simply detecting the face is not enought in our case because learning these multiple variations will require huge amounts of data, we need to have a standard way to see the faces this is we need to see the face always in the same position and perspective, to do this we need to extract landmarks from the face, landmarks are special points in the face that relate to specific relevant parts like the jaw, nose, mouth and eyes, with the detected face and the landmark points it is possible to **warp** the face image to have a frontal version of it, luckily for us landmark extraction and frontalization can be simplified a lot by using the some dlib libraries.
+Simply detecting the face is not enough in our case because learning these multiple variations will require huge amounts of data, we need to have a standard way to see the faces this is we need to see the face always in the same position and perspective, to do this we need to extract landmarks from the face, landmarks are special points in the face that relate to specific relevant parts like the jaw, nose, mouth and eyes, with the detected face and the landmark points it is possible to **warp** the face image to have a frontal version of it, luckily for us landmark extraction and frontalization can be simplified a lot by using some dlib libraries.
 
 ```python
 #landmark detector
@@ -195,10 +195,10 @@ def histogram_equalization(img):
 ```
 
 # Data Augmentation
-As you recall, we have labeled only 751 images from the MUCT database and 1505 from the LFW database, this is just not enough data for learning to detect teeth, we need to gather more data somehow, the obvious solution is to label a couple of thousand images more, this is the **ideal** solution, having more data is always better but collecting it is time expensive, so for simplicity we are going to use data augmentation. We are going to make the following transformations to our set of mouth images to get almost 10x times more different images (23528 month images in total):
+As you recall, we have labeled only 751 images from the MUCT database and 1505 from the LFW database, this is just not enough data for learning to detect teeth, we need to gather more data somehow, the obvious solution is to label a couple of thousand images more, this is the **ideal** solution, having more data is always better but collecting it is time expensive, so for simplicity we are going to use data augmentation. We are going to make the following transformations to our set of mouth images to get almost 10x times more different images (23528 mouth images in total):
 
 ## Mirroring the mouths
-For each mouth image we are going to create a mirrored clone, this will give us twice the data.
+For each mouth image, we are going to create a mirrored clone, this will give us twice the data.
 
 ´´´pyhon
 horizontal_img = cv2.flip( img, 0 )
@@ -246,7 +246,7 @@ for in_idx, img_path in enumerate(input_data_set):
 ```
 
 # Setting up the Convolutional neural network in Caffe
-Finally! we are at the point were all our training data has significant amounts of information to learn the problem, the next step will be the core functionallity of our machine learning pipeline, we are going to create a convolutional neural net that will learn the knowledge of **what a mouth showing a teeth** is, the following steps are required to correctly configure this convolutional neural network in caffe:
+Finally! we are at the point where all our training data has significant amounts of information to learn the problem, the next step will be the core functionality of our machine learning pipeline, we are going to create a convolutional neural net that will learn the knowledge of **what a mouth showing a teeth** is, the following steps are required to correctly configure this convolutional neural network in caffe:
 
 ## Preparing the training set and validation set
 Now that we have enough labeled mouths in place, we need to split it into two subsets, we are going to use the 80/20 rule, 80 percent (18828 mouth images in total) of our transformed data are going to be in training set and the 20 percent (4700 mouth images) are going to be in the validation set. The training data will be used during the training phase for our network learning and the validation set will be used to test the performance of the net during training, in this case, we have to move the mouth images to their respective folders located in training_data and validation_data.
@@ -324,11 +324,11 @@ A common step in computer vision is to extract the mean data of the entire train
 compute_image_mean -backend=lmdb train_lmdb mean.binaryproto
 ```
 
-This will generate a file called mean.binaryproto, this file will have matrix data related to the overall mean of all our training set, this matrix will be subtracted during training to each and every one of our training examples, this helps having a more reasonable scale for the inputs.
+This will generate a file called mean.binaryproto, this file will have matrix data related to the overall mean of all our training set, this matrix will be subtracted during training to each and every one of our training examples, this helps to have a more reasonable scale for the inputs.
 
 ## Designing and implementing the convolutional neural network
 
-Convnets are really good at image recognition because they can learn features automatically just by input-output asociations, they are also very good at transformation invariances this is small changes in rotation and full changes in translation.
+Convnets are really good at image recognition because they can learn features automatically just by input-output associations, they are also very good at transformation invariances this is small changes in rotation and full changes in translation.
 In machine learning, there are a set of well-known state-of-the-art architectures for image processing like AlexNet, VGGNet, Google Inception etc. If you follow that kind of architectures is almost guaranteed you will obtain the best results possible, for this case and for the sake of simplicity we are going to use a simplified version of these nets with much less convolutional layers, remember that in this particular case we are just trying to extract teeth features from the mouths and not entire concepts of the real world like AlexNet does, so a net with much less capacity will do fine for the task.
 
 train_val_feature_scaled.prototxt
@@ -723,14 +723,14 @@ python plot_diag.py 
 *Loss vs Iterations, training with learning rate 0.01 after 10000 iterations*
 
 Note:
-It looks like we are stuck in a local minima!, you can tell this just by looking at this useful graph, note that the validation error won't go down and it looks like the best it can do is 30% error on the validation set! this is not so good performance, a useful technique is to start with a bigger learning rate and then start decreasing it after a few iterations, let's try with learning rate 0.1
+It looks like we are stuck in local minima! you can tell this just by looking at this useful graph, note that the validation error won't go down and it looks like the best it can do is 30% error on the validation set! this is not so good performance, a useful technique is to start with a bigger learning rate and then start decreasing it after a few iterations, let's try with learning rate 0.1
 
 {: .center}
 ![pic](../images/train_test_image_lr_0.1.png)
 *Loss vs Iterations, training with learning rate 0.1 after 10000 iterations*
 
 Training with learning rate 0.1 (much better!)
-Look how we overcome the local minima at the beginning then we found a much deeper region on the loss space just by incrementing the initial learning rate at the very start, be careful because this doesn't always works and is trully a problem dependant situation.
+Look how we overcome the local minima at the beginning then we found a much deeper region on the loss space just by incrementing the initial learning rate at the very start, be careful because this doesn't always works and is truly a problem dependant situation.
 
 ## Deploying the trained convnet
 Now that we have our network trained with a reasonably good performance on the validation set it is time to start testing it with new unseen data.
@@ -870,7 +870,7 @@ test_set_folder_path = "../img/original_data/b_labeled"
 test_output_result_folder_path = "../result"
 ```
 
-the folder called b_labeled have images taken on different angles of the sampled MUCT dataset so, see this as the test set but with labels on it, I previously labeled these images using the manual labeling tool, this step is usefull because we can calculate how good or how bad the net is behaving after the prediction phase.
+the folder called b_labeled have images taken on different angles of the sampled MUCT dataset so, see this as the test set but with labels on it, I previously labeled these images using the manual labeling tool, this step is useful because we can calculate how good or how bad the net is behaving after the prediction phase.
 
 You can look back at the entire script to know how the following code segment relates to the code, basically, we are calculating the F1score to know how good or bad our model is doing:
 
@@ -887,7 +887,7 @@ So to start testing the net by classifying the b_labeled folder or classifying a
 python predict_feature_scaled.py
 ```
 
-Note that this script will read all the images specified on the input folder and will pass one by one each image to our trained convolutional neural network and based on the prediction probability the image will be copiedto the showing_teeth or not_showing_teeth folder.
+Note that this script will read all the images specified on the input folder and will pass one by one each image to our trained convolutional neural network and based on the prediction probability the image will be copied to the showing_teeth or not_showing_teeth folder.
 At the end of the execution of the process the accuracy, precision, recall and f1score are calculated:
 
 {: .center}
@@ -906,12 +906,12 @@ At the end of the execution of the process the accuracy, precision, recall and f
 * Precision  0.96
 * F1-score  0.92
 
-The overall performance of the model is pretty good but not perfect, note that we have a couple of false positives and false negatives but is a reasonably ratio for the problem at the end.
+The overall performance of the model is pretty good but not perfect, note that we have a couple of false positives and false negatives but is a reasonable ratio for the problem at the end.
 
-By looking at the performance metrics we can start experimenting with different hyper-parameters or different modifications of our pipeline and always have a point of comparison to see if we are doing better or not.
+By looking at the performance metrics we can start experimenting with different hyperparameters or different modifications of our pipeline and always have a point of comparison to see if we are doing better or not.
 
 ## Testing our net with real video!
-Now lets have some fun by passing a fragment of the Obama's presidential speech to the trained net to see if Barack Obama is showing his teeth to the camera or not, note that in each frame of the video the trained convolutional neural network needs to make a prediction, the output of the the prediction will be rendered on a new video along with the face detection boundary.
+Now lets have some fun by passing a fragment of the Obama's presidential speech to the trained net to see if Barack Obama is showing his teeth to the camera or not, note that in each frame of the video the trained convolutional neural network needs to make a prediction, the output of the prediction will be rendered on a new video along with the face detection boundary.
 
 ```python
 import numpy as np

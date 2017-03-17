@@ -14,17 +14,17 @@ At the end of this post our trained convolutional neural network will be able to
 *Obama's teeth being detected by our conv net!*
 
 The overall steps that will involve creating the teeth detector pipeline are:
-1. Finding the correct datasets then adapting those datasets to the problem
-    2. Labeling the data accordingly ( 1 for showing teeth, 0 not showing teeth)
-    3. Detecting the face region in an image
-    4. Detecting the principal landmarks on the face
-    5. Transforming the face with the detected landmarks to have a "frontal face" transformation
-    6. Slicing the relevant parts of the image
-    6. Easing the data for training by appliying histogram equalization
-7. Augmenting the data
-8. Setting up the convolutional neural network in Caffe
-9. Training and debugging the overall system
-10. Testing the model with unseen data
+* Finding the correct datasets then adapting those datasets to the problem
+    * Labeling the data accordingly ( 1 for showing teeth, 0 not showing teeth)
+    * Detecting the face region in an image
+    * Detecting the principal landmarks on the face
+    * Transforming the face with the detected landmarks to have a "frontal face" transformation
+    * Slicing the relevant parts of the image
+    * Easing the data for training by appliying histogram equalization
+* Augmenting the data
+* Setting up the convolutional neural network in Caffe
+* Training and debugging the overall system
+* Testing the model with unseen data
 
 # Finding a dataset
 ## Muct database

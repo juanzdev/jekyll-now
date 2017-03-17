@@ -4,23 +4,23 @@ title: Convolutional neural net for teeth detection
 published: true
 ---
 
-In this blog post, you will learn how to create a complete machine learning pipeline that solves the problem of telling whether or not a person in a picture is showing the teeth, we will see the main challenges that this problem imposes and will tackle some common machine learning problems.
-By using a combination of OpenCV computer vision libraries for face detection along with our own convolutional neural network for teeth recognition we will create a very capable system that could handle unseen data without losing significative performance. For quick prototyping, we are going to use the Caffe Deep learning framework, but you can use other cool frameworks like TensorFlow or Keras.
+In this blog post, you will learn how to create a complete machine learning pipeline that solves the problem of telling whether or not a person in a picture is showing the teeth, we will see the main challenges that this problem imposes and tackle some common problems that will arise on the process.
+By using a combination of Opencv libraries for face detection along with our own convolutional neural network for teeth recognition we will create a very capable system that could handle unseen data without losing significative performance. For quick prototyping, we are going to use the  the Caffe deep learning framework, but you can use other cool frameworks like TensorFlow or Keras.
 
-Our trained convolutional neural network detecting teeth on real video!
+At the end of this post our trained convolutional neural network will be able to detect teeth on real video with a very good precision rate!
 
 {: .center}
 ![pic](../images/giphyob.gif)
 *Obama's teeth being detected by our conv net!*
 
-The overall steps that will involve creating the detector pipeline are:
-1. Finding the correct datasets, and adapting those datasets to the problem
+The overall steps that will involve creating the teeth detector pipeline are:
+1. Finding the correct datasets then adapting those datasets to the problem
     2. Labeling the data accordingly ( 1 for showing teeth, 0 not showing teeth)
     3. Detecting the face region in an image
     4. Detecting the principal landmarks on the face
     5. Transforming the face with the detected landmarks to have a "frontal face" transformation
     6. Slicing the relevant parts of the image
-    6. Easing the data for training
+    6. Easing the data for training by appliying histogram equalization
 7. Augmenting the data
 8. Setting up the convolutional neural network in Caffe
 9. Training and debugging the overall system

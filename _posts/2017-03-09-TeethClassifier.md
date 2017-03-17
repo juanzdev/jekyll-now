@@ -28,52 +28,51 @@ The overall steps that will involve creating the teeth detector pipeline are:
 
 # Finding a dataset
 ## Muct database
-We are going to choose an open dataset called MUCT database http://www.milbo.org/muct/, this dataset contains 3755 faces total all unlabeled, all the images were taken on the same studio with the same background but with different lighting also the people on the dataset have different expressions so we have some good variety here.
+We are going to choose an open dataset called **MUCT** database http://www.milbo.org/muct/, this dataset contains 3755 unlabeled faces in total, all the images were taken on the same studio with the same background but with different lighting and camera angles.
 
 {: .center}
 ![pic](../images/all-simone-images-lores.jpg)
 *Muct database image variations, source http://www.milbo.org/muct/*
 
-Because of manual labeling constraints only a subset of this dataset called muct-a-jpg-v1.tar.gz will be used, this file contains 751 faces and although this is a small number for training the machine learning model, it is possible to obtain good results using data augmentation combined with a powerful convolutional network, the reason for choosing this limited subset of data is because at some point in the process is necessary to do manual labeling of each picture, but it is always encouraged to label more data to obtain better results.
+Because of manual labeling constraints only a subset of the dataset called muct-a-jpg-v1.tar.gz will be used, this file contains 751 faces in total, although this is a small number for training the machine learning model, it is possible to obtain good results using data augmentation techniques combined with a powerful convolutional neural network model, the reason for choosing this limited subset of data is because at some point in the process is necessary to do manual labeling for each picture, but note that it is always encouraged to label more data to obtain better results, in fact you could have much better results than the final model of this posts by taking some time to label much more data and re-train the model.
 
 ## LFW database
-To have more variety on the data we are going to use the Labeled Faces in the Wild database too http://vis-www.cs.umass.edu/lfw/, this dataset contains 13.233 images of faces total all unlabeled, this database has a lot more variety because it contains faces of people from the web. As same as before we are not going to use the entire dataset but for this case only 1505 faces.
+To have more variety on the data we are going to use the **Labeled Faces in the Wild** database too http://vis-www.cs.umass.edu/lfw/, this dataset contains 13.233 images of unlabeled faces in total, this database has a lot more variety because it contains faces of people in different situations all the images are gathered directly from the web. Similarly for the LFW database we are not going to use only 1505 faces for training.
 
 {: .center}
 ![pic](../images/lwf.jpg)
 *LFW database image samples, source http://vis-www.cs.umass.edu/lfw/*
 
 # Labeling the data
-
-Labeling the data is a manual and cumbersome process but necessary, in this problem we have to label images from the two face databases, for this particular case we need to label all the faces with the value: 1 if the face is showing the teeth or 0 otherwise, the label will be stored on the filename of the image for practical purposes. 
+Labeling the data is a manual and cumbersome process but necessary, we have to label images from the two face databases, we will label all the faces with the value 1 if the face is showing the teeth or 0 otherwise, the label will be stored on the filename of each image file. 
 
 To recap:
 For the MUCT database, we are going to label 751 faces.
 For the LFW database, we are going to label 1505 faces.
-So we have a total of 2256 unique faces with different expressions.
+So we have a total of 2256 unique faces with different expressions, some of them are showing the teeth and some not.
 
-Manual labeling can be a tedious process so you can use this simple tool for labeling images quickly using hotkeys, if you push the Y key on your keyboard it will add to the existing filename the label _showingteeth, if you want to use this tool for your purposes feel free to pull it from git hub and modify it to suite your needs. 
-
-https://github.com/juanzdev/ImageBinaryLabellingTool
+To speed up manual labeling a bit, you can use this simple tool https://github.com/juanzdev/ImageBinaryLabellingTool for quick labeling using hotkeys, the tool will read all the images in a folder and will start asking you to put the binary value, if you push the Y key on your keyboard it will add to the existing filename the label _showingteeth and pass to the next image, if you want to use this tool for your purposes feel free to pull it from git hub and modify it to suite your needs. 
 
 {: .center}
 ![pic](../images/label1.jpg)
-*Labelling images using a binary labelling tool*
+*Labelling images using the binary labelling tool*
 
 Note:
-Note that this labeled data is not our training set yet because we have such small data set we need to get rid of unnecessary noise in the images by detecting the face region using some face detection techniques.
+Note that this labeled images are not our training set, because we have such small data set (2256 images) we need to get rid of unnecessary noise in the images by detecting the face region by using some face detection technique.
 
 # Detecting the face region
 
 ## Face detection
-There are different techniques for doing face detection, the most well known and accessible are Haar Cascades and Histogram of Gradients (HOG), OpenCV offers a nice and fast implementation of Haar Cascades and Dlib offers a more precise but slower face detection algorithm with HOG. After doing some testing with both libraries I found that DLib face detection is much more precise and accurate, the Haar approach gives me a lot of false positives, the problem with Dlib face-detection is that it is slow and using it in real video data can be a pain. At the end of the exercise, we ended up using both for different kind of situations.
+There are different techniques for doing face detection, the most well known and accessible are Haar Cascades and Histogram of Gradients (HOG), OpenCV offers a nice and fast implementation of Haar Cascades and Dlib offers a more precise but slower face detection algorithm with HOG. After doing some testing with both libraries I found that DLib face detection is much more precise and accurate, the Haar approach gives me a lot of false positives, the problem with Dlib face-detection is that it is slow and using it in real video data can be a pain. At the end of the exercise, we ended up using both for different kind of situations. I recommend reading the excelent post https://medium.com/@ageitgey/machine-learning-is-fun-part-4-modern-face-recognition-with-deep-learning-c3cffc121d78#.f8kxypipx by Adam Geitgey, most of the code shown here for face detection was based on his ideas.
+
+By using the opencv libraries we can detect the region of the face, this is helpfull because we can discard unnessesary information and focus on our problem.
 
 //face detection in action
 
 Note:
 You can also use a convolutional neural network for face detection, in fact, you will get much better results if you do, but for simplicity, we are going to stick with these out of the box libraries.
 
-In Python, we are going to create two files, one for OpenCV face detection and one for DLib face detection. These files will receive an input image and will return the area of the face.
+In Python, we are going to create two files, one for OpenCV face detection and one for DLib face detection. These files will receive an input image and will return the area where the face is present.
 
 OpenCV implementation
 ```python
@@ -139,36 +138,41 @@ DLIB Implementation using histogram of gradients
             return None,-1,-1,-1,-1
 ```
 # Landmark detection and frontalization
-A common problem in computer vision is the variety of transformations the images can have, they can be rotated at certain degree or they can have different perspectives. 
+Faces on images can have a lot of variation, they can be rotated at certain degree or they can have different perspectives because the picture was taken at different angles and positions. 
 
-The next step after face detection is to extract the face landmarks, landmarks are special points in the face that relate to specific relevant parts like the jaw, nose, mouth and eyes, with the detected face and the landmark points it is possible to warp the face image to have a frontal version of it, luckily for us landmark extraction and frontalization can be simplified a lot by using the some dlib libraries.
+Simply detecting the face is not enought in our case because learning these multiple variations will require huge amounts of data, we need to have a standard way to see the faces this is we need to see the face always in the same position and perspective, to do this we need to extract landmarks from the face, landmarks are special points in the face that relate to specific relevant parts like the jaw, nose, mouth and eyes, with the detected face and the landmark points it is possible to **warp** the face image to have a frontal version of it, luckily for us landmark extraction and frontalization can be simplified a lot by using the some dlib libraries.
 
 ```python
 #landmark detector
 shape = self.md_face(img,facedet_obj)
 ```
 
-md_face receives the face region and will detect 68 landmark points using a previously trained model, with the landmark data we can make a warp transformation to the face using the landmarks as a guide to have the face image facing front.
+md_face receives the face region and will detect 68 landmark points using a previously trained model, with the landmark data we can make a warp transformation to the face using the landmarks as a guide to make the frontalization.
 
 //image of landmarks with sample face
 ![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
-to warp the face using the landmark data we use a python ported code that use the frontalization techinque by http://www.openu.ac.il/home/hassner/projects/frontalize/ ported by Heng Yang, the complete code can be found at the end of this post:
+to warp the face using the landmark data we use a python ported code that use the frontalization techinque proposed by al Hassner, Shai Harel*, Eran Paz* and Roee Enbar  http://www.openu.ac.il/home/hassner/projects/frontalize/ and ported to python by Heng Yang, the complete code can be found at the end of this post:
 
 ```python
 p2d = np.asarray([(shape.part(n).x, shape.part(n).y,) for n in range(shape.num_parts)], np.float32)
 rawfront, symfront = self.fronter.frontalization(img,facedet_obj,p2d)
 ```
-
 //image of face affined
 ![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
 # Image slicing
-Now that we have complete frontal faces we can focus on the mouth region only:
+Now that we have frontal faces we can make a simple vertical division to discard the top face region and keep only the bottom region that contains the mouths:
 
 ```python
 rawfront, symfront = self.fronter.frontalization(img,facedet_obj,p2d)
 face_hog_mouth = symfront[165:220, 130:190] #get half-bottom part
+```
+
+To generate all the mouth data you can run the script create_mouth_training_data.py
+
+```bash
+python create_mouth_training_data.py
 ```
 
 //image of mouths parts
@@ -177,11 +181,10 @@ face_hog_mouth = symfront[165:220, 130:190] #get half-bottom part
 //picture of a bunch of mouths
 ![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
 
-With those transformations in place, we can assure that our net will receive inputs of the same part of the face every time without any additional noise improving our precision on the final model, the output of this step will be our true training data, finally!
-
+With those transformations in place, our net will receive inputs of the same part of the face for each image. The total output of this step will be 2256 mouths.
 
 # Histogram Equalization
-A usefull technique for highlighting the details on the image is to apply histogram equalization:
+A usefull technique for highlighting the details on the image is to apply histogram equalization, note that this step is already applied on create_mouth_training_data.py:
 
 ```python
 def histogram_equalization(img):

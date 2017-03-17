@@ -904,7 +904,7 @@ At the end of the execution of the process the accuracy, precision, recall and f
 * Accuracy  0.90
 * Recall  0.88
 * Precision  0.96
-* F1Score  0.92
+* F1-score  0.92
 
 The overall performance of the model is pretty good but not perfect, note that we have a couple of false positives and false negatives but is a reasonably ratio for the problem at the end.
 

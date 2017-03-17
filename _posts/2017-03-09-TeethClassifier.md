@@ -195,14 +195,17 @@ def histogram_equalization(img):
 ```
 
 # Data Augmentation
-As you recall, we have labeled only 751 images from the MUCT database and 1505 from the LFW database, this is just not enough data for learning to detect teeth, we need to gather more data somehow, the obvious solution is to manual label a couple of thousands of images in addition and this is the PREFERRED solution, having more data is always better, but it is expensive in time, so for simplicity we are going to augment the data, augmenting the data is a pretty common technique in machine learning and a pretty useful one. Specifically, we are going to make the following transformations to our current training data to get almost 10x times more data (23528 month images):
+As you recall, we have labeled only 751 images from the MUCT database and 1505 from the LFW database, this is just not enough data for learning to detect teeth, we need to gather more data somehow, the obvious solution is to label a couple of thousand images more, this is the **ideal** solution, having more data is always better but collecting it is time expensive, so for simplicity we are going to use data augmentation. We are going to make the following transformations to our set of mouth images to get almost 10x times more different images (23528 month images in total):
 
 ## Mirroring the mouths
-For each image we are going to create a mirrored clone, this will give us 2x the data.
-//example of mirroring with a muct image
+For each mouth image we are going to create a mirrored clone, this will give us twice the data.
+
+´´´pyhon
+horizontal_img = cv2.flip( img, 0 )
+´´´
 
 ## Rotating the mouths
-For each mouth in the training set we are going to make small rotations, specifically -30,-20,-10,+10,+20,+30 degrees, this will give us 6x times the data approx.
+For each mouth image we are going to make small rotations, specifically -30,-20,-10,+10,+20,+30 degrees, this will give us 6x times the data approx.
 
 
 ```python
@@ -243,16 +246,18 @@ for in_idx, img_path in enumerate(input_data_set):
 ```
 
 # Setting up the Convolutional neural network in Caffe
-The following steps are required to correctly configure a convolutional neural network in caffe:
+Finally! we are at the point were all our training data has significant amounts of information to learn the problem, the next step will be the core functionallity of our machine learning pipeline, we are going to create a convolutional neural net that will learn the knowledge of **what a mouth showing a teeth** is, the following steps are required to correctly configure this convolutional neural network in caffe:
 
 ## Preparing the training set and validation set
-Now that we have enough labeled mouths in place, we need to split it into two subsets, we are going to use the 80/20 rule, 80 percent (18828 mouth images) of our transformed data are going to be the in training set and the rest of the 20 percent (4700 mouth images) are going to be in the validation set. The training data will be used during the training phase for our network learning and the validation set will be used to test the performance of the net during training, in this case, we have to move the mouth images to their respective folders located in training_data and validation_data.
+Now that we have enough labeled mouths in place, we need to split it into two subsets, we are going to use the 80/20 rule, 80 percent (18828 mouth images in total) of our transformed data are going to be in training set and the 20 percent (4700 mouth images) are going to be in the validation set. The training data will be used during the training phase for our network learning and the validation set will be used to test the performance of the net during training, in this case, we have to move the mouth images to their respective folders located in training_data and validation_data.
 
-training set folder
+{: .center}
 ![pic](../images/trainingdata.jpg)
+*training set folder*
 
-validation set folder
+{: .center}
 ![pic](../images/validationdata.jpg)
+*validation set folder*
 
 ## Creating the LMDB file
 

@@ -880,6 +880,7 @@ python predict_feature_scaled.py
 Note that this script will read all the images specified on the input folder and will pass one by one each image to our convolutional neural network and depend on the prediction probabilities it will copy the image to the showing_teeth or not_showing_teeth folder.
 At the end of the execution the accuracy, precision, recall and f1score will be calculated:
 
+{: .center}
 |                | Predicted Negative | Predicted Positive |
 |----------------|--------------------|--------------------|
 | Negative Cases | TN: 283            | FP: 18             |

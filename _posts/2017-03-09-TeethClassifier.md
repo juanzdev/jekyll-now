@@ -182,11 +182,9 @@ To generate all the mouth data you can run the script create_mouth_training_data
 python create_mouth_training_data.py
 ```
 
-//image of mouths parts
-![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
-
-//picture of a bunch of mouths
-![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
+{: .center}
+![pic](../images/mouthgrid.jpg)
+*Frontalized mouths black and white will be our training data*
 
 With those transformations in place, our net will receive inputs of the same part of the face for each image. The total output of this step will be 2256 mouths.
 

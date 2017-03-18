@@ -892,7 +892,7 @@ BULK_PREDICTION = 0 #Set this to 0 to classify individual files
 #if BULK_PREDICTION = 0 the net will classify only the file specified on individual_test_image
 individual_test_image = "../test_image.jpg"
 ```
-Testing an individual images results:
+Testing on individual images:
 
 {: .center}
 ![pic](../images/clin.jpg)

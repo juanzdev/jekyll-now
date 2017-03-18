@@ -895,11 +895,11 @@ individual_test_image = "../test_image.jpg"
 Testing an individual images results:
 
 {: .center}
-![pic](../images/clint1.jpg)
+![pic](../images/clin1.jpg)
 *predicting teeth on a single image*
 
 {: .center}
-![pic](../images/clint2.jpg)
+![pic](../images/clin2.jpg)
 *predicting teeth on a single image*
 
 {: .center}

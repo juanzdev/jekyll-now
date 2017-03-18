@@ -163,6 +163,7 @@ to warp the face using the landmark data we use a python ported code that use th
 p2d = np.asarray([(shape.part(n).x, shape.part(n).y,) for n in range(shape.num_parts)], np.float32)
 rawfront, symfront = self.fronter.frontalization(img,facedet_obj,p2d)
 ```
+
 {: .center}
 ![pic](../images/angcomb.jpg)
 *Frontalized image with image slicing*

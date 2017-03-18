@@ -207,9 +207,9 @@ As you recall, we have labeled only 751 images from the MUCT database and 1505 f
 ## Mirroring the mouths
 For each mouth image, we are going to create a mirrored clone, this will give us twice the data.
 
-´´´pyhon
+```pyhon
 horizontal_img = cv2.flip( img, 0 )
-´´´
+```
 
 ## Rotating the mouths
 For each mouth image we are going to make small rotations, specifically -30,-20,-10,+10,+20,+30 degrees, this will give us 6x times the data approx.

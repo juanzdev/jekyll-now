@@ -163,8 +163,9 @@ to warp the face using the landmark data we use a python ported code that use th
 p2d = np.asarray([(shape.part(n).x, shape.part(n).y,) for n in range(shape.num_parts)], np.float32)
 rawfront, symfront = self.fronter.frontalization(img,facedet_obj,p2d)
 ```
-//image of face affined
-![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
+{: .center}
+![pic](../images/angcomb.jpg)
+*Frontalized image with image slicing*
 
 # Image slicing
 Now that we have frontal faces we can make a simple vertical division to discard the top face region and keep only the bottom region that contains the mouths:

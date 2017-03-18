@@ -78,7 +78,7 @@ In Python, we are going to create two files, one for OpenCV face detection and o
 
 OpenCV implementation
 ```python
-    def mouth_detect_single(self,image,isPath):
+        def mouth_detect_single(self,image,isPath):
 
         if isPath == True:
             img = cv2.imread(image, cv2.IMREAD_UNCHANGED) 
@@ -128,12 +128,12 @@ DLIB Implementation using histogram of gradients
             shape = self.md_face(img,facedet_obj)
             p2d = np.asarray([(shape.part(n).x, shape.part(n).y,) for n in range(shape.num_parts)], np.float32)
             rawfront, symfront = self.fronter.frontalization(img,facedet_obj,p2d)
-            face_hog_mouth = symfront[165:220, 130:190] #get half-bottom part
+            symfront_bgr = cv2.cvtColor(symfront, cv2.COLOR_RGB2BGR) 
+            face_hog_mouth = symfront_bgr[165:220, 130:190] #get half-bottom part
             if(face_hog_mouth is not None):
                 gray_img = cv2.cvtColor(face_hog_mouth, cv2.COLOR_BGR2GRAY) 
                 crop_img_resized = cv2.resize(gray_img, (IMAGE_WIDTH, IMAGE_HEIGHT), interpolation = cv2.INTER_CUBIC)
-                #cv2.imwrite("../img/output_test_img/mouthdetectsingle_crop_rezized.jpg",crop_img_resized)
-                return crop_img_resized,facedet_obj.left(),facedet_obj.top(),facedet_obj.right(),facedet_obj.bottom()
+              	return crop_img_resized,facedet_obj.left(),facedet_obj.top(),facedet_obj.right(),facedet_obj.bottom()
             else:
                 return None,-1,-1,-1,-1
         else:
@@ -207,9 +207,9 @@ As you recall, we have labeled only 751 images from the MUCT database and 1505 f
 ## Mirroring the mouths
 For each mouth image, we are going to create a mirrored clone, this will give us twice the data.
 
-```pyhon
+```python
 horizontal_img = cv2.flip( img, 0 )
-````
+```
 
 ## Rotating the mouths
 For each mouth image we are going to make small rotations, specifically -30,-20,-10,+10,+20,+30 degrees, this will give us 6x times the data approx.
@@ -728,14 +728,14 @@ python plot_diag.py 
 
 {: .center}
 ![pic](../images/train_test_image_lr_0.01.png)
-*Loss vs Iterations, training with learning rate 0.01 after 10000 iterations*
+*Loss vs Iterations, training with learning rate 0.01 after 5000 iterations*
 
 Note:
 It looks like we are stuck in local minima! you can tell this just by looking at this useful graph, note that the validation error won't go down and it looks like the best it can do is 30% error on the validation set! this is not so good performance, a useful technique is to start with a bigger learning rate and then start decreasing it after a few iterations, let's try with learning rate 0.1
 
 {: .center}
 ![pic](../images/train_test_image_lr_0.1.png)
-*Loss vs Iterations, training with learning rate 0.1 after 10000 iterations*
+*Loss vs Iterations, training with learning rate 0.1 after 5000 iterations*
 
 Training with learning rate 0.1 (much better!)
 Look how we overcome the local minima at the beginning then we found a much deeper region on the loss space just by incrementing the initial learning rate at the very start, be careful because this doesn't always works and is truly a problem dependant situation.
@@ -744,109 +744,139 @@ Look how we overcome the local minima at the beginning then we found a much deep
 Now that we have our network trained with a reasonably good performance on the validation set it is time to start testing it with new unseen data.
 To do this we are going to use the caffe library for python, and we are going to create a simple python script that will load the deploy.prototxt architecture of our convnet, along with this architecture we are going to feed it with the trained weights located on the .caffemodel file.
 
+teeth_cnn.py
 ```python
-#extract mean data
-mean_blob = caffe_pb2.BlobProto()
-with open('../mean.binaryproto') as f:
-    mean_blob.ParseFromString(f.read())
+IMAGE_WIDTH = 32
+IMAGE_HEIGHT = 32
 
-mean_array = np.asarray(mean_blob.data, dtype=np.float32).reshape(
-    (mean_blob.channels, mean_blob.height, mean_blob.width))
+class teeth_cnn:
+	
+	def __init__(self):
+		self.init_net()
 
-mean_array = mean_array*0.003921568627
+   	def init_net(self):
+   		self.mean_blob = self.mean_blob_fn()
+   		self.mean_array = np.asarray(self.mean_blob.data, dtype=np.float32).reshape((self.mean_blob.channels, self.mean_blob.height, self.mean_blob.width))
+   		self.mean_array = self.mean_array*0.00390625
+   		self.net = caffe.Net('../model/deploy.prototxt',1,weights='../model_snapshot/snap_fe_iter_8700.caffemodel')
+   		self.net.blobs['data'].reshape(1,1, IMAGE_WIDTH, IMAGE_HEIGHT)
+   		self.transformer = caffe.io.Transformer({'data': self.net.blobs['data'].data.shape})
+   		self.transformer.set_mean('data', self.mean_array)
+   		self.transformer.set_transpose('data', (2,0,1))
+   		self.transformer.set_raw_scale('data', 0.00390625)
 
-net = caffe.Net('../model/deploy.prototxt',1,weights='../model_snapshot/snap_fe_iter_8700.caffemodel')
-net.blobs['data'].reshape(1,1, IMAGE_WIDTH, IMAGE_HEIGHT)
-transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
-transformer.set_mean('data', mean_array)
-transformer.set_transpose('data', (2,0,1))
-transformer.set_raw_scale('data', 0.00392156862745) 
+	def mean_blob_fn(self):
+		mean_blob = caffe_pb2.BlobProto()
+		with open('../mean.binaryproto') as f:
+			mean_blob.ParseFromString(f.read())
 
+		return mean_blob
+
+
+	def predict(self,image,mouth_detector):
+		img = image
+		mouth_pre,x,y,w,h = mouth_detector.mouth_detect_single(img,False)
+
+		if mouth_pre is not None:
+			mouth_pre = mouth_pre[:,:,np.newaxis]
+			mouth = self.transformer.preprocess('data', mouth_pre)
+			self.net.blobs['data'].data[...] = mouth
+			out = self.net.forward()
+			#pred = out['pred'].argmax()
+			if(out['pred'][0][1]>0.70):
+				return 1,out['pred'],x,y,w,h
+			else:
+				return 0,out['pred'],x,y,w,h
+		else:
+			return -1,0,0,0,0,0
+```
+
+predict.py
+```python
+BULK_PREDICTION = 0 #Set this to 0 to classify individual files
+#if bulk prediction is set to 1 the net will predict all images on the configured path
+test_set_folder_path = "../img/original_data/b_labeled"
+#all the files will be moved to a showing teeth or not showing teeth folder on the test_output_result_folder_path path
+test_output_result_folder_path = "../result" 
+#if BULK_PREDICTION = 0 the net will classify only the file specified on individual_test_image
+individual_test_image = "../ana.jpg"
+#read all test images
+original_data_set = [img for img in glob.glob(test_set_folder_path+"/*jpg")]
+
+mouth_detector_instance = mouth_detector()
+teeth_cnn_instance = teeth_cnn()
 
 if BULK_PREDICTION==0:
-    img = cv2.imread(individual_test_image, cv2.IMREAD_UNCHANGED)
-    mouth_pre = mouth_detector_instance.mouth_detect_single(individual_test_image,True)
-    if mouth_pre is not None:
-        mouth_pre = mouth_pre[:,:,np.newaxis]
-        mouth = transformer.preprocess('data', mouth_pre)
-        net.blobs['data'].data[...] = mouth
-        out = net.forward()
-        pred = out['pred'].argmax()
-        print(individual_test_image)
-        print("Prediction:")
-        print(pred)
-        print("Prediction probabilities")
-        print(out['pred'])
+	img = cv2.imread(individual_test_image, cv2.IMREAD_UNCHANGED)
+	result,prob,xf,yf,wf,hf = teeth_cnn_instance.predict(img,mouth_detector_instance)
+	print(individual_test_image)
+	print("Prediction:")
+	print(result)
+	print("Prediction probabilities")
+	print(prob)
 else:
-    files = glob.glob(test_output_result_folder_path+'/not_showing_teeth/*')
-    for f in files:
-        os.remove(f)
+	files = glob.glob(test_output_result_folder_path+'/not_showing_teeth/*')
+	for f in files:
+		os.remove(f)
 
-    files = glob.glob(test_output_result_folder_path+'/showing_teeth/*')
-    for f in files:
-        os.remove(f)
-    
-    #performance variables
-    total_samples = 0
-    total_positives_training = 0
-    total_negatives_training = 0
-    true_positive = 0
-    true_negative = 0
-    false_positive = 0
-    false_negative = 0
-    
-    for in_idx, img_path in enumerate(original_data_set):
-        total_samples = total_samples + 1
-        head, tail = os.path.split(img_path)
-        img = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)
-        img = transform_img(img, img_width=IMAGE_WIDTH_MAIN, img_height=IMAGE_HEIGHT_MAIN)
-        mouth_pre = mouth_detector_instance.mouth_detect_single(img_path,True)
-        if mouth_pre is not None:
-            mouth_pre = mouth_pre[:,:,np.newaxis]
-            mouth = transformer.preprocess('data', mouth_pre)
-            net.blobs['data'].data[...] = mouth
-            out = net.forward()
-            pred = out['pred'].argmax()
-            print("Prediction:")
-            print(pred)
-            print("Prediction probabilities")
-            print(out['pred'])
-            if(pred==1):
-                if 'showingteeth' in tail:
-                    total_positives_training = total_positives_training + 1
-                    true_positive = true_positive + 1
-                else:
-                    total_negatives_training = total_negatives_training + 1
-                    false_positive = false_positive + 1
+	files = glob.glob(test_output_result_folder_path+'/showing_teeth/*')
+	for f in files:
+		os.remove(f)
+	
+	#performance variables
+	total_samples = 0
+	total_positives_training = 0
+	total_negatives_training = 0
+	true_positive = 0
+	true_negative = 0
+	false_positive = 0
+	false_negative = 0
+	
+	for in_idx, img_path in enumerate(original_data_set):
+		total_samples = total_samples + 1
+		head, tail = os.path.split(img_path)
+		img = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)
+		result,prob,xf,yf,wf,hf = teeth_cnn_instance.predict(img,mouth_detector_instance)
+		print("Prediction:")
+		print(result)
+		print("Prediction probabilities")
+		print(prob)
+		if(result==1):
+			if 'showingteeth' in tail:
+				total_positives_training = total_positives_training + 1
+				true_positive = true_positive + 1
+			else:
+				total_negatives_training = total_negatives_training + 1
+				false_positive = false_positive + 1
 
-                path = test_output_result_folder_path+"/showing_teeth/"+tail
-                shutil.copy2(img_path, path)
-            else:
-                if 'showingteeth' in tail:
-                    total_positives_training = total_positives_training + 1
-                    false_negative = false_negative + 1
-                else:
-                    total_negatives_training = total_negatives_training + 1
-                    true_negative = true_negative + 1
+			path = test_output_result_folder_path+"/showing_teeth/"+tail
+			shutil.copy2(img_path, path)
+		else:
+			if 'showingteeth' in tail:
+				total_positives_training = total_positives_training + 1
+				false_negative = false_negative + 1
+			else:
+				total_negatives_training = total_negatives_training + 1
+				true_negative = true_negative + 1
 
-                path = test_output_result_folder_path+"/not_showing_teeth/"+tail
-                shutil.copy2(img_path, path)
+			path = test_output_result_folder_path+"/not_showing_teeth/"+tail
+			shutil.copy2(img_path, path)
 
-    print "Total samples %d" %total_samples
-     print "True positives %d" %true_positive
-     print "False positives %d" %false_positive
-    print "True negative %d" %true_negative
-    print "False negative %d" %false_negative
-    
-    accuracy = (true_negative + true_positive)/total_samples
-    recall = true_positive / (true_positive + false_negative)
-    precision = true_positive / (true_positive + false_positive)
-    f1score = 2*((precision*recall)/(precision+recall))
+	print "Total samples %d" %total_samples
+ 	print "True positives %d" %true_positive
+ 	print "False positives %d" %false_positive
+	print "True negative %d" %true_negative
+	print "False negative %d" %false_negative
+	
+	accuracy = (true_negative + true_positive)/total_samples
+	recall = true_positive / (true_positive + false_negative)
+	precision = true_positive / (true_positive + false_positive)
+	f1score = 2*((precision*recall)/(precision+recall))
 
-    print "Accuracy  %.2f" %accuracy
-    print "Recall  %.2f" %recall
-    print "Precision  %.2f" %precision
-    print "F1Score  %.2f" %f1score
+	print "Accuracy  %.2f" %accuracy
+	print "Recall  %.2f" %recall
+	print "Precision  %.2f" %precision
+	print "F1Score  %.2f" %f1score
 ```
 Note:
 Note that this script will test our trained net with new single image if the parameter BULK_PREDICTION is set to zero, otherwise it will make a bulk prediction over an entire folder of images and will move the ones he thinks are showing the teeth to the corresponding folder, you can play with this behaviour based o your needs.
@@ -892,7 +922,7 @@ f1score = 2*((precision*recall)/(precision+recall))
 So to start testing the net by classifying the b_labeled folder or classifying a single image, execute:
 
 ```bash
-python predict_feature_scaled.py
+python predict.py
 ```
 
 Note that this script will read all the images specified on the input folder and will pass one by one each image to our trained convolutional neural network and based on the prediction probability the image will be copied to the showing_teeth or not_showing_teeth folder.
@@ -922,115 +952,50 @@ By looking at the performance metrics we can start experimenting with different 
 Now lets have some fun by passing a fragment of the Obama's presidential speech to the trained net to see if Barack Obama is showing his teeth to the camera or not, note that in each frame of the video the trained convolutional neural network needs to make a prediction, the output of the prediction will be rendered on a new video along with the face detection boundary.
 
 ```python
-import numpy as np
-import sys
-import caffe
-import glob
-import uuid
-import cv2
-from util import transform_img
-from mouth_detector_dlib import mouth_detector
-from caffe.proto import caffe_pb2
-import os
-import shutil
-from util import histogram_equalization
+cv2.namedWindow("preview")
+vc = cv2.VideoCapture(0)
+#vc.set(3,500)
+#vc.set(4,500)
+#vc.set(5,30)
+if vc.isOpened(): # try to get the first frame
+    rval, frame = vc.read()
+else:
+    rval = False
 
-
-IMAGE_WIDTH = 32
-IMAGE_HEIGHT = 32
-
-def predict(image,mouth_detector):
-    img = image
-    mouth_pre,x,y,w,h = mouth_detector.mouth_detect_single(img,False)
-
-    if mouth_pre is not None:
-        mouth_pre = mouth_pre[:,:,np.newaxis]
-        mouth = transformer.preprocess('data', mouth_pre)
-        net.blobs['data'].data[...] = mouth
-        out = net.forward()
-        print("Prediction probabilities")
-        print(out['pred'])
-        if(out['pred'][0][1]>0.70):
-            return 1,out['pred'],x,y,w,h
-        else:
-            return 0,out['pred'],x,y,w,h
-    else:
-        return -1,0,0,0,0,0
-
-#CNN Definition
-#extract mean data
-mean_blob = caffe_pb2.BlobProto()
-with open('../mean.binaryproto') as f:
-    mean_blob.ParseFromString(f.read())
-
-mean_array = np.asarray(mean_blob.data, dtype=np.float32).reshape(
-    (mean_blob.channels, mean_blob.height, mean_blob.width))
-
-mean_array = mean_array*0.003921568627
-
-net = caffe.Net('../model/deploy.prototxt',1,weights='../model_snapshot/snap_fe_iter_8700.caffemodel')
-net.blobs['data'].reshape(1,1, IMAGE_WIDTH, IMAGE_HEIGHT) 
-transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
-transformer.set_mean('data', mean_array)
-transformer.set_transpose('data', (2,0,1))
-transformer.set_raw_scale('data', 0.00392156862745) 
-
+mouth_detector_instance = mouth_detector()
+teeth_cnn_instance = teeth_cnn()
 
 size = cv2.getTextSize("Showing teeth", cv2.FONT_HERSHEY_PLAIN, 2, 1)[0]
 x,y = (50,250)
-label_top_left = (x - size[0]/2, y - size[1]/2)
-mouth_detector_instance = mouth_detector()
 
+while rval:
+	rval, frame = vc.read()
+	copy_frame = frame.copy()
+	result,prob,xf,yf,wf,hf = teeth_cnn_instance.predict(copy_frame,mouth_detector_instance)
+	print prob
+	if result is not None:
+	    if(result == 1):
+	    	cv2.rectangle(frame, (xf,yf),(wf,hf),(0,255,0),4,0)
+	    	prob_round = prob[0][1]*100
+	    	print prob_round
+	    	cv2.rectangle(frame, (xf-2,yf-25),(wf+2,yf),(0,255,0),-1,0)
+	    	cv2.rectangle(frame, (xf-2,hf),(xf+((wf-xf)/2),hf+25),(0,255,0),-1,0)
+	    	cv2.putText(frame, "Teeth!!",(xf,hf+14),cv2.FONT_HERSHEY_PLAIN,1.2,0,2)
+	    	cv2.putText(frame, str(prob_round)+"%",(xf,yf-10),cv2.FONT_HERSHEY_PLAIN,1.2,0,2)
+	    	#out.write(frame)
+	    	print "SHOWING TEETH!!!"
+	    elif(result==0):
+	    	cv2.rectangle(frame, (xf,yf),(wf,hf),(64,64,64),4,0)
+	    	prob_round = prob[0][1]*100
+	    	print prob_round
+	    	cv2.rectangle(frame, (xf-2,yf-25),(wf+2,yf),(64,64,64),-1,0)
+	    	cv2.rectangle(frame, (xf-2,hf),(xf+((wf-xf)/2),hf+25),(64,64,64),-1,0)
+	    	cv2.putText(frame, "Teeth??",(xf,hf+14),cv2.FONT_HERSHEY_PLAIN,1.2,0,2)
+	    	cv2.putText(frame, str(prob_round)+"%",(xf,yf-10),cv2.FONT_HERSHEY_PLAIN,1.2,0,2)
 
-
-# Define the codec and create VideoWriter object
-fourcc = cv2.cv.CV_FOURCC(*'mp4v')
-cap = cv2.VideoCapture('../obama-speech.mp4')
-cap.set(1,10000); # Where frame_no is the frame you want
-ret, frame = cap.read() # Read the frame
-#cv2.imshow('window_name', frame) # show frame on window
-w = cap.get(cv2.cv.CV_CAP_PROP_FRAME_WIDTH);
-h = cap.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT);
-out = cv2.VideoWriter('output.avi',fourcc, 24, (int(w),int(h)))
-#cap.set(3,500)
-#cap.set(4,500)
-#cap.set(5,30)
-
-ret, frame = cap.read()
-while(cap.isOpened()):
-    ret, frame = cap.read()
-    copy_frame = frame.copy()
-    
-    result,prob,xf,yf,wf,hf = predict(copy_frame,mouth_detector_instance)
-
-    if result is not None:
-        if(result == 1):
-            cv2.rectangle(frame, (xf,yf),(wf,hf),(0,255,0),4,0)
-            prob_round = prob[0][1]*100
-            print prob_round
-            cv2.rectangle(frame, (xf-2,yf-25),(wf+2,yf),(0,255,0),-1,0)
-            cv2.rectangle(frame, (xf-2,hf),(xf+((wf-xf)/2),hf+25),(0,255,0),-1,0)
-            cv2.putText(frame, "Teeth!!",(xf,hf+14),cv2.FONT_HERSHEY_PLAIN,1.2,0,2)
-            cv2.putText(frame, str(prob_round)+"%",(xf,yf-10),cv2.FONT_HERSHEY_PLAIN,1.2,0,2)
-            print "SHOWING TEETH!!!"
-        elif(result==0):
-            cv2.rectangle(frame, (xf,yf),(wf,hf),(64,64,64),4,0)
-            prob_round = prob[0][1]*100
-            print prob_round
-            cv2.rectangle(frame, (xf-2,yf-25),(wf+2,yf),(64,64,64),-1,0)
-            cv2.rectangle(frame, (xf-2,hf),(xf+((wf-xf)/2),hf+25),(64,64,64),-1,0)
-            cv2.putText(frame, "Teeth??",(xf,hf+14),cv2.FONT_HERSHEY_PLAIN,1.2,0,2)
-            cv2.putText(frame, str(prob_round)+"%",(xf,yf-10),cv2.FONT_HERSHEY_PLAIN,1.2,0,2)
-    
-    out.write(frame)
-    cv2.imshow('frame',frame)
-    
-    if cv2.waitKey(200) & 0xFF == ord('q'):
-        break
-
-cap.release()
-out.release()
-cv2.destroyAllWindows()
+	cv2.imshow("preview", frame)
+	cv2.waitKey(1)
+cv2.destroyWindow("preview")
 
 ```
 

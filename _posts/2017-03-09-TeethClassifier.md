@@ -209,7 +209,7 @@ For each mouth image, we are going to create a mirrored clone, this will give us
 
 ```pyhon
 horizontal_img = cv2.flip( img, 0 )
-```
+````
 
 ## Rotating the mouths
 For each mouth image we are going to make small rotations, specifically -30,-20,-10,+10,+20,+30 degrees, this will give us 6x times the data approx.
@@ -725,6 +725,7 @@ The next step is to plot the data using the provided Caffe tool for plotting:
 ```bash
 python plot_diag.py 
 ```
+
 {: .center}
 ![pic](../images/train_test_image_lr_0.01.png)
 *Loss vs Iterations, training with learning rate 0.01 after 10000 iterations*

@@ -894,7 +894,21 @@ individual_test_image = "../test_image.jpg"
 ```
 Testing an individual images results:
 
-//image of samples images and probabilities also show some errors
+{: .center}
+![pic](../images/clint1.jpg)
+*predicting teeth on a single image*
+
+{: .center}
+![pic](../images/clint2.jpg)
+*predicting teeth on a single image*
+
+{: .center}
+![pic](../images/nat1.jpg)
+*predicting teeth on a single image*
+
+{: .center}
+![pic](../images/nat2.jpg)
+*predicting teeth on a single image*
 
 ## Testing for a bunch of images (Bulk testing)
 

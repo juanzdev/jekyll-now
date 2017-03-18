@@ -149,8 +149,9 @@ shape = self.md_face(img,facedet_obj)
 
 md_face receives the face region and will detect 68 landmark points using a previously trained model, with the landmark data we can make a warp transformation to the face using the landmarks as a guide to make the frontalization.
 
-//image of landmarks with sample face
-![bengio_language_model.png]({{site.baseurl}}/assets/bengio_language_model.jpg)
+{: .center}
+![pic](../images/keanuland.jpg)
+*Before and after landmark detection*
 
 to warp the face using the landmark data we use a python ported code that use the frontalization techinque proposed by al Hassner, Shai Harel*, Eran Paz* and Roee Enbar  http://www.openu.ac.il/home/hassner/projects/frontalize/ and ported to python by Heng Yang, the complete code can be found at the end of this post:
 

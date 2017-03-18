@@ -67,7 +67,9 @@ There are different techniques for doing face detection, the most well known and
 
 By using the opencv libraries we can detect the region of the face, this is helpfull because we can discard unnecessary information and focus on our problem.
 
-//face detection in action
+{: .center}
+![pic](../images/anaface.jpg)
+*Face detection in action*
 
 Note:
 You can also use a convolutional neural network for face detection, in fact, you will get much better results if you do, but for simplicity, we are going to stick with these out of the box libraries.

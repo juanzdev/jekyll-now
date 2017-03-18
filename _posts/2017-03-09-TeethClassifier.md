@@ -28,7 +28,7 @@ The overall steps that will involve creating the teeth detector pipeline are:
 
 # Finding a dataset
 ## Muct database
-We are going to choose an open dataset called **MUCT** database [http://www.milbo.org/muct/](http://www.milbo.org/muct/), this dataset contains 3755 unlabeled faces in total, all the images were taken in the same studio with the same background but with different lighting and camera angles.
+We are going to choose an open dataset called **MUCT** database [http://www.milbo.org/muct/](http://www.milbo.org/muct/){:target="_blank"}, this dataset contains 3755 unlabeled faces in total, all the images were taken in the same studio with the same background but with different lighting and camera angles.
 
 {: .center}
 ![pic](../images/all-simone-images-lores.jpg)

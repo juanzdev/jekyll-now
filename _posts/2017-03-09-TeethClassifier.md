@@ -51,7 +51,7 @@ For the MUCT database, we are going to label 751 faces.
 For the LFW database, we are going to label 1505 faces.
 So we have a total of 2256 unique faces with different expressions, some of them are showing the teeth and some not.
 
-To speed up manual labeling a bit, you can use this simple tool https://github.com/juanzdev/ImageBinaryLabellingTool for quick labeling using hotkeys, the tool will read all the images in a folder and will start asking you to put the binary value, if you push the Y key on your keyboard it will add to the existing filename the label _showingteeth and pass to the next image, if you want to use this tool for your purposes feel free to pull it from git hub and modify it to suite your needs. 
+To speed up manual labeling a bit, you can use this simple tool [ImageBinaryTool](https://github.com/juanzdev/ImageBinaryLabellingTool){:target="_blank"} for quick labeling using hotkeys, the tool will read all the images in a folder and will start asking you to put the binary value, if you push the Y key on your keyboard it will add to the existing filename the label _showingteeth and pass to the next image, if you want to use this tool for your purposes feel free to pull it from git hub and modify it to suite your needs. 
 
 {: .center}
 ![pic](../images/label1.jpg)

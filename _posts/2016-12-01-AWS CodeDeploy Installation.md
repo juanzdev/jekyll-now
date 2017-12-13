@@ -1,14 +1,13 @@
 ---
 layout: post
 title: Detailed Guide to AWS CodeDeploy Installation
-published: false
+published: true
 ---
 ## Detailed Guide to AWS CodeDeploy Installation
-
-Althouth not machine related it can help you with your EC2 environment if you are planning to use AWS ML, this set up was very handy for me to help me speed up my Python deployments to EC2 instances in no time.
+Although not machine related it can help you with your EC2 environment if you are planning to use AWS ML, this set up was very handy for me to help me speed up my Python deployments to EC2 instances in no time.
 
 #Set up a source repository
-In my case I didnt use any in particular but S3 Buckets, in this 
+In my case, I didn't use any in particular but S3 Buckets, in this 
 Create Bucket with policy from bucket-policy.txt, be sure to change the principal for your account
 
 Create the service role for CodeDeploy to allow it read the EC2 tags
@@ -37,7 +36,7 @@ create-application.bat
 Create the deployment group specifying the ARN of the ServiceRole, be sure to change the ARN on the script
 create-deployment-group.bat
 
-When a revision is ready run this script to zip the folder and push it to the BT Bucket
+When a revision is ready to run this script to zip the folder and push it to the BT Bucket
 BTApplication/deploy-push.bat
 
 To start the deployment of the uploaded object on S3 run:

@@ -18,8 +18,8 @@ The event overall was very interesting to me, lots of great projects were discus
 Here is the list of the very interesting projects that were discussed, overall I like a lot this talks, they were very technical and the speakers were very open to answering those questions, the most valuable thing I found was how they discuss the deep learning architectures and what challenges they found during the development process.
 
 When you arrive the meetup you can grab as many snacks and Japanese drinks as you like ;), before start listening to some complex deep learning I think my head needed some Japanese whiskey to start catching the ideas better.
-![IMG_1496.JPG](../images/IMG_1496.JPG)
 
+<img src="../images/IMG_1496.JPG" alt="Drawing" style="width: 500px;"/>
 
 Alpaca's pipeline for real-time market forecasting
 

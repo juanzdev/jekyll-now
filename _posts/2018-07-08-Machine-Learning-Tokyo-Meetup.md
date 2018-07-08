@@ -40,7 +40,7 @@ This talk discussed and end-to-end approach for object detection using SSD along
 Adam Gibson (Skymind), Deploying millions of models to production for large-scale signature verification using transfer learning + one class neural network
 
 ![IMG_1536.JPG]({{site.baseurl}}/_posts/IMG_1536.JPG)
-This talk was amazing, Adam explained who he managed to solve the problem of detecting whether or not a hand signature is faked or legit, this problem imposes a lot of problems with the data, usually if you are a bank you have so much data about your users but in this case, you only have 1 or 2 samples per person signature!, so the problem is very unbalanced this requires a different architecture and you cant use big popular datasets like IMAGENET for transfer learning and Imagenet is not very useful for black and white data.
+This talk was amazing, Adam explained who he managed to solve the problem of detecting whether or not a hand signature is faked or legit, this problem imposes a lot of problems with the data, usually if you are a bank you have so much data about your users but in this case, you only have 1 or 2 samples per person signature!, so the problem is very unbalanced this requires a different architecture and you cant use big popular datasets like IMAGENET for transfer learning because they dont work so well for black and white images.
 
 
 

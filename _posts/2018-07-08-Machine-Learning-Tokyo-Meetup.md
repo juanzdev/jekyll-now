@@ -13,7 +13,7 @@ Its been four months since I have been living in Tokyo, currently, I'm working f
 
 The event is actually hosted by a company called Preferred Networks, they have been promoting machine learning talks here in Tokyo.
 
-The event overall was very interesting for me, lots of great projects were discussed by people around the world with they wish to share the results with the community, I was impressed.
+The event overall was very interesting to me, lots of great projects were discussed by people around the world with they wish to share the results with the community, I was impressed.
 
 Here is the list of the very interesting projects that were discussed, overall I like a lot this talks, they were very technical and the speakers were very open to answering those questions, the most valuable thing I found was how they discuss the deep learning architectures and what challenges they found during the development process.
 

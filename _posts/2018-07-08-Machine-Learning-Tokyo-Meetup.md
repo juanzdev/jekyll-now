@@ -16,5 +16,7 @@ The event is actually hosted by a company called Preferred Networks, they have b
 
 The event overall was very interesting for me, lots of great projects were discussed from people around the world with they whish to share the results with the comunity, I was impressed.
 
+Here is the list of the very interesting projects that were discuessed, overall I like a lot this talks, they were very technical and the speakers were very open to answer those questions, the most valuable thing I found was how they discuss the deep learning architectures and what challenges they found during the development process.
+
 
 

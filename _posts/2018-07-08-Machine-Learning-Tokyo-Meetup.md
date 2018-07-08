@@ -4,10 +4,7 @@ title: Machine Learning Tokyo Meetup
 published: true
 ---
 
-## Machine Learning Tokyo Meetup
-
 Its been four months since I have been living in Tokyo, currently, I'm working for a Japanese company for some machine learning consultancy. I was very curious about the software development movement here in Tokyo, especially machine learning. Japan is well known worldwide for robotics and hardware innovations, I was wondering if is as good for modern AI. So I start searching for machine learning meetups and I come across a group called Deep learning Otemachi group, so after work, I decided to see and check their talks at the Marunouchi Building near Tokyo station.
-
 
 ![IMG_1494.JPG]({{site.baseurl}}/_posts/IMG_1494.JPG)
 

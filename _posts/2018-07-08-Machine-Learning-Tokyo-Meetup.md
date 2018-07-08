@@ -26,7 +26,7 @@ Alpaca's pipeline for real-time market forecasting
 The first talk was given by Paul and Remy, two French engineers that were very knowledgeable about time series analysis, they explained in great detail  how to use deep learning techniques to predict market behaviors, they talk about how the Alpaca company were successful in real-time market analysis using RNNs for time-sensitive predictions, this core functionality is part of today's Bloomberg's client application for market forecasting.
 
 
-<img src="../images/IMG_1508.JPG" alt="Drawing" style="width: 500px;"/>
+<img src="../images/IMG_1508.JPG" alt="Drawing" style="width: 300px;"/>
 
 
 Interactively Picking Real-World Objects with Unconstrained Spoken Language Instructions

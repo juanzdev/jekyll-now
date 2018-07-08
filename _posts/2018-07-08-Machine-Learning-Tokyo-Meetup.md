@@ -7,3 +7,14 @@ Its been four months since I have been living in Tokyo, currently Im working for
 
 
 ![]({{site.baseurl}}/_posts/IMG_1494.JPG)
+![IMG_1494.JPG]({{site.baseurl}}/_posts/IMG_1494.JPG)
+
+![IMG_1493.JPG]({{site.baseurl}}/_posts/IMG_1493.JPG)
+
+
+The event is actually hosted by a company called Preferred Networks, they have been promoting machine learning talks here in tokyo.
+
+The event overall was very interesting for me, lots of great projects were discussed from people around the world with they whish to share the results with the comunity, I was impressed.
+
+
+

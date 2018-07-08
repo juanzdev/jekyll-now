@@ -3,10 +3,7 @@ layout: post
 title: Detailed Guide to AWS CodeDeploy Installation
 published: true
 ---
-## Detailed Guide to AWS CodeDeploy Installation
-
 Because I found AWS CodeDeploy documentation to be kind of hard to grasp, Here is a quick reference if you want to set up a complete CodeDeploy solution.
-
 Create Bucket with policy from bucket-policy.txt, be sure to change the principal for your account
 
 Create the service role for CodeDeploy to allow it read the EC2 tags

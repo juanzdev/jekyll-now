@@ -25,9 +25,8 @@ Alpaca's pipeline for real-time market forecasting
 
 The first talk was given by Paul and Remy, two French engineers that were very knowledgeable about time series analysis, they explained in great detail  how to use deep learning techniques to predict market behaviors, they talk about how the Alpaca company were successful in real-time market analysis using RNNs for time-sensitive predictions, this core functionality is part of today's Bloomberg's client application for market forecasting.
 
-![IMG_1508.JPG](../images/IMG_1508.JPG)
 
-
+<img src="../images/IMG_1508.JPG" alt="Drawing" style="width: 500px;"/>
 
 Interactively Picking Real-World Objects with Unconstrained Spoken Language Instructions
 This talk discussed and end-to-end approach for object detection using SSD along with a couple of NLP techniques (see architecture below) attached to a robot arm. The overall system was able to listen to your commands and grab any item from the four squared areas and put the mentioned object on the desired position. This system uses NLP to understand the semantics in your sentence command eg (move the rounded object next to the smartphone), along with an RNN for speech recognition, along with a CNN + SSD for object detection, the system was an end to end solution using multiple stacked layers of neural networks. The result is very cool.

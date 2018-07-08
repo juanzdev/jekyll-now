@@ -18,5 +18,9 @@ The event overall was very interesting for me, lots of great projects were discu
 
 Here is the list of the very interesting projects that were discuessed, overall I like a lot this talks, they were very technical and the speakers were very open to answer those questions, the most valuable thing I found was how they discuss the deep learning architectures and what challenges they found during the development process.
 
+When you arrive the meetup you can grab as many snacks and japanese drinks as you like ;), before start listening to some complex deeplearnign I think my head needed some japanese whiskey to start catching the ideas better.
+![IMG_1496.JPG]({{site.baseurl}}/_posts/IMG_1496.JPG)
+
+
 
 

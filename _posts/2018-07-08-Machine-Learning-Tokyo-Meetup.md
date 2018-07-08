@@ -4,7 +4,7 @@ title: Machine Learning Tokyo Meetup
 published: true
 ---
 
-Its been four months since I have been living in Tokyo, currently, I'm working for a Japanese company for some machine learning consultancy. I was very curious about the software development movement here in Tokyo, especially machine learning. Japan is well known worldwide for robotics and hardware innovations, I was wondering if is as good for modern AI. So I start searching for machine learning meetups and I come across a group called Deep learning Otemachi group, so after work, I decided to see and check their talks at the Marunouchi Building near Tokyo station.
+It has been four months since I have been living in Tokyo, currently, I'm working for a Japanese company for some machine learning consultancy. I was very curious about the software development movement here in Tokyo, especially machine learning. Japan is well known worldwide for robotics and hardware innovations, I was wondering if is as good for modern AI. So I start searching for machine learning meetups and I come across a group called Deep learning Otemachi group, so after work, I decided to see and check their talks at the Marunouchi Building near Tokyo station.
 
 ![IMG_1494.JPG](../images/IMG_1494.JPG)
 
@@ -41,7 +41,7 @@ Adam Gibson (Skymind), Deploying millions of models to production for large-scal
 
 ![IMG_1532.JPG](../images/IMG_1532.JPG)
 
-This talk was amazing, Adam explained who he managed to solve the problem of detecting whether or not a hand signature is faked or legit, this problem imposes a lot of problems with the data, usually if you are a bank you have so much data about your users but in this case, you only have 1 or 2 samples per person signature!, so the problem is very unbalanced this requires a different architecture and you cant use big popular datasets like IMAGENET for transfer learning because they dont work so well for black and white images.
+This talk was amazing, Adam explained who he managed to solve the problem of detecting whether or not a hand signature is faked or legit, this problem imposes a lot of problems with the data, usually if you are a bank you have so much data about your users but in this case, you only have 1 or 2 samples per person signature!, so the problem is very unbalanced this requires a different architecture and you cant use big popular datasets like IMAGENET for transfer learning because they don't work so well for black and white images.
 
 
 

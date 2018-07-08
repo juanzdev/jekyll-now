@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 ---
 ## Machine Learning Tokyo Meetup
 

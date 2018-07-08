@@ -31,11 +31,23 @@ The first talk was given by Paul and Remy, two french engineers that were very k
 
 
 Interactively Picking Real-World Objects with Unconstrained Spoken Language Instructions
-This talk discussed and end-to-end approach for object detection using SSM along with a couple of NLP techniques (see architecture below) attached to a robot arm. The overall system was able to listen to your commands and grab any item from the four squared areas and put the mentioned object on the desired position. This sistem uses NLP to understand the semantics in your sentence command eg (move the rounded object next to the smartphone), along with a RNN for speech recognition, along with a CNN + SSM for object detection, the system was an end to end solution using multiple stacked layers of neural networks. The result is very cool.
+This talk discussed and end-to-end approach for object detection using SSD along with a couple of NLP techniques (see architecture below) attached to a robot arm. The overall system was able to listen to your commands and grab any item from the four squared areas and put the mentioned object on the desired position. This sistem uses NLP to understand the semantics in your sentence command eg (move the rounded object next to the smartphone), along with a RNN for speech recognition, along with a CNN + SSD for object detection, the system was an end to end solution using multiple stacked layers of neural networks. The result is very cool.
 
 ![IMG_1522.JPG]({{site.baseurl}}/_posts/IMG_1522.JPG)
 
+
+
+
+Adam Gibson (Skymind), Deploying millions of models to production for large scale signature verification using transfer learning + one class neural network
+
+This talk was amazing, Adam explained who he managed to solve the problem of detecting whether or not a hand signature is faked or legit, this problem imposes a lot of problems with the data, usually if you are a bank you have so much data about your users but in this case, you only have 1 or 2 samples per person signature!, so the problem is very unbalanced this requires a diferent architecture and you cant use big popular datasets like imagenet for transfer learning and Imagenet is not very usefull for black and white data.
+
+
+
+This architecture Im still trying to understand it, I find it so interesting!
 ![IMG_1536.JPG]({{site.baseurl}}/_posts/IMG_1536.JPG)
+
+![IMG_1532.JPG]({{site.baseurl}}/_posts/IMG_1532.JPG)
 
 
 

@@ -22,6 +22,8 @@ When you arrive the meetup you can grab as many snacks and japanese drinks as yo
 ![IMG_1496.JPG]({{site.baseurl}}/_posts/IMG_1496.JPG)
 
 
+Alpaca's pipeline for real-time market forecasting
 
+The first talk was given by a french young people about using deep learning techniques to predict market behaviors, they talk about how the Alpaca company were successfull on real time market analysis using RNNs for time sensitive predictions, this core functionallity is part of todays Bloombergs client application for market forecasting.
 
 

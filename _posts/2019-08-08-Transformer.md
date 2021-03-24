@@ -3,18 +3,6 @@ layout: post
 title: Transformers
 published: true
 ---
-# Transformer
-
-Vaswani et al 2017
-They use Attention [[Sequence Modeling - 2. Attention Mechanisms]] based mechanisms as building blocks.
-
-Is a multilayer attention model that is currently state of the art in most language tasks and many other things
-
-Has superior performance compared to previous attention based architerctures via:
--	Multi query hidden state propagation (self attention)
--	Multi head attention (multiple attention mechanism for the same item that are combined)
--	Residual connections (layer norm)
-
 
 The tranformer architecture consist of multiple transformer modules stacked, usually there are multiple types of transformers, encoder specialized, decoer specialized or both, the nice thing about transfrormers is that they are highly parallelizable, also they provide multiple attention layers, this means that they learn to selectevely process what input to take from the previous layer, this includes the input layer (self attention) all the way to the hidden layers, this is powerfull beause the transformer learns its own architectural connections according to the learned task.
 
@@ -27,6 +15,10 @@ The transformer has mult head attention, this is multiple attention learned weig
 # Advanced Tranformers
 VilBERT tryes to combine language tasks and vision tasks all in one architecture, this model achieve this by using Co-Attention layers, this layers are layers that receive input streams according to a specific domain, language or vision, but they share they attention with the other specialized stream, in this way, the language stream attention layer learns to focus its attention on the vision task, and the vision stream attention layer learns to focus its attention on the language task.
 
+Transformers has superior performance compared to previous attention based architerctures via:
+-	Multi query hidden state propagation (self attention)
+-	Multi head attention (multiple attention mechanism for the same item that are combined)
+-	Residual connections (layer norm)
 
 
 

@@ -4,7 +4,7 @@ title: Transformers
 published: true
 ---
 
-Since the breakthrough paper [https://arxiv.org/abs/1706.03762], Transformers had been achieving state of the art in many tasks, here I explain in easy terms what a transformer is.
+Since the [breakthrough paper](https://arxiv.org/abs/1706.03762), Transformers had been achieving state of the art in many tasks, here I explain in easy terms what a transformer is.
 
 A transformer model is a neural network model that uses the following approaches:
 

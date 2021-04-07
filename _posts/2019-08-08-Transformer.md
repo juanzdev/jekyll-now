@@ -4,6 +4,16 @@ title: Transformers
 published: true
 ---
 
+Since the breakthrough paper attention is all you need, Transformers had been achieving state of the art in many tasks, here I explain in easy terms what a transformer is:
+
+A transformer model is a neural network model that uses the following approaches:
+
+- It uses a form of direct access memory called Attention, which helps the network access the inputs at any time in the inference process, the network learns to focus on the most relevant inputs in the right context.
+- The original transformer uses the seq2seq approach using an encoder module and a decoder module with the main task of machine translation, the encoder encodes all the inputs to a hidden state, this hidden state is special because is the result of encoding learned representations according to the task in hand, this hidden state is created with the help of attention layers. The decoder module takes the entire hidden representation of the input and with repeated inference calls, it starts to output a sequence of outputs one-word token at a time, for example, it starts to output the input sequence translated to another language word by word.
+- The encoder uses multiple attention layers (Multi-Head Attention) to focus on the inputs from different perspectives, for example, a word can be viewed in terms of genre or terms of quantity, in the end, all the attention heads are combined into a single representation.
+- The decoder uses multiple masked attention layers (masked multi-head attention), it is masked because we want the decoder to learn its attention only from the context of the seen words so far (it can't see the future), this makes the original transformer model unidirectional. Some tasks may require bidirectional knowledge of the inputs (for example Question/Answering) for this reason variation of transformer architectures had emerged (see BERT) where the masking is not made, so the attention has access to the entire input at all times.
+- The decoder also uses multi-head attention to focus on the outputs from the encoder.
+- 
 The tranformer architecture consist of multiple transformer modules stacked, usually there are multiple types of transformers, encoder specialized, decoer specialized or both, the nice thing about transfrormers is that they are highly parallelizable, also they provide multiple attention layers, this means that they learn to selectevely process what input to take from the previous layer, this includes the input layer (self attention) all the way to the hidden layers, this is powerfull beause the transformer learns its own architectural connections according to the learned task.
 
 ## Q, K, V matrices

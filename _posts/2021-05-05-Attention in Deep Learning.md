@@ -1,7 +1,12 @@
+---
+layout: post
+title: Attention in Deep Learning
+published: true
+---
 
 # What is attention
 
-Attention [Bahdanau et al. 2015] is a differentiable dictionary, which means that provides valuable information given a query state.
+Attention is a differentiable dictionary, which means that provides valuable information given a query state.
 
 In deep learning, everything has to be learned continuously in a smooth way, this is deep learning main technique of learning representations is via backpropagation. Deep learning models can learn hierarchical representations automatically given the data all this process takes place by incrementally tuning the weights in a neural network given the loss function of interest.
 
@@ -17,3 +22,6 @@ Attention in deep learning provides this dictionary structure in a learnable way
 
 Still, without going into any details about how exactly is implemented, an attention layer can be useful when a neural network at inference time for example at layer 13th needs certain information from the original input but not all information but just a subset. A deep model without attention would have to encode this input information throughout all the intermediate layers, and if the model is too deep, the relevant information could be lost or get too noisy when updating the gradients (catastrophic forgetting).
 A deep model with attention can make a query(Q) lookup at any time to the differentiable dictionary, this differentiable dictionary provides the relevant information given the query, this query is not an exact query concept but is the query information that the neural network needs to perform given its actual state. Given the state query, the dictionary will return the most probable keys and their corresponding values that match the query context. This dictionary is not provided by any means at training time, it is initially a set of random parameters, but at training time the dictionary will be learned based on the downstream task of interest.
+
+
+[Bahdanau et al. 2015] 

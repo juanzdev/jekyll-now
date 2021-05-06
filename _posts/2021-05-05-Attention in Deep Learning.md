@@ -4,9 +4,8 @@ title: Attention in Deep Learning
 published: true
 ---
 
-In deep learning, everything has to be learned continuously in a smooth way, deep learning main technique of learning representations is via backpropagation. Deep learning models can learn hierarchical representations automatically given the data all this process takes place by incrementally tuning the weights in a neural network given the loss function of interest.
-
-Attention is a differentiable dictionary, which means that provides valuable information given a query state.
+In deep learning, backpropagation constrain the learning to smooth due to differentation. Deep learning models can learn hierarchical representations automatically given the data, all this process takes place by incrementally tuning the weights in a neural network given the loss function of interest.
+An Attention Layer is a differentiable dictionary, which provides valuable information to the neural network given a query state.
 
 The problem with very deep models like recurrent neural networks is that they are so deep that the information encoded at some layer could be very far from another layer that needs the stored representation. Attention solves this.
 

@@ -4,7 +4,7 @@ title: Attention in Deep Learning
 published: true
 ---
 
-In deep learning, backpropagation constrain the learning to be smooth due to differentation. Deep learning models can learn hierarchical representations automatically given the data, all this process takes place by incrementally tuning the weights in a neural network given the loss function of interest. Attention is the mechanism to introduce a dictionary-like structure to the nerual netork learning process. 
+In deep learning, backpropagation constrain the learning to be smooth due to differentation. Deep learning models can learn hierarchical representations automatically given the data, all this process takes place by incrementally tuning the weights in a neural network given the loss function of interest. Attention is the mechanism to introduce a dictionary-like structure to the nerual network learning process. 
 
 An Attention Layer can be seen as a differentiable dictionary, which provides valuable information to the neural network given a query state.
 

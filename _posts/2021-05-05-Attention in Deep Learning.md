@@ -14,7 +14,7 @@ Attention makes the information instantly available at any time through a deep m
 
 Attention is also learnable, this is, an attention mechanism in a neural network can be implemented using an attention layer.
 
-The attention layer can be seen as a dictionary structure, remember that a dictionary is a data structure that is very fast at reading time, this is we provide make a lookup to the dictionary with a unique key and the dictionary provides a value.
+The attention layer can be seen as a dictionary structure, remember that a dictionary is a data structure that is very fast at reading time, this is we provide a lookup to the dictionary with a unique key and the dictionary provides a value.
 
 Attention in deep learning provides this dictionary structure in a learnable way (eg: can be learned with backpropagation)
 

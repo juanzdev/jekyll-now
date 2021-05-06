@@ -4,9 +4,9 @@ title: Attention in Deep Learning
 published: true
 ---
 
-# What is attention
+# Attention in Deep Learning
 
-Attention is a differentiable dictionary, which means that provides valuable information given a query state.
+Attention [Bahdanau et al. 2015] is a differentiable dictionary, which means that provides valuable information given a query state.
 
 In deep learning, everything has to be learned continuously in a smooth way, this is deep learning main technique of learning representations is via backpropagation. Deep learning models can learn hierarchical representations automatically given the data all this process takes place by incrementally tuning the weights in a neural network given the loss function of interest.
 
